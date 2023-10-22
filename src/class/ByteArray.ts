@@ -1,0 +1,59 @@
+/**
+ * バイト配列のクラス。
+ */
+export default class ByteArray {
+
+    /**
+     * コンストラクタ。Blobを指定する。
+     * 
+     * @param blob 
+     */
+    public constructor(blob: Blob) {
+        this.blob = blob;
+    }
+
+    private blob: Blob;
+
+    /**
+     * 初期ファイル名を指定して、バイト配列をフロントでダウンロードする。
+     * 
+     * @param defaultFilename 
+     */
+    public download(defaultFilename: string): void {
+        const url = URL.createObjectURL(this.blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = defaultFilename;
+        link.click();
+        URL.revokeObjectURL(url);
+    }
+    
+    /**
+     * このバイト配列をUnit8Arrayに変換する。
+     * 
+     * @returns 
+     */
+    public toUnit8Array(): Promise<Uint8Array> {
+        return new Promise<Uint8Array>((resolve, reject) => {
+            const arrayBuffer = this.blob.arrayBuffer().then((arrayBuffer) => {
+                resolve(new Uint8Array(arrayBuffer));
+            }).catch((error) => {
+                reject(error);
+            });
+        });
+    }
+
+    /**
+     * コンストラクタの呼び出しと同じで新しいインスタンスを作成する。
+     * 
+     * @param blobLike 
+     * @returns 
+     */
+    public static from(blobLike: Blob | Uint8Array): ByteArray {
+        if (blobLike instanceof Blob) {
+            return new ByteArray(blobLike);
+        }
+        const uint8Array: Uint8Array = blobLike;
+        return new ByteArray(new Blob([uint8Array]));
+    }
+}
