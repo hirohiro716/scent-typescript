@@ -6,4 +6,5 @@ import { ObjectValidator, ObjectValidationError } from "./class/validation/Objec
 import ByteArray from "./class/ByteArray.js";
 import Column from "./class/database/Column.js";
 import { API, APIRequestError } from "./class/API.js";
-export { StringObject, Datetime, DayOfWeek, DatetimeFormat, Property, StringValidator, StringValidationError, ObjectValidator, ObjectValidationError, ByteArray, Column, API, APIRequestError, };
+import UserAgent from "./class/UserAgent.js";
+export { StringObject, Datetime, DayOfWeek, DatetimeFormat, Property, StringValidator, StringValidationError, ObjectValidator, ObjectValidationError, ByteArray, Column, API, APIRequestError, UserAgent, };
