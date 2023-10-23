@@ -463,7 +463,7 @@ export default class StringObject {
     *[Symbol.iterator]() {
         for (const one of this.joinAndResetParts()) {
             yield one;
-          }
+        }
     };
 
     /**
