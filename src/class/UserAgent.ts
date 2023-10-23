@@ -1,4 +1,4 @@
-import { StringObject } from "..";
+import StringObject from "./StringObject.js";
 
 /**
  * ユーザーエージェントのクラス。
