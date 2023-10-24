@@ -186,7 +186,7 @@ class StringObject {
     narrow() {
         const value = new StringObject(this.joinAndResetParts());
         this.parts = [];
-        for (const one of value) {
+        for (const one of value.toString()) {
             if (StringObject.WIDE_TO_NARROW_MAP[one]) {
                 this.parts.push(StringObject.WIDE_TO_NARROW_MAP[one]);
             }
@@ -204,7 +204,7 @@ class StringObject {
     wide() {
         const value = new StringObject(this.joinAndResetParts());
         this.parts = [];
-        for (const one of value) {
+        for (const one of value.toString()) {
             if (StringObject.NARROW_TO_WIDE_MAP[one]) {
                 this.parts.push(StringObject.NARROW_TO_WIDE_MAP[one]);
             }
@@ -222,7 +222,7 @@ class StringObject {
     lower() {
         const value = new StringObject(this.joinAndResetParts());
         this.parts = [];
-        for (const one of value) {
+        for (const one of value.toString()) {
             if (StringObject.JAPANESE_UPPER_TO_LOWER_MAP[one]) {
                 this.parts.push(StringObject.JAPANESE_UPPER_TO_LOWER_MAP[one]);
             }
@@ -240,7 +240,7 @@ class StringObject {
     upper() {
         const value = new StringObject(this.joinAndResetParts());
         this.parts = [];
-        for (const one of value) {
+        for (const one of value.toString()) {
             if (StringObject.JAPANESE_LOWER_TO_UPPER_MAP[one]) {
                 this.parts.push(StringObject.JAPANESE_LOWER_TO_UPPER_MAP[one]);
             }
@@ -258,7 +258,7 @@ class StringObject {
     hiragana() {
         const value = new StringObject(this.joinAndResetParts());
         this.parts = [];
-        for (const one of value) {
+        for (const one of value.toString()) {
             if (StringObject.KATAKANA_TO_HIRAGANA_MAP[one]) {
                 this.parts.push(StringObject.KATAKANA_TO_HIRAGANA_MAP[one]);
             }
@@ -276,7 +276,7 @@ class StringObject {
     katakana() {
         const value = new StringObject(this.joinAndResetParts());
         this.parts = [];
-        for (const one of value) {
+        for (const one of value.toString()) {
             if (StringObject.HIRAGANA_TO_KATAKANA_MAP[one]) {
                 this.parts.push(StringObject.HIRAGANA_TO_KATAKANA_MAP[one]);
             }
@@ -413,7 +413,7 @@ class StringObject {
      */
     *[Symbol.iterator]() {
         for (const one of this.joinAndResetParts()) {
-            yield one;
+            yield new StringObject(one);
         }
     }
     ;

@@ -224,7 +224,7 @@ export default class StringObject {
     public narrow(): StringObject {
         const value = new StringObject(this.joinAndResetParts());
         this.parts = [];
-        for (const one of value) {
+        for (const one of value.toString()) {
             if (StringObject.WIDE_TO_NARROW_MAP[one]) {
                 this.parts.push(StringObject.WIDE_TO_NARROW_MAP[one]);
             } else {
@@ -242,7 +242,7 @@ export default class StringObject {
     public wide(): StringObject {
         const value = new StringObject(this.joinAndResetParts());
         this.parts = [];
-        for (const one of value) {
+        for (const one of value.toString()) {
             if (StringObject.NARROW_TO_WIDE_MAP[one]) {
                 this.parts.push(StringObject.NARROW_TO_WIDE_MAP[one]);
             } else {
@@ -260,7 +260,7 @@ export default class StringObject {
     public lower(): StringObject {
         const value = new StringObject(this.joinAndResetParts());
         this.parts = [];
-        for (const one of value) {
+        for (const one of value.toString()) {
             if (StringObject.JAPANESE_UPPER_TO_LOWER_MAP[one]) {
                 this.parts.push(StringObject.JAPANESE_UPPER_TO_LOWER_MAP[one]);
             } else {
@@ -278,7 +278,7 @@ export default class StringObject {
     public upper(): StringObject {
         const value = new StringObject(this.joinAndResetParts());
         this.parts = [];
-        for (const one of value) {
+        for (const one of value.toString()) {
             if (StringObject.JAPANESE_LOWER_TO_UPPER_MAP[one]) {
                 this.parts.push(StringObject.JAPANESE_LOWER_TO_UPPER_MAP[one]);
             } else {
@@ -296,7 +296,7 @@ export default class StringObject {
     public hiragana(): StringObject {
         const value = new StringObject(this.joinAndResetParts());
         this.parts = [];
-        for (const one of value) {
+        for (const one of value.toString()) {
             if (StringObject.KATAKANA_TO_HIRAGANA_MAP[one]) {
                 this.parts.push(StringObject.KATAKANA_TO_HIRAGANA_MAP[one]);
             } else {
@@ -314,7 +314,7 @@ export default class StringObject {
     public katakana(): StringObject {
         const value = new StringObject(this.joinAndResetParts());
         this.parts = [];
-        for (const one of value) {
+        for (const one of value.toString()) {
             if (StringObject.HIRAGANA_TO_KATAKANA_MAP[one]) {
                 this.parts.push(StringObject.HIRAGANA_TO_KATAKANA_MAP[one]);
             } else {
@@ -462,7 +462,7 @@ export default class StringObject {
      */
     *[Symbol.iterator]() {
         for (const one of this.joinAndResetParts()) {
-            yield one;
+            yield new StringObject(one);
         }
     };
 

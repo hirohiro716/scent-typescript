@@ -220,7 +220,7 @@ export default class StringObject {
     /**
      * イテレーターの実装。
      */
-    [Symbol.iterator](): Generator<string, void, unknown>;
+    [Symbol.iterator](): Generator<StringObject, void, unknown>;
     /**
      * この文字列を指定された回数繰り返す。
      *
