@@ -1,5 +1,6 @@
 
 import StringObject from "./class/StringObject.js";
+import { Regex, RegexTypes } from "./class/Regex.js";
 import { Datetime, DayOfWeek, DatetimeFormat } from "./class/Datetime.js";
 import Property from "./class/Property.js";
 
@@ -15,7 +16,7 @@ import { API, APIRequestError } from "./class/API.js";
 import UserAgent from "./class/UserAgent.js";
 
 export {
-    StringObject, Datetime, DayOfWeek, DatetimeFormat, Property,
+    StringObject, Regex, RegexTypes, Datetime, DayOfWeek, DatetimeFormat, Property,
     StringValidator, StringValidationError, ObjectValidator, ObjectValidationError,
     ByteArray,
     Column,
