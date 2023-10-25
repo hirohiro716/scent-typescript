@@ -59,8 +59,14 @@ export class API {
         });
     }
 
+    /**
+     * ErrorObjectに含まれるエラーメッセージのキー。
+     */
     public static readonly NAME_OF_ERROR_MESSAGE: string = "message";
 
+    /**
+     * ErrorObjectに含まれる原因オブジェクトのキー。
+     */
     public static readonly NAME_OF_ERROR_CAUSE_OBJECT: string = "cause";
 
     /**

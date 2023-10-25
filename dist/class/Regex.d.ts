@@ -9,7 +9,13 @@ export declare class Regex {
      * @param flags
      */
     constructor(regex: string, flags?: string);
+    /**
+     * 正規表現の文字列。
+     */
     readonly regex: string;
+    /**
+     * フラグ。
+     */
     readonly flags: string;
     /**
      * 正規表現の文字列からRegExpを作成する。

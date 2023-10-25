@@ -67,7 +67,13 @@ export class API {
         return object;
     }
 }
+/**
+ * ErrorObjectに含まれるエラーメッセージのキー。
+ */
 API.NAME_OF_ERROR_MESSAGE = "message";
+/**
+ * ErrorObjectに含まれる原因オブジェクトのキー。
+ */
 API.NAME_OF_ERROR_CAUSE_OBJECT = "cause";
 /**
  * リクエストで発生したエラーのクラス。

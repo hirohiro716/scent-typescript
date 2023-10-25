@@ -18,7 +18,13 @@ export declare class API {
      * @returns
      */
     request(formData: FormData): Promise<Response>;
+    /**
+     * ErrorObjectに含まれるエラーメッセージのキー。
+     */
     static readonly NAME_OF_ERROR_MESSAGE: string;
+    /**
+     * ErrorObjectに含まれる原因オブジェクトのキー。
+     */
     static readonly NAME_OF_ERROR_CAUSE_OBJECT: string;
     /**
      * APIで発生したエラーのオブジェクトを作成する。

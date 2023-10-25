@@ -16,8 +16,14 @@ export class Regex {
         this.flags = flags;
     }
 
+    /**
+     * 正規表現の文字列。
+     */
     public readonly regex: string;
 
+    /**
+     * フラグ。
+     */
     public readonly flags: string;
 
     /**
