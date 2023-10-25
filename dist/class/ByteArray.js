@@ -7,8 +7,14 @@ export default class ByteArray {
      *
      * @param blob
      */
-    constructor(blob) {
-        this.blob = blob;
+    constructor(blobLike) {
+        if (blobLike instanceof Blob) {
+            this.blob = blobLike;
+        }
+        else {
+            const uint8Array = blobLike;
+            this.blob = new Blob([uint8Array]);
+        }
     }
     /**
      * 初期ファイル名を指定して、バイト配列をフロントでダウンロードする。
@@ -30,7 +36,7 @@ export default class ByteArray {
      */
     toUnit8Array() {
         return new Promise((resolve, reject) => {
-            const arrayBuffer = this.blob.arrayBuffer().then((arrayBuffer) => {
+            this.blob.arrayBuffer().then((arrayBuffer) => {
                 resolve(new Uint8Array(arrayBuffer));
             }).catch((error) => {
                 reject(error);
@@ -44,10 +50,6 @@ export default class ByteArray {
      * @returns
      */
     static from(blobLike) {
-        if (blobLike instanceof Blob) {
-            return new ByteArray(blobLike);
-        }
-        const uint8Array = blobLike;
-        return new ByteArray(new Blob([uint8Array]));
+        return new ByteArray(blobLike);
     }
 }

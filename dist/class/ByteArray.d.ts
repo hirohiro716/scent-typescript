@@ -7,8 +7,11 @@ export default class ByteArray {
      *
      * @param blob
      */
-    constructor(blob: Blob);
-    private blob;
+    constructor(blobLike: Blob | Uint8Array);
+    /**
+     * コンストラクタで指定されたBlob。
+     */
+    readonly blob: Blob;
     /**
      * 初期ファイル名を指定して、バイト配列をフロントでダウンロードする。
      *
