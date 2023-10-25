@@ -29,10 +29,10 @@ export default class StringObject {
      * @returns
      */
     private joinAndResetParts(): string {
-        if (this.parts.length == 0) {
+        if (this.parts.length === 0) {
             return "";
         }
-        if (this.parts.length == 1) {
+        if (this.parts.length === 1) {
             return this.parts[0];
         }
         let value = this.parts.join("");
@@ -413,7 +413,7 @@ export default class StringObject {
      */
     public toDatetime(): Datetime | null {
         const datetime = new Datetime(this.joinAndResetParts());
-        if (datetime.getAllMilliseconds() == 0) {
+        if (datetime.getAllMilliseconds() === 0) {
             return null;
         }
         return datetime;
@@ -426,7 +426,7 @@ export default class StringObject {
      */
     public toDate(): Date | null {
         const datetime: Datetime | null = this.toDatetime();
-        if (datetime == null) {
+        if (datetime === null) {
             return null;
         }
         return datetime.date;
@@ -523,7 +523,7 @@ export default class StringObject {
      */
     public static random(length: number, baseCharacters?: string): StringObject {
         const base = new StringObject(baseCharacters);
-        if (base.length() == 0) {
+        if (base.length() === 0) {
             base.append(this.randomBaseCharacters);
         }
         const result = new StringObject();

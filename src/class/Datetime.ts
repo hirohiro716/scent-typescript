@@ -38,13 +38,13 @@ export class Datetime {
         if (typeof parameter1 === "string") {
             this._date = new Date();
             const millisecond: number = Date.parse(parameter1);
-            if (isNaN(millisecond) == false) {
+            if (isNaN(millisecond) === false) {
                 this._date.setTime(millisecond);
             } else {
                 this._date.setTime(0);
                 const valueLikeDatetime: string = parameter1.replaceAll("/", "-").replaceAll(" ", "T");
                 const millisecond: number = Date.parse(valueLikeDatetime);
-                if (isNaN(millisecond) == false) {
+                if (isNaN(millisecond) === false) {
                     this._date.setTime(millisecond);
                 }
             }
@@ -398,17 +398,17 @@ export class Datetime {
     public equals(comparison: Datetime | Date | string): boolean {
         if (typeof comparison === "string") {
             const datetimeForComparison: Datetime = new Datetime(comparison);
-            if (this._date.getTime() == datetimeForComparison._date.getTime()) {
+            if (this._date.getTime() === datetimeForComparison._date.getTime()) {
                 return true;
             }
         }
         if (comparison instanceof Datetime) {
-            if (this._date.getTime() == comparison._date.getTime()) {
+            if (this._date.getTime() === comparison._date.getTime()) {
                 return true;
             }
         }
         if (comparison instanceof Date) {
-            if (this._date.getTime() == comparison.getTime()) {
+            if (this._date.getTime() === comparison.getTime()) {
                 return true;
             }
         }
@@ -432,7 +432,7 @@ export class Datetime {
         } else {
             return false;
         }
-        return this.getYear() == datetimeForComparison.getYear() && this.getMonth() == datetimeForComparison.getMonth() && this.getDay() == datetimeForComparison.getDay();
+        return this.getYear() === datetimeForComparison.getYear() && this.getMonth() === datetimeForComparison.getMonth() && this.getDay() === datetimeForComparison.getDay();
     }
 
     /**
@@ -452,8 +452,8 @@ export class Datetime {
         } else {
             return false;
         }
-        return this.getHour() == datetimeForComparison.getHour() && this.getMinute() == datetimeForComparison.getMinute()
-            && this.getSecond() == datetimeForComparison.getSecond() && this.getMillisecond() == datetimeForComparison.getMillisecond();
+        return this.getHour() === datetimeForComparison.getHour() && this.getMinute() === datetimeForComparison.getMinute()
+            && this.getSecond() === datetimeForComparison.getSecond() && this.getMillisecond() === datetimeForComparison.getMillisecond();
     }
 }
 

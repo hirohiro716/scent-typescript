@@ -48,7 +48,7 @@ export class Regex {
      */
     static makeRoughComparison(value) {
         const valueObject = new StringObject(value);
-        if (valueObject.length() == 0) {
+        if (valueObject.length() === 0) {
             return valueObject.toString();
         }
         const result = new StringObject();

@@ -190,19 +190,19 @@ export class StringValidator {
         for (const [method, parameter] of this.scheduledMethods.entries()) {
             switch (method) {
                 case Method.BLANK:
-                    if (value.length() == 0) {
+                    if (value.length() === 0) {
                         throw this.createError(method);
                     }
                     break;
                 case Method.INTEGER:
                     if (value.length() > 0) {
-                        if (value.clone().replace("[-0-9]", "").length() > 0 || value.toNumber() == null) {
+                        if (value.clone().replace("[-0-9]", "").length() > 0 || value.toNumber() === null) {
                             throw this.createError(method);
                         }
                     }
                     break;
                 case Method.DECIMAL:
-                    if (value.length() > 0 && value.toNumber() == null) {
+                    if (value.length() > 0 && value.toNumber() === null) {
                         throw this.createError(method);
                     }
                     break;
@@ -224,7 +224,7 @@ export class StringValidator {
                 case Method.ZERO:
                     if (value.length() > 0) {
                         const valueLikeNumber = value.toNumber();
-                        if (valueLikeNumber != null && valueLikeNumber == 0) {
+                        if (valueLikeNumber != null && valueLikeNumber === 0) {
                             throw this.createError(method);
                         }
                     }
@@ -248,7 +248,7 @@ export class StringValidator {
                 case Method.DATETIME:
                     if (value.length() > 0) {
                         const valueLikeDatetime = value.toDatetime();
-                        if (valueLikeDatetime == null) {
+                        if (valueLikeDatetime === null) {
                             throw this.createError(method);
                         }
                     }
@@ -277,7 +277,7 @@ export class StringValidator {
                     break;
                 case Method.REGEX:
                     if (value.length() > 0) {
-                        if (value.clone().replace(parameter, "").length() == value.length()) {
+                        if (value.clone().replace(parameter, "").length() === value.length()) {
                             throw this.createError(method);
                         }
                     }

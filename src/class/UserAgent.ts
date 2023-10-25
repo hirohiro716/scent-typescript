@@ -42,6 +42,6 @@ export default class UserAgent {
      * @returns 
      */
     public static isSafari(): boolean {
-        return this.toString().toLowerCase().includes("safari") && this.toString().toLowerCase().includes("chrom") == false;
+        return this.toString().toLowerCase().includes("safari") && this.toString().toLowerCase().includes("chrom") === false;
     }
 }
