@@ -1,11 +1,13 @@
+import Enumeration from "./class/Enumeration.js";
+import Property from "./class/Property.js";
 import StringObject from "./class/StringObject.js";
 import { Regex, RegexTypes } from "./class/Regex.js";
+import { RoundNumber, RoundNumbers } from "./class/RoundNumber.js";
 import { Datetime, DayOfWeek, DatetimeFormat } from "./class/Datetime.js";
-import Property from "./class/Property.js";
 import { StringValidator, StringValidationError } from "./class/validation/StringValidator.js";
 import { ObjectValidator, ObjectValidationError } from "./class/validation/ObjectValidator.js";
 import ByteArray from "./class/ByteArray.js";
 import Column from "./class/database/Column.js";
 import { API, APIRequestError } from "./class/API.js";
 import UserAgent from "./class/UserAgent.js";
-export { StringObject, Regex, RegexTypes, Datetime, DayOfWeek, DatetimeFormat, Property, StringValidator, StringValidationError, ObjectValidator, ObjectValidationError, ByteArray, Column, API, APIRequestError, UserAgent, };
+export { Enumeration, Property, StringObject, RoundNumber, RoundNumbers, Regex, RegexTypes, Datetime, DayOfWeek, DatetimeFormat, StringValidator, StringValidationError, ObjectValidator, ObjectValidationError, ByteArray, Column, API, APIRequestError, UserAgent, };
