@@ -1,19 +1,9 @@
+import Enumeration from "./Enumeration.js";
 import StringObject from "./StringObject.js";
-const ROUND = "round";
-const FLOOR = "floor";
-const CEIL = "ceil";
 /**
  * 数値の端数処理のクラス。
  */
-export class RoundNumber {
-    /**
-     * コンストラクタ。メソッド名("round"|"floor"|"ceil")を指定する。
-     *
-     * @param methodName
-     */
-    constructor(methodName) {
-        this.methodName = methodName;
-    }
+export class RoundNumber extends Enumeration {
     /**
      * 指定された数値を丸める。
      *
@@ -29,12 +19,12 @@ export class RoundNumber {
         else if (digit < 0) {
             multiplier = 1 / StringObject.from("1").paddingRight(Math.abs(digit) + 1, "0").toNumber();
         }
-        switch (this.methodName) {
-            case ROUND:
+        switch (this.physicalName) {
+            case RoundNumbers.round.physicalName:
                 return Math.round(value * multiplier) / multiplier;
-            case FLOOR:
+            case RoundNumbers.floor.physicalName:
                 return Math.floor(value * multiplier) / multiplier;
-            case CEIL:
+            case RoundNumbers.ceil.physicalName:
                 return Math.ceil(value * multiplier) / multiplier;
         }
         return value;
@@ -44,7 +34,7 @@ export class RoundNumber {
  * 数値の端数処理の種類。
  */
 export const RoundNumbers = {
-    round: new RoundNumber(ROUND),
-    floor: new RoundNumber(FLOOR),
-    ceil: new RoundNumber(CEIL),
+    round: new RoundNumber("round", "四捨五入"),
+    floor: new RoundNumber("floor", "切り下げ"),
+    ceil: new RoundNumber("ceil", "切り上げ"),
 };

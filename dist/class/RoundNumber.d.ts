@@ -1,14 +1,8 @@
+import Enumeration from "./Enumeration.js";
 /**
  * 数値の端数処理のクラス。
  */
-export declare class RoundNumber {
-    /**
-     * コンストラクタ。メソッド名("round"|"floor"|"ceil")を指定する。
-     *
-     * @param methodName
-     */
-    constructor(methodName: string);
-    readonly methodName: string;
+export declare class RoundNumber extends Enumeration {
     /**
      * 指定された数値を丸める。
      *
