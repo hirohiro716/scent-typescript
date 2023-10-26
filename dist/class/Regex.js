@@ -4,7 +4,7 @@ import StringObject from "./StringObject.js";
  */
 export class Regex {
     /**
-     * コンストラクタ。正規表現の文字列とフラグを指定する。
+     * コンストラクタ。正規表現の文字列とフラグ(未指定の場合は"g")を指定する。
      *
      * @param regex
      * @param flags

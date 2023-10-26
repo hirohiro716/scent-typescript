@@ -1,4 +1,4 @@
-import StringObject from "./StringObject.js";
+import StringObject from "../StringObject.js";
 
 /**
  * APIにリクエストするクラス。このクラスでリクエストできるAPIはエラーをJSONで返すものに限る。

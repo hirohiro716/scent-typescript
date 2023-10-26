@@ -1,5 +1,5 @@
 import StringObject from "../StringObject.js";
-import { Datetime } from "../Datetime.js";
+import { Datetime } from "../datetime/Datetime.js";
 
 /**
  * 文字列の妥当性を確認するクラス。

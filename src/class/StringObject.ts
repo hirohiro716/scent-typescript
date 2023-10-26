@@ -1,4 +1,4 @@
-import { Datetime } from "./Datetime.js";
+import { Datetime } from "./datetime/Datetime.js";
 
 /**
  * 文字列のクラス。
