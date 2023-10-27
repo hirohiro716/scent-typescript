@@ -1,3 +1,4 @@
+/// <reference types="node" />
 /**
  * バイト配列のクラス。
  */
@@ -24,6 +25,12 @@ export default class ByteArray {
      * @returns
      */
     toUnit8Array(): Promise<Uint8Array>;
+    /**
+     * このバイト配列をBufferに変換する。
+     *
+     * @returns
+     */
+    toBuffer(): Promise<Buffer>;
     /**
      * コンストラクタの呼び出しと同じで新しいインスタンスを作成する。
      *

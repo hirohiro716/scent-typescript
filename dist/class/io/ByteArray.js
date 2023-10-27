@@ -44,6 +44,20 @@ export default class ByteArray {
         });
     }
     /**
+     * このバイト配列をBufferに変換する。
+     *
+     * @returns
+     */
+    toBuffer() {
+        return new Promise((resolve, reject) => {
+            this.blob.arrayBuffer().then((arrayBuffer) => {
+                resolve(Buffer.from(arrayBuffer));
+            }).catch((error) => {
+                reject(error);
+            });
+        });
+    }
+    /**
      * コンストラクタの呼び出しと同じで新しいインスタンスを作成する。
      *
      * @param blobLike
