@@ -185,7 +185,7 @@ export declare class Datetime {
      * @example
      * new Datetime("2023-12-22 12:12").toString() returns "2023-12-22 12:12:00"
      *
-     * @param datetimeFormat
+     * @param datetimeFormat 日時文字列フォーマットパターン。デフォルトはDatetimeFormat.DATE_TO_SECOND。
      * @returns
      */
     toString(datetimeFormat?: DatetimeFormat): string;

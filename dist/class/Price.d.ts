@@ -4,10 +4,10 @@ import { RoundNumber } from "./RoundNumber.js";
  */
 export default class Price {
     /**
-     * コンストラクタ。1円未満の金額端数処理方法、金額を指定する。
+     * コンストラクタ。
      *
-     * @param roundNumber
-     * @param amount
+     * @param roundNumber 1円未満の金額端数処理方法。
+     * @param amount 金額。デフォルトは0。
      */
     constructor(roundNumber: RoundNumber, amount?: number);
     /**

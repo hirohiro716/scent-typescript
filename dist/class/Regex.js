@@ -4,10 +4,10 @@ import StringObject from "./StringObject.js";
  */
 export class Regex {
     /**
-     * コンストラクタ。正規表現の文字列とフラグ(未指定の場合は"g")を指定する。
+     * コンストラクタ。
      *
-     * @param regex
-     * @param flags
+     * @param regex 正規表現の文字列。
+     * @param flags 機能フラグ。デフォルトは"g"。
      */
     constructor(regex, flags = "g") {
         this.regex = regex;
@@ -33,8 +33,8 @@ export class Regex {
     /**
      * コンストラクタの呼び出しと同じで新しいインスタンスを作成する。
      *
-     * @param regex
-     * @param flags
+     * @param regex 正規表現の文字列。
+     * @param flags 機能フラグ。デフォルトは"g"。
      * @returns
      */
     static from(regex, flags = "g") {
