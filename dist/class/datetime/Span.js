@@ -32,10 +32,10 @@ export default class Span {
     contains(datetime) {
         let milliseconds;
         if (datetime instanceof Datetime) {
-            milliseconds = datetime.getAllMilliseconds();
+            milliseconds = datetime.clone().setHour(0).setMinute(0).setSecond(0).setMillisecond(0).getAllMilliseconds();
         }
         else {
-            milliseconds = Datetime.from(datetime).getAllMilliseconds();
+            milliseconds = Datetime.from(datetime).setHour(0).setMinute(0).setSecond(0).setMillisecond(0).getAllMilliseconds();
         }
         if (this.startDate.getAllMilliseconds() <= milliseconds && milliseconds <= this.endDate.getAllMilliseconds()) {
             return true;
