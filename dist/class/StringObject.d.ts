@@ -20,19 +20,21 @@ export default class StringObject {
      * 指定された変数の文字列表現をセットする。
      *
      * @param value
+     * @returns このインスタンス。
      */
-    set(value: any): void;
+    set(value: any): StringObject;
     /**
      * 指定された変数の文字列表現を末尾に追加する。
      *
      * @param addition
-     * @returns
+     * @returns このインスタンス。
      */
     append(addition: any): StringObject;
     /**
      * 指定された変数の文字列表現を先頭に追加する。
      *
      * @param addition
+     * @returns このインスタンス。
      */
     prepend(addition: any): StringObject;
     /**
@@ -43,7 +45,7 @@ export default class StringObject {
      *
      * @param addition
      * @param index
-     * @returns
+     * @returns このインスタンス。
      */
     insert(addition: any, index: number): StringObject;
     /**
@@ -55,6 +57,7 @@ export default class StringObject {
      *
      * @param startIndex
      * @param endIndex
+     * @returns このインスタンス。
      */
     extract(startIndex: number, endIndex?: number): StringObject;
     /**
@@ -65,6 +68,7 @@ export default class StringObject {
      * new StringObject("A or B").extract("(A|B)") returns "AB"
      *
      * @param regex
+     * @returns このインスタンス。
      */
     extract(regex: string): StringObject;
     /**
@@ -75,35 +79,41 @@ export default class StringObject {
      *
      * @param regex
      * @param replacement
-     * @returns
+     * @returns このインスタンス。
      */
     replace(regex: string, replacement: string): StringObject;
     /**
      * 先頭と末尾のスペースをすべて削除する。スペースとは String.fromCharCode(32), String.fromCharCode(12288) に該当する文字列。
+     *
+     * @returns このインスタンス。
      */
     trim(): StringObject;
     /**
      * CRを置き換える。CRLFのCRは置き換えられない。
      *
      * @param replacement
+     * @returns このインスタンス。
      */
     replaceCr(replacement: string): StringObject;
     /**
      * LFを置き換える。CRLFのLFは置き換えられない。
      *
      * @param replacement
+     * @returns このインスタンス。
      */
     replaceLf(replacement: string): StringObject;
     /**
      * CRLFを置き換える。
      *
      * @param replacement
+     * @returns このインスタンス。
      */
     replaceCrlf(replacement: string): StringObject;
     /**
      * タブを置き換える。
      *
      * @param replacement
+     * @returns このインスタンス。
      */
     replaceTab(replacement: string): StringObject;
     /**
@@ -111,43 +121,43 @@ export default class StringObject {
      * @example
      * new StringObject("123.000").removeMeaninglessDecimalPoint() returns "123"
      *
-     * @returns
+     * @returns このインスタンス。
      */
     removeMeaninglessDecimalPoint(): StringObject;
     /**
      * 日本語全角文字を半角に置き換える。
      *
-     * @returns
+     * @returns このインスタンス。
      */
     narrow(): StringObject;
     /**
      * 半角を日本語全角に置き換える。
      *
-     * @returns
+     * @returns このインスタンス。
      */
     wide(): StringObject;
     /**
      * 大文字を小文字に置き換える。
      *
-     * @returns
+     * @returns このインスタンス。
      */
     lower(): StringObject;
     /**
      * 小文字を大文字に置き換える。
      *
-     * @returns
+     * @returns このインスタンス。
      */
     upper(): StringObject;
     /**
      * カタカナをひらがなに置き換える。
      *
-     * @returns
+     * @returns このインスタンス。
      */
     hiragana(): StringObject;
     /**
      * ひらがなをカタカナに置き換える。
      *
-     * @returns
+     * @returns このインスタンス。
      */
     katakana(): StringObject;
     /**
@@ -155,6 +165,7 @@ export default class StringObject {
      *
      * @param length
      * @param addition
+     * @returns このインスタンス。
      */
     paddingLeft(length: number, addition: any): StringObject;
     /**
@@ -162,6 +173,7 @@ export default class StringObject {
      *
      * @param length
      * @param addition
+     * @returns このインスタンス。
      */
     paddingRight(length: number, addition: any): StringObject;
     /**
