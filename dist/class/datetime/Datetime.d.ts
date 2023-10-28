@@ -250,10 +250,10 @@ export declare class Datetime {
     /**
      * コンストラクタの呼び出しと同じで新しいインスタンスを作成する。
      *
-     * @param value
+     * @param dateValue
      * @returns
      */
-    static from(dateValue: string | Date): Datetime;
+    static from(dateValue?: string | Date): Datetime;
 }
 /**
  * 曜日の定数。
