@@ -1,44 +1,40 @@
 import { Datetime } from "./Datetime.js";
-
 /**
  * 期間のクラス。
  */
-export default class Span {
-
+export default class Period {
     /**
      * コンストラクタ。開始日と終了日を指定する。
-     * 
-     * @param startDate 
-     * @param endDate 
+     *
+     * @param startDate
+     * @param endDate
      */
-    public constructor(startDate: Datetime | Date, endDate: Datetime | Date) {
+    constructor(startDate, endDate) {
         if (startDate instanceof Datetime) {
             this.startDate = startDate.clone().setHour(0).setMinute(0).setSecond(0).setMillisecond(0);
-        } else {
+        }
+        else {
             this.startDate = Datetime.from(startDate).setHour(0).setMinute(0).setSecond(0).setMillisecond(0);
         }
         if (endDate instanceof Datetime) {
             this.endDate = endDate.clone().setHour(0).setMinute(0).setSecond(0).setMillisecond(0);
-        } else {
+        }
+        else {
             this.endDate = Datetime.from(endDate).setHour(0).setMinute(0).setSecond(0).setMillisecond(0);
         }
     }
-
-    public startDate: Datetime;
-
-    public endDate: Datetime;
-
     /**
      * 指定された日時が期間内の場合はtrueを返す。
-     * 
-     * @param datetime 
-     * @returns 
+     *
+     * @param datetime
+     * @returns
      */
-    public contains(datetime: Datetime | Date): boolean {
-        let milliseconds: number;
+    contains(datetime) {
+        let milliseconds;
         if (datetime instanceof Datetime) {
             milliseconds = datetime.clone().setHour(0).setMinute(0).setSecond(0).setMillisecond(0).getAllMilliseconds();
-        } else {
+        }
+        else {
             milliseconds = Datetime.from(datetime).setHour(0).setMinute(0).setSecond(0).setMillisecond(0).getAllMilliseconds();
         }
         if (this.startDate.getAllMilliseconds() <= milliseconds && milliseconds <= this.endDate.getAllMilliseconds()) {
@@ -46,46 +42,33 @@ export default class Span {
         }
         return false;
     }
-
-    /**
-     * このインスタンスが指定されたインスタンスと同じ期間の場合はtrueを返す。
-     * 
-     * @param comparison 
-     */
-    public equals(comparison: Span): boolean;
-
-    /**
-     * このインスタンスが指定された日付と同じ期間の場合はtrueを返す。
-     * 
-     * @param startDate 
-     * @param endDate 
-     */
-    public equals(startDate: Datetime | Date, endDate: Datetime | Date): boolean;
-
     /**
      * @deprecated
      */
-    public equals(parameter1: Span | Datetime | Date, endDate?: Datetime | Date): boolean {
-        let comparison: undefined | Span;
-        if (parameter1 instanceof Span) {
+    equals(parameter1, endDate) {
+        let comparison;
+        if (parameter1 instanceof Period) {
             comparison = parameter1;
-        } else {
-            let startDateOfComparison: undefined | Datetime;
+        }
+        else {
+            let startDateOfComparison;
             if (parameter1 instanceof Datetime) {
                 startDateOfComparison = parameter1;
-            } else {
+            }
+            else {
                 startDateOfComparison = new Datetime(parameter1);
             }
-            let endDateOfComparison: undefined | Datetime;
+            let endDateOfComparison;
             if (endDate) {
                 if (endDate instanceof Datetime) {
                     endDateOfComparison = endDate;
-                } else {
+                }
+                else {
                     endDateOfComparison = new Datetime(endDate);
                 }
             }
             if (startDateOfComparison && endDateOfComparison) {
-                comparison = new Span(startDateOfComparison, endDateOfComparison);
+                comparison = new Period(startDateOfComparison, endDateOfComparison);
             }
         }
         if (comparison) {

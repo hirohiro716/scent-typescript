@@ -2,7 +2,7 @@ import { Datetime } from "./Datetime.js";
 /**
  * 期間のクラス。
  */
-export default class Span {
+export default class Period {
     /**
      * コンストラクタ。開始日と終了日を指定する。
      *
@@ -24,7 +24,7 @@ export default class Span {
      *
      * @param comparison
      */
-    equals(comparison: Span): boolean;
+    equals(comparison: Period): boolean;
     /**
      * このインスタンスが指定された日付と同じ期間の場合はtrueを返す。
      *

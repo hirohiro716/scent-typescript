@@ -9,7 +9,7 @@ import { Dimension } from "./class/Dimension.js";
 import { Bounds } from "./class/Bounds.js";
 
 import { Datetime, DayOfWeek, DatetimeFormat } from "./class/datetime/Datetime.js";
-import Span from "./class/datetime/Span.js";
+import Period from "./class/datetime/Period.js";
 
 import { StringValidator, StringValidationError } from "./class/validation/StringValidator.js";
 import { ObjectValidator, ObjectValidationError } from "./class/validation/ObjectValidator.js";
@@ -25,7 +25,7 @@ export type {
 
 export {
     Enumeration, Property, UserAgent, StringObject, RoundNumber, RoundNumbers, Price, Regex, RegexTypes,
-    Datetime, DayOfWeek, DatetimeFormat, Span,
+    Datetime, DayOfWeek, DatetimeFormat, Period,
     StringValidator, StringValidationError, ObjectValidator, ObjectValidationError,
     ByteArray, API, APIRequestError,
     Column,
