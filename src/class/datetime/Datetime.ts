@@ -180,135 +180,158 @@ export class Datetime {
      * 年(西暦)をセットする。
      * 
      * @param year 
+     * @returns このインスタンス。
      */
-    public setYear(year: number): void {
+    public setYear(year: number): Datetime {
         this._date.setFullYear(year);
+        return this;
     }
 
     /**
      * 月(1〜12)をセットする。
      * 
      * @param month 
+     * @returns このインスタンス。
      */
-    public setMonth(month: number): void {
+    public setMonth(month: number): Datetime {
         this._date.setMonth(month - 1);
+        return this;
     }
 
     /**
      * 日(1〜31)をセットする。
      * 
      * @param day 
+     * @returns このインスタンス。
      */
-    public setDay(day: number): void {
+    public setDay(day: number): Datetime {
         this._date.setDate(day);
+        return this;
     }
 
     /**
      * 時(0〜23)をセットする。
      * 
      * @param hour 
+     * @returns このインスタンス。
      */
-    public setHour(hour: number): void {
+    public setHour(hour: number): Datetime {
         this._date.setHours(hour);
+        return this;
     }
 
     /**
      * 分(0〜59)をセットする。
      * 
      * @param minute 
+     * @returns このインスタンス。
      */
-    public setMinute(minute: number): void {
+    public setMinute(minute: number): Datetime {
         this._date.setMinutes(minute);
+        return this;
     }
 
     /**
      * 秒(0〜59)をセットする。
      * 
      * @param minute 
+     * @returns このインスタンス。
      */
-    public setSecond(second: number): void {
+    public setSecond(second: number): Datetime {
         this._date.setSeconds(second);
+        return this;
     }
 
     /**
      * ミリ秒(0〜999)をセットする。
      * 
      * @param minute 
+     * @returns このインスタンス。
      */
-    public setMillisecond(millisecond: number): void {
+    public setMillisecond(millisecond: number): Datetime {
         this._date.setMilliseconds(millisecond);
+        return this;
     }
 
     /**
      * 0ミリ秒が表す日時(1970-01-01 00:00:00.000)からの経過ミリ秒をセットする。
      * 
      * @param milliseconds 
+     * @returns このインスタンス。
      */
-    public setAllMilliseconds(milliseconds: number): void {
+    public setAllMilliseconds(milliseconds: number): Datetime {
         this._date.setTime(milliseconds);
+        return this;
     }
 
     /**
      * 年を加算する。
      * 
      * @param year 
+     * @returns このインスタンス。
      */
-    public addYear(year: number) {
-        this.setYear(this.getYear() + year);
+    public addYear(year: number): Datetime {
+        return this.setYear(this.getYear() + year);
     }
 
     /**
      * 月を加算する。
      * 
      * @param month 
+     * @returns このインスタンス。
      */
-    public addMonth(month: number) {
-        this.setMonth(this.getMonth() + month);
+    public addMonth(month: number): Datetime {
+        return this.setMonth(this.getMonth() + month);
     }
 
     /**
      * 日を加算する。
      * 
      * @param day 
+     * @returns このインスタンス。
      */
-    public addDay(day: number) {
-        this.setDay(this.getDay() + day);
+    public addDay(day: number): Datetime {
+        return this.setDay(this.getDay() + day);
     }
 
     /**
      * 時を加算する。
      * 
      * @param hour 
+     * @returns このインスタンス。
      */
-    public addHour(hour: number) {
-        this.setHour(this.getHour() + hour);
+    public addHour(hour: number): Datetime {
+        return this.setHour(this.getHour() + hour);
     }
 
     /**
      * 分を加算する。
      * 
      * @param minute 
+     * @returns このインスタンス。
      */
-    public addMinute(minute: number) {
-        this.setMinute(this.getMinute() + minute);
+    public addMinute(minute: number): Datetime {
+        return this.setMinute(this.getMinute() + minute);
     }
 
     /**
      * 秒を加算する。
      * 
      * @param second
+     * @returns このインスタンス。
      */
-    public addSecond(second: number) {
-        this.setSecond(this.getSecond() + second);
+    public addSecond(second: number): Datetime {
+        return this.setSecond(this.getSecond() + second);
     }
 
     /**
      * ミリ秒を加算する。
      * 
      * @param millisecond 
+     * @returns このインスタンス。
      */
-    public addMillisecond(millisecond: number) {
-        this.setMillisecond(this.getMillisecond() + millisecond);
+    public addMillisecond(millisecond: number): Datetime {
+        return this.setMillisecond(this.getMillisecond() + millisecond);
     }
 
     /**

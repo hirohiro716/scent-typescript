@@ -44,20 +44,22 @@ export default class StringObject {
      * 指定された変数の文字列表現をセットする。
      * 
      * @param value 
+     * @returns このインスタンス。
      */
-    public set(value: any): void {
+    public set(value: any): StringObject {
         let stringValue = "";
         if (typeof value !== "undefined" && value !== null) {
             stringValue = new String(value).toString();
         }
         this.parts = [stringValue];
+        return this;
     }
 
     /**
      * 指定された変数の文字列表現を末尾に追加する。
      * 
      * @param addition 
-     * @returns
+     * @returns このインスタンス。
      */
     public append(addition: any): StringObject {
         if (typeof addition !== "undefined" && addition !== null) {
@@ -70,6 +72,7 @@ export default class StringObject {
      * 指定された変数の文字列表現を先頭に追加する。
      * 
      * @param addition 
+     * @returns このインスタンス。
      */
     public prepend(addition: any): StringObject {
         if (typeof addition !== "undefined" && addition !== null) {
@@ -86,7 +89,7 @@ export default class StringObject {
      * 
      * @param addition 
      * @param index 
-     * @returns 
+     * @returns このインスタンス。
      */
     public insert(addition: any, index: number): StringObject {
         if (typeof addition !== "undefined" && addition !== null) {
@@ -107,6 +110,7 @@ export default class StringObject {
      * 
      * @param startIndex 
      * @param endIndex 
+     * @returns このインスタンス。
      */
     public extract(startIndex: number, endIndex?: number): StringObject;
 
@@ -118,6 +122,7 @@ export default class StringObject {
      * new StringObject("A or B").extract("(A|B)") returns "AB"
      * 
      * @param regex 
+     * @returns このインスタンス。
      */
     public extract(regex: string): StringObject;
 
@@ -149,7 +154,7 @@ export default class StringObject {
      * 
      * @param regex 
      * @param replacement 
-     * @returns 
+     * @returns このインスタンス。
      */
     public replace(regex: string, replacement: string): StringObject {
         const value = this.joinAndResetParts();
@@ -159,6 +164,8 @@ export default class StringObject {
 
     /**
      * 先頭と末尾のスペースをすべて削除する。スペースとは String.fromCharCode(32), String.fromCharCode(12288) に該当する文字列。
+     * 
+     * @returns このインスタンス。
      */
     public trim(): StringObject {
         const regex = new StringObject(String.fromCharCode(32, 12288));
@@ -173,6 +180,7 @@ export default class StringObject {
      * CRを置き換える。CRLFのCRは置き換えられない。
      * 
      * @param replacement 
+     * @returns このインスタンス。
      */
     public replaceCr(replacement: string): StringObject {
         return this.replace("\r([^\n])|\r$", replacement + "$1");
@@ -182,6 +190,7 @@ export default class StringObject {
      * LFを置き換える。CRLFのLFは置き換えられない。
      * 
      * @param replacement 
+     * @returns このインスタンス。
      */
     public replaceLf(replacement: string): StringObject {
         return this.replace("([^\r])\n|^\n", "$1" + replacement);
@@ -191,6 +200,7 @@ export default class StringObject {
      * CRLFを置き換える。
      * 
      * @param replacement 
+     * @returns このインスタンス。
      */
     public replaceCrlf(replacement: string): StringObject {
         return this.replace("\r\n", replacement);
@@ -200,6 +210,7 @@ export default class StringObject {
      * タブを置き換える。
      * 
      * @param replacement 
+     * @returns このインスタンス。
      */
     public replaceTab(replacement: string): StringObject {
         return this.replace("\t", replacement);
@@ -210,7 +221,7 @@ export default class StringObject {
      * @example
      * new StringObject("123.000").removeMeaninglessDecimalPoint() returns "123"
      * 
-     * @returns 
+     * @returns このインスタンス。
      */
     public removeMeaninglessDecimalPoint(): StringObject {
         return this.replace("\\.{1}0{1,}$", "");
@@ -219,7 +230,7 @@ export default class StringObject {
     /**
      * 日本語全角文字を半角に置き換える。
      * 
-     * @returns 
+     * @returns このインスタンス。
      */
     public narrow(): StringObject {
         const value = new StringObject(this.joinAndResetParts());
@@ -237,7 +248,7 @@ export default class StringObject {
     /**
      * 半角を日本語全角に置き換える。
      * 
-     * @returns 
+     * @returns このインスタンス。
      */
     public wide(): StringObject {
         const value = new StringObject(this.joinAndResetParts());
@@ -255,7 +266,7 @@ export default class StringObject {
     /**
      * 大文字を小文字に置き換える。
      * 
-     * @returns 
+     * @returns このインスタンス。
      */
     public lower(): StringObject {
         const value = new StringObject(this.joinAndResetParts());
@@ -273,7 +284,7 @@ export default class StringObject {
     /**
      * 小文字を大文字に置き換える。
      * 
-     * @returns 
+     * @returns このインスタンス。
      */
     public upper(): StringObject {
         const value = new StringObject(this.joinAndResetParts());
@@ -291,7 +302,7 @@ export default class StringObject {
     /**
      * カタカナをひらがなに置き換える。
      * 
-     * @returns 
+     * @returns このインスタンス。
      */
     public hiragana(): StringObject {
         const value = new StringObject(this.joinAndResetParts());
@@ -309,7 +320,7 @@ export default class StringObject {
     /**
      * ひらがなをカタカナに置き換える。
      * 
-     * @returns 
+     * @returns このインスタンス。
      */
     public katakana(): StringObject {
         const value = new StringObject(this.joinAndResetParts());
@@ -329,6 +340,7 @@ export default class StringObject {
      * 
      * @param length 
      * @param addition 
+     * @returns このインスタンス。
      */
     public paddingLeft(length: number, addition: any): StringObject {
         if (typeof addition !== "undefined" && addition !== null) {
@@ -344,6 +356,7 @@ export default class StringObject {
      * 
      * @param length 
      * @param addition 
+     * @returns このインスタンス。
      */
     public paddingRight(length: number, addition: any): StringObject {
         if (typeof addition !== "undefined" && addition !== null) {
