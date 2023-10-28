@@ -478,6 +478,20 @@ export class Datetime {
         return this.getHour() === datetimeForComparison.getHour() && this.getMinute() === datetimeForComparison.getMinute()
             && this.getSecond() === datetimeForComparison.getSecond() && this.getMillisecond() === datetimeForComparison.getMillisecond();
     }
+
+    /**
+     * コンストラクタの呼び出しと同じで新しいインスタンスを作成する。
+     * 
+     * @param value 
+     * @returns 
+     */
+    public static from(dateValue: string | Date): Datetime {
+        if (dateValue instanceof Date) {
+            return new Datetime(dateValue);
+        } else {
+            return new Datetime(dateValue);
+        }
+    }
 }
 
 /**

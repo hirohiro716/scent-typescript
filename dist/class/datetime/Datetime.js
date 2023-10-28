@@ -149,121 +149,144 @@ export class Datetime {
      * 年(西暦)をセットする。
      *
      * @param year
+     * @returns このインスタンス。
      */
     setYear(year) {
         this._date.setFullYear(year);
+        return this;
     }
     /**
      * 月(1〜12)をセットする。
      *
      * @param month
+     * @returns このインスタンス。
      */
     setMonth(month) {
         this._date.setMonth(month - 1);
+        return this;
     }
     /**
      * 日(1〜31)をセットする。
      *
      * @param day
+     * @returns このインスタンス。
      */
     setDay(day) {
         this._date.setDate(day);
+        return this;
     }
     /**
      * 時(0〜23)をセットする。
      *
      * @param hour
+     * @returns このインスタンス。
      */
     setHour(hour) {
         this._date.setHours(hour);
+        return this;
     }
     /**
      * 分(0〜59)をセットする。
      *
      * @param minute
+     * @returns このインスタンス。
      */
     setMinute(minute) {
         this._date.setMinutes(minute);
+        return this;
     }
     /**
      * 秒(0〜59)をセットする。
      *
      * @param minute
+     * @returns このインスタンス。
      */
     setSecond(second) {
         this._date.setSeconds(second);
+        return this;
     }
     /**
      * ミリ秒(0〜999)をセットする。
      *
      * @param minute
+     * @returns このインスタンス。
      */
     setMillisecond(millisecond) {
         this._date.setMilliseconds(millisecond);
+        return this;
     }
     /**
      * 0ミリ秒が表す日時(1970-01-01 00:00:00.000)からの経過ミリ秒をセットする。
      *
      * @param milliseconds
+     * @returns このインスタンス。
      */
     setAllMilliseconds(milliseconds) {
         this._date.setTime(milliseconds);
+        return this;
     }
     /**
      * 年を加算する。
      *
      * @param year
+     * @returns このインスタンス。
      */
     addYear(year) {
-        this.setYear(this.getYear() + year);
+        return this.setYear(this.getYear() + year);
     }
     /**
      * 月を加算する。
      *
      * @param month
+     * @returns このインスタンス。
      */
     addMonth(month) {
-        this.setMonth(this.getMonth() + month);
+        return this.setMonth(this.getMonth() + month);
     }
     /**
      * 日を加算する。
      *
      * @param day
+     * @returns このインスタンス。
      */
     addDay(day) {
-        this.setDay(this.getDay() + day);
+        return this.setDay(this.getDay() + day);
     }
     /**
      * 時を加算する。
      *
      * @param hour
+     * @returns このインスタンス。
      */
     addHour(hour) {
-        this.setHour(this.getHour() + hour);
+        return this.setHour(this.getHour() + hour);
     }
     /**
      * 分を加算する。
      *
      * @param minute
+     * @returns このインスタンス。
      */
     addMinute(minute) {
-        this.setMinute(this.getMinute() + minute);
+        return this.setMinute(this.getMinute() + minute);
     }
     /**
      * 秒を加算する。
      *
      * @param second
+     * @returns このインスタンス。
      */
     addSecond(second) {
-        this.setSecond(this.getSecond() + second);
+        return this.setSecond(this.getSecond() + second);
     }
     /**
      * ミリ秒を加算する。
      *
      * @param millisecond
+     * @returns このインスタンス。
      */
     addMillisecond(millisecond) {
-        this.setMillisecond(this.getMillisecond() + millisecond);
+        return this.setMillisecond(this.getMillisecond() + millisecond);
     }
     /**
      * 文字列表現を取得する。
@@ -403,6 +426,20 @@ export class Datetime {
         }
         return this.getHour() === datetimeForComparison.getHour() && this.getMinute() === datetimeForComparison.getMinute()
             && this.getSecond() === datetimeForComparison.getSecond() && this.getMillisecond() === datetimeForComparison.getMillisecond();
+    }
+    /**
+     * コンストラクタの呼び出しと同じで新しいインスタンスを作成する。
+     *
+     * @param value
+     * @returns
+     */
+    static from(dateValue) {
+        if (dateValue instanceof Date) {
+            return new Datetime(dateValue);
+        }
+        else {
+            return new Datetime(dateValue);
+        }
     }
 }
 /**

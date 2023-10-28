@@ -90,92 +90,107 @@ export declare class Datetime {
      * 年(西暦)をセットする。
      *
      * @param year
+     * @returns このインスタンス。
      */
-    setYear(year: number): void;
+    setYear(year: number): Datetime;
     /**
      * 月(1〜12)をセットする。
      *
      * @param month
+     * @returns このインスタンス。
      */
-    setMonth(month: number): void;
+    setMonth(month: number): Datetime;
     /**
      * 日(1〜31)をセットする。
      *
      * @param day
+     * @returns このインスタンス。
      */
-    setDay(day: number): void;
+    setDay(day: number): Datetime;
     /**
      * 時(0〜23)をセットする。
      *
      * @param hour
+     * @returns このインスタンス。
      */
-    setHour(hour: number): void;
+    setHour(hour: number): Datetime;
     /**
      * 分(0〜59)をセットする。
      *
      * @param minute
+     * @returns このインスタンス。
      */
-    setMinute(minute: number): void;
+    setMinute(minute: number): Datetime;
     /**
      * 秒(0〜59)をセットする。
      *
      * @param minute
+     * @returns このインスタンス。
      */
-    setSecond(second: number): void;
+    setSecond(second: number): Datetime;
     /**
      * ミリ秒(0〜999)をセットする。
      *
      * @param minute
+     * @returns このインスタンス。
      */
-    setMillisecond(millisecond: number): void;
+    setMillisecond(millisecond: number): Datetime;
     /**
      * 0ミリ秒が表す日時(1970-01-01 00:00:00.000)からの経過ミリ秒をセットする。
      *
      * @param milliseconds
+     * @returns このインスタンス。
      */
-    setAllMilliseconds(milliseconds: number): void;
+    setAllMilliseconds(milliseconds: number): Datetime;
     /**
      * 年を加算する。
      *
      * @param year
+     * @returns このインスタンス。
      */
-    addYear(year: number): void;
+    addYear(year: number): Datetime;
     /**
      * 月を加算する。
      *
      * @param month
+     * @returns このインスタンス。
      */
-    addMonth(month: number): void;
+    addMonth(month: number): Datetime;
     /**
      * 日を加算する。
      *
      * @param day
+     * @returns このインスタンス。
      */
-    addDay(day: number): void;
+    addDay(day: number): Datetime;
     /**
      * 時を加算する。
      *
      * @param hour
+     * @returns このインスタンス。
      */
-    addHour(hour: number): void;
+    addHour(hour: number): Datetime;
     /**
      * 分を加算する。
      *
      * @param minute
+     * @returns このインスタンス。
      */
-    addMinute(minute: number): void;
+    addMinute(minute: number): Datetime;
     /**
      * 秒を加算する。
      *
      * @param second
+     * @returns このインスタンス。
      */
-    addSecond(second: number): void;
+    addSecond(second: number): Datetime;
     /**
      * ミリ秒を加算する。
      *
      * @param millisecond
+     * @returns このインスタンス。
      */
-    addMillisecond(millisecond: number): void;
+    addMillisecond(millisecond: number): Datetime;
     /**
      * 年〜日までの区切り文字。
      */
@@ -232,6 +247,13 @@ export declare class Datetime {
      * @returns
      */
     equalsTime(comparison: Datetime | Date | string): boolean;
+    /**
+     * コンストラクタの呼び出しと同じで新しいインスタンスを作成する。
+     *
+     * @param value
+     * @returns
+     */
+    static from(dateValue: string | Date): Datetime;
 }
 /**
  * 曜日の定数。
