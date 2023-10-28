@@ -482,14 +482,16 @@ export class Datetime {
     /**
      * コンストラクタの呼び出しと同じで新しいインスタンスを作成する。
      * 
-     * @param value 
+     * @param dateValue 
      * @returns 
      */
-    public static from(dateValue: string | Date): Datetime {
+    public static from(dateValue?: string | Date): Datetime {
         if (dateValue instanceof Date) {
             return new Datetime(dateValue);
-        } else {
+        } else if (typeof dateValue === "string") {
             return new Datetime(dateValue);
+        } else {
+            return new Datetime();
         }
     }
 }
