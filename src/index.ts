@@ -5,6 +5,8 @@ import StringObject from "./class/StringObject.js";
 import { Regex, RegexTypes } from "./class/Regex.js";
 import { RoundNumber, RoundNumbers } from "./class/RoundNumber.js";
 import Price from "./class/Price.js";
+import { Dimension } from "./class/Dimension.js";
+import { Bounds } from "./class/Bounds.js";
 
 import { Datetime, DayOfWeek, DatetimeFormat } from "./class/datetime/Datetime.js";
 
@@ -15,6 +17,10 @@ import { API, APIRequestError } from "./class/io/API.js";
 import ByteArray from "./class/io/ByteArray.js";
 
 import Column from "./class/database/Column.js";
+
+export type {
+    Dimension, Bounds,
+}
 
 export {
     Enumeration, Property, UserAgent, StringObject, RoundNumber, RoundNumbers, Price, Regex, RegexTypes,
