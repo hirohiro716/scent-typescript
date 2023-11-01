@@ -9,7 +9,7 @@ export declare class Datetime {
      */
     constructor(datetimeString: string);
     /**
-     * コンストラクタ。Dateオブジェクトを指定する。
+     * コンストラクタ。Dateインスタンスを指定する。
      *
      * @param date
      */
@@ -27,7 +27,7 @@ export declare class Datetime {
     constructor(year: number, month: number, day: number, hour?: number, minute?: number, second?: number);
     private _date;
     /**
-     * 内部で保持しているDateオブジェクトを取得する。
+     * 内部で保持しているDateインスタンスを取得する。
      *
      * @returns
      */
@@ -225,7 +225,7 @@ export declare class Datetime {
      */
     toStringOnlyTime(): string;
     /**
-     * このオブジェクトのクローンを作成する。
+     * このインスタンスのクローンを作成する。
      *
      * @returns
      */

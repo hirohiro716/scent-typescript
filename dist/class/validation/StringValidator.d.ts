@@ -61,7 +61,7 @@ export declare class StringValidator {
      */
     addMinimumValueCheck(value: number): void;
     /**
-     * 対象の値がDateオブジェクトではない、または日時として有効ではない文字列の場合に例外をスローする確認を予約する。
+     * 対象の値がDateインスタンスではない、または日時として有効ではない文字列の場合に例外をスローする確認を予約する。
      */
     addDatetimeCheck(): void;
     /**

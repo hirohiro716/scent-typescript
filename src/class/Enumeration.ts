@@ -25,7 +25,7 @@ export default abstract class Enumeration {
     public readonly logicalName;
 
     /**
-     * 指定された定数オブジェクト内から、指定された物理名に一致する定数を返す。見つからなかった場合はnullを返す。
+     * 指定された定数インスタンス内から、指定された物理名に一致する定数を返す。見つからなかった場合はnullを返す。
      * 
      * @param enumerations 
      * @param physicalName 

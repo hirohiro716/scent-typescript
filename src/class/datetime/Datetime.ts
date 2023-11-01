@@ -13,7 +13,7 @@ export class Datetime {
     public constructor(datetimeString: string);
 
     /**
-     * コンストラクタ。Dateオブジェクトを指定する。
+     * コンストラクタ。Dateインスタンスを指定する。
      * 
      * @param date 
      */
@@ -71,7 +71,7 @@ export class Datetime {
     private _date: Date;
 
     /**
-     * 内部で保持しているDateオブジェクトを取得する。
+     * 内部で保持しているDateインスタンスを取得する。
      * 
      * @returns 
      */
@@ -412,7 +412,7 @@ export class Datetime {
     }
 
     /**
-     * このオブジェクトのクローンを作成する。
+     * このインスタンスのクローンを作成する。
      * 
      * @returns 
      */

@@ -420,7 +420,7 @@ export default class StringObject {
     }
 
     /**
-     * 文字列をDatetimeオブジェクトに変換する。失敗した場合はnullを返す。
+     * 文字列をDatetimeインスタンスに変換する。失敗した場合はnullを返す。
      * 
      * @returns 
      */
@@ -433,7 +433,7 @@ export default class StringObject {
     }
 
     /**
-     * 文字列をDateオブジェクトに変換する。失敗した場合はnullを返す。
+     * 文字列をDateインスタンスに変換する。失敗した場合はnullを返す。
      * 
      * @returns 
      */
@@ -446,7 +446,7 @@ export default class StringObject {
     }
 
     /**
-     * このオブジェクトのクローンを作成する。
+     * このインスタンスのクローンを作成する。
      * 
      * @returns 
      */

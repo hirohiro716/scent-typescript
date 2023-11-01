@@ -100,7 +100,7 @@ export class StringValidator {
     }
 
     /**
-     * 対象の値がDateオブジェクトではない、または日時として有効ではない文字列の場合に例外をスローする確認を予約する。
+     * 対象の値がDateインスタンスではない、または日時として有効ではない文字列の場合に例外をスローする確認を予約する。
      */
     public addDatetimeCheck(): void {
         this.scheduledMethods.set(Method.DATETIME, null);

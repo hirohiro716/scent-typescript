@@ -50,7 +50,7 @@ export class Datetime {
         this._date = new Date();
     }
     /**
-     * 内部で保持しているDateオブジェクトを取得する。
+     * 内部で保持しているDateインスタンスを取得する。
      *
      * @returns
      */
@@ -357,7 +357,7 @@ export class Datetime {
         return this.toString(DatetimeFormat.HOUR_TO_SECOND);
     }
     /**
-     * このオブジェクトのクローンを作成する。
+     * このインスタンスのクローンを作成する。
      *
      * @returns
      */

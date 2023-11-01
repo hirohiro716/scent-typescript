@@ -205,19 +205,19 @@ export default class StringObject {
      */
     toBoolean(): boolean;
     /**
-     * 文字列をDatetimeオブジェクトに変換する。失敗した場合はnullを返す。
+     * 文字列をDatetimeインスタンスに変換する。失敗した場合はnullを返す。
      *
      * @returns
      */
     toDatetime(): Datetime | null;
     /**
-     * 文字列をDateオブジェクトに変換する。失敗した場合はnullを返す。
+     * 文字列をDateインスタンスに変換する。失敗した場合はnullを返す。
      *
      * @returns
      */
     toDate(): Date | null;
     /**
-     * このオブジェクトのクローンを作成する。
+     * このインスタンスのクローンを作成する。
      *
      * @returns
      */
