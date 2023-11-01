@@ -51,7 +51,7 @@ export default class CutoffPeriod {
         for (let monthNumber = 0; monthNumber <= numberOfMounths; monthNumber++) {
             for (let cutoffDayIndex = 0; cutoffDayIndex < this.cutoffDays.length; cutoffDayIndex++) {
                 const cutoffDay = this.cutoffDays[cutoffDayIndex];
-                const datetime = this.baseDate.clone();
+                const datetime = this._baseDate.clone();
                 if (monthNumber < numberOfMounths) {
                     const forward = datetime.clone();
                     forward.addMonth(monthNumber);
