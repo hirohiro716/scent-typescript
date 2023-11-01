@@ -11,6 +11,12 @@ export declare class RoundNumber extends Enumeration {
      * @returns
      */
     calculate(value: number, digit?: number): number;
+    /**
+     * 指定された物理名に一致する定数を返す。見つからなかった場合はnullを返す。
+     *
+     * @param physicalName
+     * @returns
+     */
     static findRoundNumber(physicalName: string): RoundNumber | null;
 }
 /**

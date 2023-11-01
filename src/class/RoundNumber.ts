@@ -31,6 +31,12 @@ export class RoundNumber extends Enumeration {
         return value;
     }
 
+    /**
+     * 指定された物理名に一致する定数を返す。見つからなかった場合はnullを返す。
+     * 
+     * @param physicalName 
+     * @returns 
+     */
     public static findRoundNumber(physicalName: string): RoundNumber | null {
         return RoundNumber.findEnumeration(RoundNumbers, physicalName);
     }
