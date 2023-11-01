@@ -6,27 +6,27 @@ import { Datetime } from "./Datetime.js";
 export default class Period {
 
     /**
-     * コンストラクタ。開始日と終了日を指定する。
+     * コンストラクタ。開始日時と終了日時を指定する。
      * 
-     * @param startDate 
-     * @param endDate 
+     * @param startDatetime
+     * @param endDatetime
      */
-    public constructor(startDate: Datetime | Date, endDate: Datetime | Date) {
-        if (startDate instanceof Datetime) {
-            this.startDate = startDate.clone().setHour(0).setMinute(0).setSecond(0).setMillisecond(0);
+    public constructor(startDatetime: Datetime | Date, endDatetime: Datetime | Date) {
+        if (startDatetime instanceof Datetime) {
+            this.startDatetime = startDatetime;
         } else {
-            this.startDate = Datetime.from(startDate).setHour(0).setMinute(0).setSecond(0).setMillisecond(0);
+            this.startDatetime = Datetime.from(startDatetime);
         }
-        if (endDate instanceof Datetime) {
-            this.endDate = endDate.clone().setHour(0).setMinute(0).setSecond(0).setMillisecond(0);
+        if (endDatetime instanceof Datetime) {
+            this.endDatetime = endDatetime;
         } else {
-            this.endDate = Datetime.from(endDate).setHour(0).setMinute(0).setSecond(0).setMillisecond(0);
+            this.endDatetime = Datetime.from(endDatetime);
         }
     }
 
-    public startDate: Datetime;
+    public readonly startDatetime: Datetime;
 
-    public endDate: Datetime;
+    public readonly endDatetime: Datetime;
 
     /**
      * 指定された日時が期間内の場合はtrueを返す。
@@ -37,14 +37,11 @@ export default class Period {
     public contains(datetime: Datetime | Date): boolean {
         let milliseconds: number;
         if (datetime instanceof Datetime) {
-            milliseconds = datetime.clone().setHour(0).setMinute(0).setSecond(0).setMillisecond(0).getAllMilliseconds();
+            milliseconds = datetime.getAllMilliseconds();
         } else {
-            milliseconds = Datetime.from(datetime).setHour(0).setMinute(0).setSecond(0).setMillisecond(0).getAllMilliseconds();
+            milliseconds = Datetime.from(datetime).getAllMilliseconds();
         }
-        if (this.startDate.getAllMilliseconds() <= milliseconds && milliseconds <= this.endDate.getAllMilliseconds()) {
-            return true;
-        }
-        return false;
+        return this.startDatetime.getAllMilliseconds() <= milliseconds && milliseconds <= this.endDatetime.getAllMilliseconds();
     }
 
     /**
@@ -55,7 +52,7 @@ export default class Period {
     public equals(comparison: Period): boolean;
 
     /**
-     * このインスタンスが指定された日付と同じ期間の場合はtrueを返す。
+     * このインスタンスが指定された期間と同じ場合はtrueを返す。
      * 
      * @param startDate 
      * @param endDate 
@@ -88,9 +85,6 @@ export default class Period {
                 comparison = new Period(startDateOfComparison, endDateOfComparison);
             }
         }
-        if (comparison) {
-            return this.startDate.equalsDate(comparison.startDate) && this.endDate.equals(comparison.endDate);
-        }
-        return false;
+        return typeof comparison !== "undefined" && this.startDatetime.equals(comparison.startDatetime) && this.endDatetime.equals(comparison.endDatetime);
     }
 }

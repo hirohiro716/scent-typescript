@@ -4,14 +4,14 @@ import { Datetime } from "./Datetime.js";
  */
 export default class Period {
     /**
-     * コンストラクタ。開始日と終了日を指定する。
+     * コンストラクタ。開始日時と終了日時を指定する。
      *
-     * @param startDate
-     * @param endDate
+     * @param startDatetime
+     * @param endDatetime
      */
-    constructor(startDate: Datetime | Date, endDate: Datetime | Date);
-    startDate: Datetime;
-    endDate: Datetime;
+    constructor(startDatetime: Datetime | Date, endDatetime: Datetime | Date);
+    readonly startDatetime: Datetime;
+    readonly endDatetime: Datetime;
     /**
      * 指定された日時が期間内の場合はtrueを返す。
      *
@@ -26,7 +26,7 @@ export default class Period {
      */
     equals(comparison: Period): boolean;
     /**
-     * このインスタンスが指定された日付と同じ期間の場合はtrueを返す。
+     * このインスタンスが指定された期間と同じ場合はtrueを返す。
      *
      * @param startDate
      * @param endDate

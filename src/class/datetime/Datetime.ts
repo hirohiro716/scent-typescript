@@ -335,6 +335,15 @@ export class Datetime {
     }
 
     /**
+     * 月末に変更する。
+     */
+    public changeToLastDayOfMonth(): void {
+        this.addMonth(1);
+        this.setDay(1);
+        this.addDay(-1);
+    }
+
+    /**
      * 年〜日までの区切り文字。
      */
     public yearToDateSeparator: string = "-";

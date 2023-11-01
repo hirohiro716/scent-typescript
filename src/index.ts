@@ -10,6 +10,7 @@ import { Bounds } from "./class/Bounds.js";
 
 import { Datetime, DayOfWeek, DatetimeFormat } from "./class/datetime/Datetime.js";
 import Period from "./class/datetime/Period.js";
+import CutoffPeriod from "./class/datetime/CutoffPeriod.js";
 
 import { StringValidator, StringValidationError } from "./class/validation/StringValidator.js";
 import { ObjectValidator, ObjectValidationError } from "./class/validation/ObjectValidator.js";
@@ -25,7 +26,7 @@ export type {
 
 export {
     Enumeration, Property, UserAgent, StringObject, RoundNumber, RoundNumbers, Price, Regex, RegexTypes,
-    Datetime, DayOfWeek, DatetimeFormat, Period,
+    Datetime, DayOfWeek, DatetimeFormat, Period, CutoffPeriod,
     StringValidator, StringValidationError, ObjectValidator, ObjectValidationError,
     ByteArray, API, APIRequestError,
     Column,

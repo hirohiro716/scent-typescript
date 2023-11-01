@@ -4,23 +4,23 @@ import { Datetime } from "./Datetime.js";
  */
 export default class Period {
     /**
-     * コンストラクタ。開始日と終了日を指定する。
+     * コンストラクタ。開始日時と終了日時を指定する。
      *
-     * @param startDate
-     * @param endDate
+     * @param startDatetime
+     * @param endDatetime
      */
-    constructor(startDate, endDate) {
-        if (startDate instanceof Datetime) {
-            this.startDate = startDate.clone().setHour(0).setMinute(0).setSecond(0).setMillisecond(0);
+    constructor(startDatetime, endDatetime) {
+        if (startDatetime instanceof Datetime) {
+            this.startDatetime = startDatetime;
         }
         else {
-            this.startDate = Datetime.from(startDate).setHour(0).setMinute(0).setSecond(0).setMillisecond(0);
+            this.startDatetime = Datetime.from(startDatetime);
         }
-        if (endDate instanceof Datetime) {
-            this.endDate = endDate.clone().setHour(0).setMinute(0).setSecond(0).setMillisecond(0);
+        if (endDatetime instanceof Datetime) {
+            this.endDatetime = endDatetime;
         }
         else {
-            this.endDate = Datetime.from(endDate).setHour(0).setMinute(0).setSecond(0).setMillisecond(0);
+            this.endDatetime = Datetime.from(endDatetime);
         }
     }
     /**
@@ -32,15 +32,12 @@ export default class Period {
     contains(datetime) {
         let milliseconds;
         if (datetime instanceof Datetime) {
-            milliseconds = datetime.clone().setHour(0).setMinute(0).setSecond(0).setMillisecond(0).getAllMilliseconds();
+            milliseconds = datetime.getAllMilliseconds();
         }
         else {
-            milliseconds = Datetime.from(datetime).setHour(0).setMinute(0).setSecond(0).setMillisecond(0).getAllMilliseconds();
+            milliseconds = Datetime.from(datetime).getAllMilliseconds();
         }
-        if (this.startDate.getAllMilliseconds() <= milliseconds && milliseconds <= this.endDate.getAllMilliseconds()) {
-            return true;
-        }
-        return false;
+        return this.startDatetime.getAllMilliseconds() <= milliseconds && milliseconds <= this.endDatetime.getAllMilliseconds();
     }
     /**
      * @deprecated
@@ -71,9 +68,6 @@ export default class Period {
                 comparison = new Period(startDateOfComparison, endDateOfComparison);
             }
         }
-        if (comparison) {
-            return this.startDate.equalsDate(comparison.startDate) && this.endDate.equals(comparison.endDate);
-        }
-        return false;
+        return typeof comparison !== "undefined" && this.startDatetime.equals(comparison.startDatetime) && this.endDatetime.equals(comparison.endDatetime);
     }
 }

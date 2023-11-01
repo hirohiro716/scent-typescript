@@ -192,6 +192,10 @@ export declare class Datetime {
      */
     addMillisecond(millisecond: number): Datetime;
     /**
+     * 月末に変更する。
+     */
+    changeToLastDayOfMonth(): void;
+    /**
      * 年〜日までの区切り文字。
      */
     yearToDateSeparator: string;

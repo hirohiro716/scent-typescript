@@ -289,6 +289,14 @@ export class Datetime {
         return this.setMillisecond(this.getMillisecond() + millisecond);
     }
     /**
+     * 月末に変更する。
+     */
+    changeToLastDayOfMonth() {
+        this.addMonth(1);
+        this.setDay(1);
+        this.addDay(-1);
+    }
+    /**
      * 文字列表現を取得する。
      * @example
      * new Datetime("2023-12-22 12:12").toString() returns "2023-12-22 12:12:00"
