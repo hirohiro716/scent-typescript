@@ -29,6 +29,9 @@ export class RoundNumber extends Enumeration {
         }
         return value;
     }
+    static findRoundNumber(physicalName) {
+        return RoundNumber.findEnumeration(RoundNumbers, physicalName);
+    }
 }
 /**
  * 数値の端数処理の種類。

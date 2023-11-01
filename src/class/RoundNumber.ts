@@ -30,6 +30,10 @@ export class RoundNumber extends Enumeration {
         }
         return value;
     }
+
+    public static findRoundNumber(physicalName: string): RoundNumber | null {
+        return RoundNumber.findEnumeration(RoundNumbers, physicalName);
+    }
 }
 
 /**

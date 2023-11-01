@@ -11,6 +11,7 @@ export declare class RoundNumber extends Enumeration {
      * @returns
      */
     calculate(value: number, digit?: number): number;
+    static findRoundNumber(physicalName: string): RoundNumber | null;
 }
 /**
  * 数値の端数処理の種類。
