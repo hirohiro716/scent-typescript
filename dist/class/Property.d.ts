@@ -20,12 +20,4 @@ export default class Property extends Enumeration {
      * このプロパティの最大文字数。
      */
     readonly maximumLength: number | undefined;
-    /**
-     * 指定された複数のプロパティの中から、指定された物理名のプロパティを返す。
-     *
-     * @param properties
-     * @param physicalName
-     * @returns
-     */
-    static findProperty(properties: Record<any, Property>, physicalName: string): Property | undefined;
 }
