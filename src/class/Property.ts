@@ -28,19 +28,4 @@ export default class Property extends Enumeration {
      * このプロパティの最大文字数。
      */
     public readonly maximumLength: number | undefined;
-
-    /**
-     * 指定された複数のプロパティの中から、指定された物理名のプロパティを返す。
-     * 
-     * @param properties 
-     * @param physicalName 
-     * @returns 
-     */
-    public static findProperty(properties: Record<any, Property>, physicalName: string): Property | undefined {
-        for (const property of Object.values(properties)) {
-            if (property.physicalName === physicalName) {
-                return property;
-            }
-        }
-    }
 }

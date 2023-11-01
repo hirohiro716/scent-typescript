@@ -31,7 +31,7 @@ export default abstract class Enumeration {
      * @param physicalName 
      * @returns 
      */
-    public static findEnumeration(enumerations: Record<any, Enumeration>, physicalName: string): Enumeration | null {
+    public static findEnumeration<T extends Enumeration>(enumerations: Record<any, T>, physicalName: string): T | null {
         for (const enumeration of Object.values(enumerations)) {
             if (enumeration.physicalName === physicalName) {
                 return enumeration;
