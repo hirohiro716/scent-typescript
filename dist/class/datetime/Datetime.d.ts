@@ -81,7 +81,7 @@ export declare class Datetime {
      */
     getMillisecond(): number;
     /**
-     * 0ミリ秒が表す日時(1970-01-01 00:00:00.000)からの経過ミリ秒を取得する。
+     * 0ミリ秒が表す日時(UTC 1970-01-01 00:00:00.000)からの経過ミリ秒を取得する。
      *
      * @returns
      */
@@ -136,7 +136,7 @@ export declare class Datetime {
      */
     setMillisecond(millisecond: number): Datetime;
     /**
-     * 0ミリ秒が表す日時(1970-01-01 00:00:00.000)からの経過ミリ秒をセットする。
+     * 0ミリ秒が表す日時(UTC 1970-01-01 00:00:00.000)からの経過ミリ秒をセットする。
      *
      * @param milliseconds
      * @returns このインスタンス。

@@ -35,37 +35,49 @@ export class Datetime {
      * @deprecated
      */
     public constructor(parameter1?: string | number | Date, month?: number, day?: number, hour?: number, minute?: number, second?: number) {
+        this._date = new Date();
         if (typeof parameter1 === "string") {
-            this._date = new Date();
-            const millisecond: number = Date.parse(parameter1);
-            if (isNaN(millisecond) === false) {
-                this._date.setTime(millisecond);
-            } else {
-                this._date.setTime(0);
-                const valueLikeDatetime: string = parameter1.replaceAll("/", "-").replaceAll(" ", "T");
-                const millisecond: number = Date.parse(valueLikeDatetime);
-                if (isNaN(millisecond) === false) {
-                    this._date.setTime(millisecond);
+            this.setYear(1970).setMonth(1).setDay(1).setHour(0).setMinute(0).setSecond(0).setMillisecond(0);
+            const datetimeString = new StringObject(parameter1);
+            const yyyymmdd = datetimeString.clone().extract("^[0-9\\-]{5,}").split("-|/");
+            if (yyyymmdd.length == 3) {
+                const yyyy = yyyymmdd[0].toNumber();
+                if (yyyy) this.setYear(yyyy);
+                const mm = yyyymmdd[1].toNumber();
+                if (mm) this.setMonth(mm);
+                const dd = yyyymmdd[2].toNumber();
+                if (dd) this.setDay(dd);
+            }
+            const hhmmss = datetimeString.clone().extract("[0-9:\\.]{3,}$").split(":|\\.");
+            if (hhmmss.length >= 2) {
+                const hh = hhmmss[0].toNumber();
+                if (hh) this.setHour(hh);
+                const mm = hhmmss[1].toNumber();
+                if (mm) this.setMinute(mm);
+                if (hhmmss.length >= 3) {
+                    const ss = hhmmss[2].toNumber();
+                    if (ss) this.setSecond(ss);
+                    if (hhmmss.length === 4) {
+                        const ms = hhmmss[3].toNumber();
+                        if (ms) this.setMillisecond(ms);
+                    }
                 }
             }
             return;
         }
         if (typeof parameter1 === "number") {
-            this._date = new Date();
-            this._date.setTime(0);
-            this._date.setFullYear(parameter1);
-            if (month) this._date.setMonth(month - 1);
-            if (day) this._date.setDate(day);
-            if (hour) this._date.setHours(hour);
-            if (minute) this._date.setMinutes(minute);
-            if (second) this._date.setSeconds(second);
+            this.setYear(parameter1);
+            if (month) this.setMonth(month);
+            if (day) this.setDay(day);
+            if (hour) this.setHour(hour);
+            if (minute) this.setMinute(minute);
+            if (second) this.setSecond(second);
             return;
         }
         if (parameter1 instanceof Date) {
             this._date = parameter1;
             return;
         }
-        this._date = new Date();
     }
 
     private _date: Date;
@@ -168,7 +180,7 @@ export class Datetime {
     }
 
     /**
-     * 0ミリ秒が表す日時(1970-01-01 00:00:00.000)からの経過ミリ秒を取得する。
+     * 0ミリ秒が表す日時(UTC 1970-01-01 00:00:00.000)からの経過ミリ秒を取得する。
      * 
      * @returns 
      */
@@ -254,7 +266,7 @@ export class Datetime {
     }
 
     /**
-     * 0ミリ秒が表す日時(1970-01-01 00:00:00.000)からの経過ミリ秒をセットする。
+     * 0ミリ秒が表す日時(UTC 1970-01-01 00:00:00.000)からの経過ミリ秒をセットする。
      * 
      * @param milliseconds 
      * @returns このインスタンス。
