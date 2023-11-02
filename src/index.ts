@@ -19,6 +19,8 @@ import { API, APIRequestError } from "./class/io/API.js";
 import ByteArray from "./class/io/ByteArray.js";
 
 import Column from "./class/database/Column.js";
+import Table from "./class/database/Table.js";
+import RecordMap from "./class/database/RecordMap.js";
 
 export type {
     Dimension, Bounds,
@@ -29,5 +31,5 @@ export {
     Datetime, DayOfWeek, DatetimeFormat, Period, CutoffPeriod,
     StringValidator, StringValidationError, ObjectValidator, ObjectValidationError,
     ByteArray, API, APIRequestError,
-    Column,
+    Column, Table, RecordMap,
 };

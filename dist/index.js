@@ -13,4 +13,6 @@ import { ObjectValidator, ObjectValidationError } from "./class/validation/Objec
 import { API, APIRequestError } from "./class/io/API.js";
 import ByteArray from "./class/io/ByteArray.js";
 import Column from "./class/database/Column.js";
-export { Enumeration, Property, UserAgent, StringObject, RoundNumber, RoundNumbers, Price, Regex, RegexTypes, Datetime, DayOfWeek, DatetimeFormat, Period, CutoffPeriod, StringValidator, StringValidationError, ObjectValidator, ObjectValidationError, ByteArray, API, APIRequestError, Column, };
+import Table from "./class/database/Table.js";
+import RecordMap from "./class/database/RecordMap.js";
+export { Enumeration, Property, UserAgent, StringObject, RoundNumber, RoundNumbers, Price, Regex, RegexTypes, Datetime, DayOfWeek, DatetimeFormat, Period, CutoffPeriod, StringValidator, StringValidationError, ObjectValidator, ObjectValidationError, ByteArray, API, APIRequestError, Column, Table, RecordMap, };
