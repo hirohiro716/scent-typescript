@@ -442,6 +442,8 @@ class StringObject {
     }
     /**
      * この文字列を指定された正規表現の一致で分割する。
+     * @example
+     * new StringObject("1.2.3.4").splitToStrings("\\.") returns ["1", "2", "3", "4"]
      *
      * @param regexDelimiter
      * @returns
@@ -451,6 +453,8 @@ class StringObject {
     }
     /**
      * この文字列を指定された正規表現の一致で分割する。
+     * @example
+     * new StringObject("1.2.3.4").split("\\.") returns ["1", "2", "3", "4"]
      *
      * @param regexDelimiter
      * @returns

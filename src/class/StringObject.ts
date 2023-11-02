@@ -120,6 +120,7 @@ export default class StringObject {
      * new StringObject("a12bc34d").extract("[0-9]") returns "1234"
      * new StringObject("cccbbbaaa").extract("^[a-z]") returns "c"
      * new StringObject("A or B").extract("(A|B)") returns "AB"
+     * new StringObject("12.34").extract("[0-9]\\.[0-9]") returns "2.3"
      * 
      * @param regex 
      * @returns このインスタンス。
@@ -494,6 +495,8 @@ export default class StringObject {
 
     /**
      * この文字列を指定された正規表現の一致で分割する。
+     * @example
+     * new StringObject("1.2.3.4").splitToStrings("\\.") returns ["1", "2", "3", "4"]
      * 
      * @param regexDelimiter 
      * @returns 
@@ -504,6 +507,8 @@ export default class StringObject {
 
     /**
      * この文字列を指定された正規表現の一致で分割する。
+     * @example
+     * new StringObject("1.2.3.4").split("\\.") returns ["1", "2", "3", "4"]
      * 
      * @param regexDelimiter 
      * @returns 

@@ -84,13 +84,13 @@ export class Regex {
  */
 export const RegexTypes = {
     integer: new Regex("^[0-9]{0,}$"),
-    integerNegative: new Regex("^[\-0-9]{0,}$"),
+    integerNegative: new Regex("^[\\-0-9]{0,}$"),
     integerWide: new Regex("^[０-９]{0,}$"),
     decimal: new Regex("^[0-9.]{0,}$"),
-    decimalNegative: new Regex("^[\-0-9.]{0,}$"),
-    telephone: new Regex("^[0-9\-*#]{0,}$"),
-    datetime: new Regex("^[0-9\-/: ]{0,}$"),
-    date: new Regex("^[0-9\-/]{0,}$"),
+    decimalNegative: new Regex("^[\\-0-9.]{0,}$"),
+    telephone: new Regex("^[0-9\\-*#]{0,}$"),
+    datetime: new Regex("^[0-9\\-/: ]{0,}$"),
+    date: new Regex("^[0-9\\-/]{0,}$"),
     time: new Regex("^[0-9:]{0,}$"),
     half: new Regex("^[ -~｡-ﾟ]{0,}$"),
     wide: new Regex("^[^ -~｡-ﾟ]{0,}$"),
