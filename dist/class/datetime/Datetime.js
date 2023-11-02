@@ -39,7 +39,7 @@ export class Datetime {
                     const ss = hhmmss[2].toNumber();
                     if (ss)
                         this.setSecond(ss);
-                    if (hhmmss.length == 4) {
+                    if (hhmmss.length === 4) {
                         const ms = hhmmss[3].toNumber();
                         if (ms)
                             this.setMillisecond(ms);
@@ -66,7 +66,6 @@ export class Datetime {
             this._date = parameter1;
             return;
         }
-        this._date = new Date();
     }
     /**
      * 内部で保持しているDateインスタンスを取得する。
