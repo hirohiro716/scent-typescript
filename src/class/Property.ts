@@ -6,12 +6,12 @@ import Enumeration from "./Enumeration.js";
 export default class Property extends Enumeration {
 
     /**
-     * コンストラクタ。物理名、論理名、初期値、最大文字数を指定する。
+     * コンストラクタ。
      * 
-     * @param physicalName 
-     * @param logicalName 
-     * @param defaultValue
-     * @param maximumLength
+     * @param physicalName プロパティの物理名。
+     * @param logicalName プロパティの論理名。
+     * @param defaultValue プロパティの初期値。
+     * @param maximumLength プロパティに入力できる最大文字数。
      */
     public constructor(physicalName: string, logicalName: string, defaultValue?: any, maximumLength?: number) {
         super(physicalName, logicalName);
