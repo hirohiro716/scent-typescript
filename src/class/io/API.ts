@@ -26,37 +26,36 @@ export class API {
      * @param formData 
      * @returns 
      */
-    public request(formData: FormData): Promise<Response> {
-        return new Promise<Response>((resolve, reject) => {
-            const url = new StringObject(this.url);
-            const requestInit: RequestInit = { method: this.method };
-            switch(StringObject.from(this.method).lower().toString()) {
-                case "post":
-                    requestInit.body = formData;
-                    break;
-                case "get":
-                    url.append("?");
-                    url.append(StringObject.queryString(formData));
-                    break;
-            }
-            fetch(url.toString(), requestInit).then((response) => {
-                switch (response.status) {
-                    case 200:
-                    case 201:
-                        resolve(response);
-                        break;
-                    default:
-                        response.json().then((json) => {
-                            reject(new APIRequestError(json));
-                        }).catch((error: any) => {
-                            reject(new APIRequestError({ message: error.message}));
-                        });
-                        break;
+    public async request(formData: FormData): Promise<Response> {
+        const url = new StringObject(this.url);
+        const requestInit: RequestInit = { method: this.method };
+        switch(StringObject.from(this.method).lower().toString()) {
+            case "post":
+                requestInit.body = formData;
+                break;
+            case "get":
+                url.append("?");
+                url.append(StringObject.queryString(formData));
+                break;
+        }
+        let response: Response;
+        try {
+            response = await fetch(url.toString(), requestInit);
+        } catch (error: any) {
+            throw new APIRequestError({ message: error.message});
+        }
+        switch (response.status) {
+            case 200:
+            case 201:
+                return response;
+            default:
+                try {
+                    const json = await response.json();
+                    throw new APIRequestError(json);
+                } catch (error: any) {
+                    throw new APIRequestError({ message: error.message});
                 }
-            }).catch((error: any) => {
-                reject(new APIRequestError({ message: error.message}));
-            });
-        });
+        }
     }
 
     /**

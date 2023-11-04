@@ -41,14 +41,9 @@ export default class ByteArray {
      * 
      * @returns 
      */
-    public toUnit8Array(): Promise<Uint8Array> {
-        return new Promise<Uint8Array>((resolve, reject) => {
-            this.blob.arrayBuffer().then((arrayBuffer) => {
-                resolve(new Uint8Array(arrayBuffer));
-            }).catch((error) => {
-                reject(error);
-            });
-        });
+    public async toUnit8Array(): Promise<Uint8Array> {
+        const arrayBuffer = await this.blob.arrayBuffer();
+        return new Uint8Array(arrayBuffer);
     }
 
     /**
@@ -56,14 +51,9 @@ export default class ByteArray {
      * 
      * @returns 
      */
-    public toBuffer(): Promise<Buffer> {
-        return new Promise<Buffer>((resolve, reject) => {
-            this.blob.arrayBuffer().then((arrayBuffer) => {
-                resolve(Buffer.from(arrayBuffer));
-            }).catch((error) => {
-                reject(error);
-            });
-        });
+    public async toBuffer(): Promise<Buffer> {
+        const arrayBuffer = await this.blob.arrayBuffer();
+        return Buffer.from(arrayBuffer);
     }
 
     /**

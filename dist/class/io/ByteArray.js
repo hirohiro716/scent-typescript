@@ -34,28 +34,18 @@ export default class ByteArray {
      *
      * @returns
      */
-    toUnit8Array() {
-        return new Promise((resolve, reject) => {
-            this.blob.arrayBuffer().then((arrayBuffer) => {
-                resolve(new Uint8Array(arrayBuffer));
-            }).catch((error) => {
-                reject(error);
-            });
-        });
+    async toUnit8Array() {
+        const arrayBuffer = await this.blob.arrayBuffer();
+        return new Uint8Array(arrayBuffer);
     }
     /**
      * このバイト配列をBufferに変換する。
      *
      * @returns
      */
-    toBuffer() {
-        return new Promise((resolve, reject) => {
-            this.blob.arrayBuffer().then((arrayBuffer) => {
-                resolve(Buffer.from(arrayBuffer));
-            }).catch((error) => {
-                reject(error);
-            });
-        });
+    async toBuffer() {
+        const arrayBuffer = await this.blob.arrayBuffer();
+        return Buffer.from(arrayBuffer);
     }
     /**
      * コンストラクタの呼び出しと同じで新しいインスタンスを作成する。
