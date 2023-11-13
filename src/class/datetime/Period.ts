@@ -24,8 +24,14 @@ export default class Period {
         }
     }
 
+    /**
+     * 期間の開始日時。
+     */
     public readonly startDatetime: Datetime;
 
+    /**
+     * 期間の終了日時。
+     */
     public readonly endDatetime: Datetime;
 
     /**
