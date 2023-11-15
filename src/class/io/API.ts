@@ -25,6 +25,7 @@ export class API {
      * 
      * @param formData 
      * @returns 
+     * @throws APIRequestError リクエストに失敗した場合。
      */
     public async request(formData: FormData): Promise<Response> {
         const url = new StringObject(this.url);
