@@ -27,7 +27,7 @@ export class ObjectValidator {
         const errors = new Map();
         for (const property of this.propertiesForValidation()) {
             try {
-                this.valueValidate(property);
+                await this.valueValidate(property);
             }
             catch (error) {
                 errors.set(property, error.message);
@@ -44,7 +44,7 @@ export class ObjectValidator {
         for (const property of this.propertiesForValidation()) {
             const value = this.valueNormalize(property);
             if (typeof value !== "undefined") {
-                this.target[property.physicalName] = this.valueNormalize(property);
+                this.target[property.physicalName] = await this.valueNormalize(property);
             }
         }
     }
