@@ -44,14 +44,14 @@ export abstract class ObjectValidator<T extends Record<string, any>> {
      * 
      * @throws StringValidationError
      */
-    protected abstract valueValidate(property: Property): void;
+    protected abstract valueValidate(property: Property): Promise<void>;
 
     /**
      * ターゲットの妥当性を確認する。
      * 
      * @throws ObjectValidationError
      */
-    public validate(): void {
+    public async validate(): Promise<void> {
         const errors: Map<Property, string> = new Map();
         for (const property of this.propertiesForValidation()) {
             try {
@@ -66,14 +66,16 @@ export abstract class ObjectValidator<T extends Record<string, any>> {
     }
 
     /**
-     * ターゲットの指定されたキーに対応する値を標準化して返す。
+     * ターゲットの指定されたキーに対応する値を標準化して返す。undefinedを返す場合は値に対して何もしない。
+     * 
+     * @returns
      */
-    protected abstract valueNormalize(property: Property): any;
+    protected abstract valueNormalize(property: Property): Promise<any>;
 
     /**
      * ターゲットを標準化する。
      */
-    public normalize(): void {
+    public async normalize(): Promise<void> {
         for (const property of this.propertiesForValidation()) {
             const value = this.valueNormalize(property);
             if (typeof value !== "undefined") {
