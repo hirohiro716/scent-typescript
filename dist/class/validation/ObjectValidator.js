@@ -23,7 +23,7 @@ export class ObjectValidator {
      *
      * @throws ObjectValidationError
      */
-    validate() {
+    async validate() {
         const errors = new Map();
         for (const property of this.propertiesForValidation()) {
             try {
@@ -40,7 +40,7 @@ export class ObjectValidator {
     /**
      * ターゲットを標準化する。
      */
-    normalize() {
+    async normalize() {
         for (const property of this.propertiesForValidation()) {
             const value = this.valueNormalize(property);
             if (typeof value !== "undefined") {

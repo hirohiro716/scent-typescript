@@ -33,21 +33,23 @@ export declare abstract class ObjectValidator<T extends Record<string, any>> {
      *
      * @throws StringValidationError
      */
-    protected abstract valueValidate(property: Property): void;
+    protected abstract valueValidate(property: Property): Promise<void>;
     /**
      * ターゲットの妥当性を確認する。
      *
      * @throws ObjectValidationError
      */
-    validate(): void;
+    validate(): Promise<void>;
     /**
-     * ターゲットの指定されたキーに対応する値を標準化して返す。
+     * ターゲットの指定されたキーに対応する値を標準化して返す。undefinedを返す場合は値に対して何もしない。
+     *
+     * @returns
      */
-    protected abstract valueNormalize(property: Property): any;
+    protected abstract valueNormalize(property: Property): Promise<any>;
     /**
      * ターゲットを標準化する。
      */
-    normalize(): void;
+    normalize(): Promise<void>;
 }
 /**
  * オブジェクトが妥当ではない場合に発生するエラーのクラス。
