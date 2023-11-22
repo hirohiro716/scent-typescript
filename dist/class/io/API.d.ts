@@ -16,6 +16,7 @@ export declare class API {
      *
      * @param formData
      * @returns
+     * @throws APIRequestError リクエストに失敗した場合。
      */
     request(formData: FormData): Promise<Response>;
     /**

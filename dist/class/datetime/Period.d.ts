@@ -10,7 +10,13 @@ export default class Period {
      * @param endDatetime
      */
     constructor(startDatetime: Datetime | Date, endDatetime: Datetime | Date);
+    /**
+     * 期間の開始日時。
+     */
     readonly startDatetime: Datetime;
+    /**
+     * 期間の終了日時。
+     */
     readonly endDatetime: Datetime;
     /**
      * 指定された日時が期間内の場合はtrueを返す。
