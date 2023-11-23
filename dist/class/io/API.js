@@ -44,13 +44,15 @@ export class API {
             case 201:
                 return response;
             default:
+                let apiRequestError;
                 try {
                     const json = await response.json();
-                    throw new APIRequestError(json);
+                    apiRequestError = new APIRequestError(json);
                 }
                 catch (error) {
-                    throw new APIRequestError({ message: error.message });
+                    apiRequestError = new APIRequestError({ message: error.message });
                 }
+                throw apiRequestError;
         }
     }
     /**

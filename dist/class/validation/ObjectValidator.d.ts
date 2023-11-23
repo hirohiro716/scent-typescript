@@ -31,7 +31,7 @@ export declare abstract class ObjectValidator<T extends Record<string, any>> {
     /**
      * ターゲットの指定されたキーに対応する値の妥当性を確認する。
      *
-     * @throws StringValidationError
+     * @throws Error
      */
     protected abstract valueValidate(property: Property): Promise<void>;
     /**
