@@ -6,23 +6,30 @@ import Property from "../Property.js";
 export abstract class ObjectValidator<T extends Record<string, any>> {
 
     /**
-     * コンストラクタ。妥当性を確認して有効化するターゲットとその一般名を指定する。
+     * コンストラクタ。妥当性を確認して有効化するターゲットを指定する。
      * 
      * @param target 
      */
-    public constructor(target: T) {
-        this.target = target;
+    public constructor(target?: T) {
+        if (target) {
+            this._target = target;
+        }
     }
 
-    protected readonly target: Record<string, any>;
+    private _target: Record<string, any> | null = null;
 
     /**
-     * ターゲットを取得する。
-     * 
-     * @returns 
+     * 妥当性を確認して有効化するターゲット。
      */
-    public getTarget(): any {
-        return this.target;
+    public get target(): Record<string, any> {
+        if (this._target === null) {
+            return {};
+        }
+        return this._target;
+    }
+
+    public set target(target: Record<string, any>) {
+        this._target = target;
     }
 
     /**

@@ -3,20 +3,27 @@
  */
 export class ObjectValidator {
     /**
-     * コンストラクタ。妥当性を確認して有効化するターゲットとその一般名を指定する。
+     * コンストラクタ。妥当性を確認して有効化するターゲットを指定する。
      *
      * @param target
      */
     constructor(target) {
-        this.target = target;
+        this._target = null;
+        if (target) {
+            this._target = target;
+        }
     }
     /**
-     * ターゲットを取得する。
-     *
-     * @returns
+     * 妥当性を確認して有効化するターゲット。
      */
-    getTarget() {
-        return this.target;
+    get target() {
+        if (this._target === null) {
+            return {};
+        }
+        return this._target;
+    }
+    set target(target) {
+        this._target = target;
     }
     /**
      * ターゲットの妥当性を確認する。
