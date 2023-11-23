@@ -42,9 +42,9 @@ export class ObjectValidator {
      */
     async normalize() {
         for (const property of this.propertiesForValidation()) {
-            const value = this.valueNormalize(property);
+            const value = await this.valueNormalize(property);
             if (typeof value !== "undefined") {
-                this.target[property.physicalName] = await this.valueNormalize(property);
+                this.target[property.physicalName] = value;
             }
         }
     }
