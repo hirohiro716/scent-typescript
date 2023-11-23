@@ -50,12 +50,14 @@ export class API {
             case 201:
                 return response;
             default:
+                let apiRequestError: APIRequestError;
                 try {
                     const json = await response.json();
-                    throw new APIRequestError(json);
+                    apiRequestError = new APIRequestError(json);
                 } catch (error: any) {
-                    throw new APIRequestError({ message: error.message});
+                    apiRequestError = new APIRequestError({ message: error.message});
                 }
+                throw apiRequestError;
         }
     }
 
