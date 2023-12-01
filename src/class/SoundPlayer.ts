@@ -10,50 +10,71 @@ export default class SoundPlayer {
      * @param mediaURL 
      */
     public constructor(mediaURL: string) {
-        this.mediaURL = mediaURL;
-        this.audioElement = new Audio(mediaURL);
+        this._mediaURL = mediaURL;
+        if (window) {
+            this._audioElement = new Audio(mediaURL);
+        }
     }
+
+    private _mediaURL: string;
 
     /**
      * 再生するサウンドメディアのURL。
      */
-    public readonly mediaURL: string;
+    public get mediaURL(): string {
+        return this._mediaURL;
+    }
+
+    private _audioElement: HTMLAudioElement | undefined;
 
     /**
      * 再生に使用するHTMLAudioElement。
      */
-    public readonly audioElement: HTMLAudioElement;
+    public get audioElement(): HTMLAudioElement | undefined {
+        return this._audioElement;
+    }
 
     /**
      * 再生する音量(0〜1)。
      */
     public get volume(): number {
-        return this.audioElement.volume;
+        if (this._audioElement) {
+            return this._audioElement.volume;
+        }
+        return 0;
     }
 
     public set volume(volume: number) {
-        this.audioElement.volume = volume;
+        if (this._audioElement) {
+            this._audioElement.volume = volume;
+        }
     }
 
     /**
      * サウンドを再生する。
      */
     public async play(): Promise<void> {
-        await this.audioElement.play();
+        if (this._audioElement) {
+            await this._audioElement.play();
+        }
     }
 
     /**
      * サウンドを一時停止する。
      */
     public async pause(): Promise<void> {
-        this.audioElement.pause();
+        if (this._audioElement) {
+            this._audioElement.pause();
+        }
     }
 
     /**
      * サウンドを停止する。
      */
     public async stop(): Promise<void> {
-        this.audioElement.pause();
-        this.audioElement.currentTime = 0;
+        if (this._audioElement) {
+            this._audioElement.pause();
+            this._audioElement.currentTime = 0;
+        }
     }
 }
