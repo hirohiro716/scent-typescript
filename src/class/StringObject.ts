@@ -183,7 +183,7 @@ export default class StringObject {
      * @param replacement 
      * @returns このインスタンス。
      */
-    public replaceCr(replacement: string): StringObject {
+    public replaceCR(replacement: string): StringObject {
         return this.replace("\r([^\n])|\r$", replacement + "$1");
     }
 
@@ -193,7 +193,7 @@ export default class StringObject {
      * @param replacement 
      * @returns このインスタンス。
      */
-    public replaceLf(replacement: string): StringObject {
+    public replaceLF(replacement: string): StringObject {
         return this.replace("([^\r])\n|^\n", "$1" + replacement);
     }
 
@@ -203,7 +203,7 @@ export default class StringObject {
      * @param replacement 
      * @returns このインスタンス。
      */
-    public replaceCrlf(replacement: string): StringObject {
+    public replaceCRLF(replacement: string): StringObject {
         return this.replace("\r\n", replacement);
     }
 
