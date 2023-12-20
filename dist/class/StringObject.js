@@ -147,7 +147,7 @@ class StringObject {
      * @param replacement
      * @returns このインスタンス。
      */
-    replaceCr(replacement) {
+    replaceCR(replacement) {
         return this.replace("\r([^\n])|\r$", replacement + "$1");
     }
     /**
@@ -156,7 +156,7 @@ class StringObject {
      * @param replacement
      * @returns このインスタンス。
      */
-    replaceLf(replacement) {
+    replaceLF(replacement) {
         return this.replace("([^\r])\n|^\n", "$1" + replacement);
     }
     /**
@@ -165,7 +165,7 @@ class StringObject {
      * @param replacement
      * @returns このインスタンス。
      */
-    replaceCrlf(replacement) {
+    replaceCRLF(replacement) {
         return this.replace("\r\n", replacement);
     }
     /**

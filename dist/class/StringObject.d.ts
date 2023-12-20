@@ -95,21 +95,21 @@ export default class StringObject {
      * @param replacement
      * @returns このインスタンス。
      */
-    replaceCr(replacement: string): StringObject;
+    replaceCR(replacement: string): StringObject;
     /**
      * LFを置き換える。CRLFのLFは置き換えられない。
      *
      * @param replacement
      * @returns このインスタンス。
      */
-    replaceLf(replacement: string): StringObject;
+    replaceLF(replacement: string): StringObject;
     /**
      * CRLFを置き換える。
      *
      * @param replacement
      * @returns このインスタンス。
      */
-    replaceCrlf(replacement: string): StringObject;
+    replaceCRLF(replacement: string): StringObject;
     /**
      * タブを置き換える。
      *
