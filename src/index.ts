@@ -24,6 +24,8 @@ import RecordMap from "./class/database/RecordMap.js";
 import UserAgent from "./class/UserAgent.js";
 import SoundPlayer from "./class/SoundPlayer.js";
 
+import GraphicalString from "./class/graphic/GraphicalString.js";
+
 export type {
     Dimension, Bounds,
 }
@@ -35,4 +37,5 @@ export {
     ByteArray, API, APIRequestError,
     Column, Table, RecordMap,
     UserAgent, SoundPlayer,
+    GraphicalString,
 };

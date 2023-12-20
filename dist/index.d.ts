@@ -1,6 +1,5 @@
 import Enumeration from "./class/Enumeration.js";
 import Property from "./class/Property.js";
-import UserAgent from "./class/UserAgent.js";
 import StringObject from "./class/StringObject.js";
 import { Regex, RegexTypes } from "./class/Regex.js";
 import { RoundNumber, RoundNumbers } from "./class/RoundNumber.js";
@@ -17,5 +16,8 @@ import ByteArray from "./class/io/ByteArray.js";
 import Column from "./class/database/Column.js";
 import Table from "./class/database/Table.js";
 import RecordMap from "./class/database/RecordMap.js";
+import UserAgent from "./class/UserAgent.js";
+import SoundPlayer from "./class/SoundPlayer.js";
+import GraphicalString from "./class/graphic/GraphicalString.js";
 export type { Dimension, Bounds, };
-export { Enumeration, Property, UserAgent, StringObject, RoundNumber, RoundNumbers, Price, Regex, RegexTypes, Datetime, DayOfWeek, DatetimeFormat, Period, CutoffPeriod, StringValidator, StringValidationError, ObjectValidator, ObjectValidationError, ByteArray, API, APIRequestError, Column, Table, RecordMap, };
+export { Enumeration, Property, StringObject, RoundNumber, RoundNumbers, Price, Regex, RegexTypes, Datetime, DayOfWeek, DatetimeFormat, Period, CutoffPeriod, StringValidator, StringValidationError, ObjectValidator, ObjectValidationError, ByteArray, API, APIRequestError, Column, Table, RecordMap, UserAgent, SoundPlayer, GraphicalString, };
