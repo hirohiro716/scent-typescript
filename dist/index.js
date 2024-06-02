@@ -18,4 +18,5 @@ import UserAgent from "./class/UserAgent.js";
 import SoundPlayer from "./class/SoundPlayer.js";
 import GraphicalString from "./class/graphic/GraphicalString.js";
 import JAN13Renderer from "./class/graphic/JAN13Renderer.js";
-export { Enumeration, Property, StringObject, RoundNumber, RoundNumbers, Price, Regex, RegexTypes, Datetime, DayOfWeek, DatetimeFormat, Period, CutoffPeriod, StringValidator, StringValidationError, ObjectValidator, ObjectValidationError, ByteArray, API, APIRequestError, Column, Table, RecordMap, UserAgent, SoundPlayer, GraphicalString, JAN13Renderer, };
+import NW7Renderer from "./class/graphic/NW7Renderer.js";
+export { Enumeration, Property, StringObject, RoundNumber, RoundNumbers, Price, Regex, RegexTypes, Datetime, DayOfWeek, DatetimeFormat, Period, CutoffPeriod, StringValidator, StringValidationError, ObjectValidator, ObjectValidationError, ByteArray, API, APIRequestError, Column, Table, RecordMap, UserAgent, SoundPlayer, GraphicalString, JAN13Renderer, NW7Renderer, };

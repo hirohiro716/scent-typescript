@@ -26,6 +26,7 @@ import SoundPlayer from "./class/SoundPlayer.js";
 
 import GraphicalString from "./class/graphic/GraphicalString.js";
 import JAN13Renderer from "./class/graphic/JAN13Renderer.js";
+import NW7Renderer from "./class/graphic/NW7Renderer.js";
 
 export type {
     Dimension, Bounds,
@@ -38,5 +39,5 @@ export {
     ByteArray, API, APIRequestError,
     Column, Table, RecordMap,
     UserAgent, SoundPlayer,
-    GraphicalString, JAN13Renderer,
+    GraphicalString, JAN13Renderer, NW7Renderer,
 };
