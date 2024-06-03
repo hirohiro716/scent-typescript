@@ -100,14 +100,12 @@ class JAN13Renderer {
      * @param bounds
      */
     render(bounds) {
-        const oneModule = bounds.width / 115;
+        const oneModule = bounds.width / 95;
         if (typeof this._context === "undefined" || oneModule <= 0 || JAN13Renderer.isValid(this._barcode) === false) {
             return;
         }
         const barcode = new StringObject(this._barcode);
         let renderingX = bounds.x;
-        // クワイエットゾーン
-        renderingX += oneModule * 10;
         // ノーマルガードバー
         this._context.fillRect(renderingX, bounds.y, oneModule, bounds.height);
         renderingX += oneModule * 2;
