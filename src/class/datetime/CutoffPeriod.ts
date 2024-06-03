@@ -23,7 +23,7 @@ export default class CutoffPeriod {
     private _baseDate: Datetime = Datetime.from().setHour(0).setMinute(0).setSecond(0).setMillisecond(0);
 
     /**
-     * 基準日。デフォルトは現在の時刻。
+     * 基準日。現在の時刻がデフォルト。
      */
     public get baseDate(): Datetime {
         return this._baseDate;

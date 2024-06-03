@@ -6,7 +6,7 @@ export default class Price {
      * コンストラクタ。
      *
      * @param roundNumber 1円未満の金額端数処理方法。
-     * @param amount 金額。デフォルトは0。
+     * @param amount 金額。0がデフォルト。
      */
     constructor(roundNumber, amount = 0) {
         this.roundNumber = roundNumber;

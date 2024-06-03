@@ -14,7 +14,7 @@ export default class CutoffPeriod {
         this.cutoffDays = cutoffDays;
     }
     /**
-     * 基準日。デフォルトは現在の時刻。
+     * 基準日。現在の時刻がデフォルト。
      */
     get baseDate() {
         return this._baseDate;

@@ -6,7 +6,7 @@ export declare class Regex {
      * コンストラクタ。
      *
      * @param regex 正規表現の文字列。
-     * @param flags 機能フラグ。デフォルトは"g"。
+     * @param flags 機能フラグ。"g"がデフォルト。
      */
     constructor(regex: string, flags?: string);
     /**
@@ -34,7 +34,7 @@ export declare class Regex {
      * コンストラクタの呼び出しと同じで新しいインスタンスを作成する。
      *
      * @param regex 正規表現の文字列。
-     * @param flags 機能フラグ。デフォルトは"g"。
+     * @param flags 機能フラグ。"g"がデフォルト。
      * @returns
      */
     static from(regex: string, flags?: string): Regex;

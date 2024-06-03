@@ -16,7 +16,7 @@ export default class CutoffPeriod {
     readonly cutoffDays: number[];
     private _baseDate;
     /**
-     * 基準日。デフォルトは現在の時刻。
+     * 基準日。現在の時刻がデフォルト。
      */
     get baseDate(): Datetime;
     set baseDate(date: Date | Datetime);

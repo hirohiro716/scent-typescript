@@ -9,7 +9,7 @@ export class Regex {
      * コンストラクタ。
      * 
      * @param regex 正規表現の文字列。
-     * @param flags 機能フラグ。デフォルトは"g"。
+     * @param flags 機能フラグ。"g"がデフォルト。
      */
     public constructor(regex: string, flags: string = "g") {
         this.regex = regex;
@@ -49,7 +49,7 @@ export class Regex {
      * コンストラクタの呼び出しと同じで新しいインスタンスを作成する。
      * 
      * @param regex 正規表現の文字列。
-     * @param flags 機能フラグ。デフォルトは"g"。
+     * @param flags 機能フラグ。"g"がデフォルト。
      * @returns 
      */
     public static from(regex: string, flags: string = "g"): Regex {
