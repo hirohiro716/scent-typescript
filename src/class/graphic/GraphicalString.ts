@@ -132,17 +132,17 @@ export default class GraphicalString {
         this._leading = leading;
     }
 
-    private _isAllowAutomaticLineFeed: boolean = false;
+    private _allowAutomaticLineFeed: boolean = false;
 
     /**
      * 文字列を描画する際の自動改行が許可されている場合はtrue。
      */
-    public get isAllowAutomaticLineFeed(): boolean {
-        return this._isAllowAutomaticLineFeed;
+    public get allowAutomaticLineFeed(): boolean {
+        return this._allowAutomaticLineFeed;
     }
 
-    public set isAllowAutomaticLineFeed(isAllowAutomaticLineFeed: boolean) {
-        this._isAllowAutomaticLineFeed = isAllowAutomaticLineFeed;
+    public set allowAutomaticLineFeed(allowAutomaticLineFeed: boolean) {
+        this._allowAutomaticLineFeed = allowAutomaticLineFeed;
     }
 
     /**
@@ -183,7 +183,7 @@ export default class GraphicalString {
             for (let index = 0; index < this._string.length; index++) {
                 const one = new StringObject(this._string).extract(index, index + 1);
                 const metrics = this._context.measureText(line.clone().append(one).toString());
-                if (this._isAllowAutomaticLineFeed && typeof this._maximumWidth !== "undefined" && this._maximumWidth < metrics.width || one.equals("\n")) {
+                if (this._allowAutomaticLineFeed && typeof this._maximumWidth !== "undefined" && this._maximumWidth < metrics.width || one.equals("\n")) {
                     if (line.length() > 0) {
                         lines.push(line.toString());
                     }

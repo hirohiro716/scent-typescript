@@ -12,7 +12,7 @@ export default class GraphicalString {
     constructor(string, context) {
         this._horizontalPosition = "left";
         this._verticalPosition = "alphabetic";
-        this._isAllowAutomaticLineFeed = false;
+        this._allowAutomaticLineFeed = false;
         this._string = StringObject.from(string).replaceCRLF("\n").replaceCR("\n").toString();
         this._context = context;
     }
@@ -95,11 +95,11 @@ export default class GraphicalString {
     /**
      * 文字列を描画する際の自動改行が許可されている場合はtrue。
      */
-    get isAllowAutomaticLineFeed() {
-        return this._isAllowAutomaticLineFeed;
+    get allowAutomaticLineFeed() {
+        return this._allowAutomaticLineFeed;
     }
-    set isAllowAutomaticLineFeed(isAllowAutomaticLineFeed) {
-        this._isAllowAutomaticLineFeed = isAllowAutomaticLineFeed;
+    set allowAutomaticLineFeed(allowAutomaticLineFeed) {
+        this._allowAutomaticLineFeed = allowAutomaticLineFeed;
     }
     /**
      * 指定されたフォントのサイズを変更した文字列を返す。
@@ -138,7 +138,7 @@ export default class GraphicalString {
             for (let index = 0; index < this._string.length; index++) {
                 const one = new StringObject(this._string).extract(index, index + 1);
                 const metrics = this._context.measureText(line.clone().append(one).toString());
-                if (this._isAllowAutomaticLineFeed && typeof this._maximumWidth !== "undefined" && this._maximumWidth < metrics.width || one.equals("\n")) {
+                if (this._allowAutomaticLineFeed && typeof this._maximumWidth !== "undefined" && this._maximumWidth < metrics.width || one.equals("\n")) {
                     if (line.length() > 0) {
                         lines.push(line.toString());
                     }

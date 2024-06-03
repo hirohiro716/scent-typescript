@@ -60,12 +60,12 @@ export default class GraphicalString {
      */
     get leading(): number | undefined;
     set leading(leading: number | undefined);
-    private _isAllowAutomaticLineFeed;
+    private _allowAutomaticLineFeed;
     /**
      * 文字列を描画する際の自動改行が許可されている場合はtrue。
      */
-    get isAllowAutomaticLineFeed(): boolean;
-    set isAllowAutomaticLineFeed(isAllowAutomaticLineFeed: boolean);
+    get allowAutomaticLineFeed(): boolean;
+    set allowAutomaticLineFeed(allowAutomaticLineFeed: boolean);
     /**
      * 指定されたフォントのサイズを変更した文字列を返す。
      *
