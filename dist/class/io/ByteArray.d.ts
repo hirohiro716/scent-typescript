@@ -4,15 +4,15 @@
  */
 export default class ByteArray {
     /**
-     * コンストラクタ。Blobを指定する。
+     * コンストラクタ。Uint8Arrayを指定する。
      *
-     * @param blob
+     * @param uint8Array
      */
-    constructor(blobLike: Blob | Uint8Array);
+    constructor(uint8Array: Uint8Array);
     /**
-     * コンストラクタで指定されたBlob。
+     * コンストラクタで指定されたUint8Arrayインスタンス。
      */
-    readonly blob: Blob;
+    readonly uint8Array: Uint8Array;
     /**
      * 初期ファイル名を指定して、バイト配列をフロントでダウンロードする。
      *
@@ -24,18 +24,24 @@ export default class ByteArray {
      *
      * @returns
      */
-    toUnit8Array(): Promise<Uint8Array>;
+    toBlob(): Blob;
     /**
      * このバイト配列をBufferに変換する。
      *
      * @returns
      */
-    toBuffer(): Promise<Buffer>;
+    toBuffer(): Buffer;
+    /**
+     * このバイト配列を文字列に変換する。
+     *
+     * @returns
+     */
+    toString(): string;
     /**
      * コンストラクタの呼び出しと同じで新しいインスタンスを作成する。
      *
-     * @param blobLike
+     * @param byteArrayLike
      * @returns
      */
-    static from(blobLike: Blob | Uint8Array): ByteArray;
+    static from(byteArrayLike: Uint8Array | Blob): Promise<ByteArray>;
 }

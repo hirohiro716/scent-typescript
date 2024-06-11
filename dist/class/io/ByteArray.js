@@ -3,18 +3,12 @@
  */
 export default class ByteArray {
     /**
-     * コンストラクタ。Blobを指定する。
+     * コンストラクタ。Uint8Arrayを指定する。
      *
-     * @param blob
+     * @param uint8Array
      */
-    constructor(blobLike) {
-        if (blobLike instanceof Blob) {
-            this.blob = blobLike;
-        }
-        else {
-            const uint8Array = blobLike;
-            this.blob = new Blob([uint8Array]);
-        }
+    constructor(uint8Array) {
+        this.uint8Array = uint8Array;
     }
     /**
      * 初期ファイル名を指定して、バイト配列をフロントでダウンロードする。
@@ -22,7 +16,7 @@ export default class ByteArray {
      * @param defaultFilename
      */
     download(defaultFilename) {
-        const url = URL.createObjectURL(this.blob);
+        const url = URL.createObjectURL(this.toBlob());
         const link = document.createElement('a');
         link.href = url;
         link.download = defaultFilename;
@@ -34,26 +28,37 @@ export default class ByteArray {
      *
      * @returns
      */
-    async toUnit8Array() {
-        const arrayBuffer = await this.blob.arrayBuffer();
-        return new Uint8Array(arrayBuffer);
+    toBlob() {
+        return new Blob([this.uint8Array]);
     }
     /**
      * このバイト配列をBufferに変換する。
      *
      * @returns
      */
-    async toBuffer() {
-        const arrayBuffer = await this.blob.arrayBuffer();
-        return Buffer.from(arrayBuffer);
+    toBuffer() {
+        return Buffer.from(this.uint8Array);
+    }
+    /**
+     * このバイト配列を文字列に変換する。
+     *
+     * @returns
+     */
+    toString() {
+        return this.toBuffer().toString("hex");
     }
     /**
      * コンストラクタの呼び出しと同じで新しいインスタンスを作成する。
      *
-     * @param blobLike
+     * @param byteArrayLike
      * @returns
      */
-    static from(blobLike) {
-        return new ByteArray(blobLike);
+    static async from(byteArrayLike) {
+        if (byteArrayLike instanceof Blob) {
+            const arrayBuffer = await byteArrayLike.arrayBuffer();
+            const uint8Array = new Uint8Array(arrayBuffer);
+            return new ByteArray(uint8Array);
+        }
+        return new ByteArray(byteArrayLike);
     }
 }

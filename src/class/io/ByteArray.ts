@@ -4,23 +4,18 @@
 export default class ByteArray {
 
     /**
-     * コンストラクタ。Blobを指定する。
+     * コンストラクタ。Uint8Arrayを指定する。
      * 
-     * @param blob 
+     * @param uint8Array
      */
-    public constructor(blobLike: Blob | Uint8Array) {
-        if (blobLike instanceof Blob) {
-            this.blob = blobLike;
-        } else {
-            const uint8Array: Uint8Array = blobLike;
-            this.blob = new Blob([uint8Array]);
-        }
+    public constructor(uint8Array: Uint8Array) {
+        this.uint8Array = uint8Array;
     }
 
     /**
-     * コンストラクタで指定されたBlob。
+     * コンストラクタで指定されたUint8Arrayインスタンス。
      */
-    public readonly blob: Blob;
+    public readonly uint8Array: Uint8Array;
 
     /**
      * 初期ファイル名を指定して、バイト配列をフロントでダウンロードする。
@@ -28,7 +23,7 @@ export default class ByteArray {
      * @param defaultFilename 
      */
     public download(defaultFilename: string): void {
-        const url = URL.createObjectURL(this.blob);
+        const url = URL.createObjectURL(this.toBlob());
         const link = document.createElement('a');
         link.href = url;
         link.download = defaultFilename;
@@ -41,9 +36,8 @@ export default class ByteArray {
      * 
      * @returns 
      */
-    public async toUnit8Array(): Promise<Uint8Array> {
-        const arrayBuffer = await this.blob.arrayBuffer();
-        return new Uint8Array(arrayBuffer);
+    public toBlob(): Blob {
+        return new Blob([this.uint8Array]);
     }
 
     /**
@@ -51,18 +45,31 @@ export default class ByteArray {
      * 
      * @returns 
      */
-    public async toBuffer(): Promise<Buffer> {
-        const arrayBuffer = await this.blob.arrayBuffer();
-        return Buffer.from(arrayBuffer);
+    public toBuffer(): Buffer {
+        return Buffer.from(this.uint8Array);
+    }
+
+    /**
+     * このバイト配列を文字列に変換する。
+     * 
+     * @returns 
+     */
+    public toString(): string {
+        return this.toBuffer().toString("hex");
     }
 
     /**
      * コンストラクタの呼び出しと同じで新しいインスタンスを作成する。
      * 
-     * @param blobLike 
+     * @param byteArrayLike 
      * @returns 
      */
-    public static from(blobLike: Blob | Uint8Array): ByteArray {
-        return new ByteArray(blobLike);
+    public static async from(byteArrayLike: Uint8Array | Blob): Promise<ByteArray> {
+        if (byteArrayLike instanceof Blob) {
+            const arrayBuffer = await byteArrayLike.arrayBuffer();
+            const uint8Array = new Uint8Array(arrayBuffer);
+            return new ByteArray(uint8Array);
+        }
+        return new ByteArray(byteArrayLike);
     }
 }
