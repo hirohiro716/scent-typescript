@@ -1,4 +1,4 @@
-import StringObject from "../StringObject";
+import StringObject from "../StringObject.js";
 /**
  * NW7のバーコードを描画するクラス。
  */

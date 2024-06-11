@@ -1,5 +1,5 @@
-import { Bounds } from "../Bounds";
-import StringObject from "../StringObject";
+import { Bounds } from "../Bounds.js";
+import StringObject from "../StringObject.js";
 
 /**
  * NW7のバーコードを描画するクラス。
