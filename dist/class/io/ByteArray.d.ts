@@ -4,11 +4,11 @@
  */
 export default class ByteArray {
     /**
-     * コンストラクタ。Uint8Arrayを指定する。
+     * コンストラクタ。
      *
-     * @param uint8Array
+     * @param byteArrayLike バイト配列またはバイト配列のHEX表現文字列を指定する。
      */
-    constructor(uint8Array: Uint8Array);
+    constructor(byteArrayLike: Uint8Array | string);
     /**
      * コンストラクタで指定されたUint8Arrayインスタンス。
      */
@@ -43,5 +43,5 @@ export default class ByteArray {
      * @param byteArrayLike
      * @returns
      */
-    static from(byteArrayLike: Uint8Array | Blob): Promise<ByteArray>;
+    static from(byteArrayLike: Uint8Array | string | Blob): Promise<ByteArray>;
 }

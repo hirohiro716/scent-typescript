@@ -4,12 +4,17 @@
 export default class ByteArray {
 
     /**
-     * コンストラクタ。Uint8Arrayを指定する。
+     * コンストラクタ。
      * 
-     * @param uint8Array
+     * @param byteArrayLike バイト配列またはバイト配列のHEX表現文字列を指定する。
      */
-    public constructor(uint8Array: Uint8Array) {
-        this.uint8Array = uint8Array;
+    public constructor(byteArrayLike: Uint8Array | string) {
+        if (typeof byteArrayLike === "string") {
+            const uint8Array = new Uint8Array(Buffer.from(byteArrayLike, "hex"));
+            this.uint8Array = uint8Array;
+        } else {
+            this.uint8Array = byteArrayLike;
+        }
     }
 
     /**
@@ -64,7 +69,7 @@ export default class ByteArray {
      * @param byteArrayLike 
      * @returns 
      */
-    public static async from(byteArrayLike: Uint8Array | Blob): Promise<ByteArray> {
+    public static async from(byteArrayLike: Uint8Array | string | Blob): Promise<ByteArray> {
         if (byteArrayLike instanceof Blob) {
             const arrayBuffer = await byteArrayLike.arrayBuffer();
             const uint8Array = new Uint8Array(arrayBuffer);

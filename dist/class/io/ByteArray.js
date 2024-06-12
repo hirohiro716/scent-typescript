@@ -3,12 +3,18 @@
  */
 export default class ByteArray {
     /**
-     * コンストラクタ。Uint8Arrayを指定する。
+     * コンストラクタ。
      *
-     * @param uint8Array
+     * @param byteArrayLike バイト配列またはバイト配列のHEX表現文字列を指定する。
      */
-    constructor(uint8Array) {
-        this.uint8Array = uint8Array;
+    constructor(byteArrayLike) {
+        if (typeof byteArrayLike === "string") {
+            const uint8Array = new Uint8Array(Buffer.from(byteArrayLike, "hex"));
+            this.uint8Array = uint8Array;
+        }
+        else {
+            this.uint8Array = byteArrayLike;
+        }
     }
     /**
      * 初期ファイル名を指定して、バイト配列をフロントでダウンロードする。
