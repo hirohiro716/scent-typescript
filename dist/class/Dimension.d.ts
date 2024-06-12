@@ -1,5 +1,5 @@
 /**
- * サイズのタイプ。
+ * サイズの型。
  *
  * @property width 幅。
  * @property height 高さ。
