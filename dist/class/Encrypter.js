@@ -1,8 +1,7 @@
 import { default as Crypto } from "crypto";
 import ByteArray from "./io/ByteArray.js";
-import StringObject from "./StringObject.js";
 /**
- * 文字列を暗号化するクラス。
+ * データを暗号化するクラス。
  *
  * @author hiro
  */
@@ -56,19 +55,19 @@ export class Encrypter {
         this._authTagLength = length;
     }
     /**
-     * 指定された値を暗号化する。
+     * 指定されたデータを暗号化する。
      *
-     * @param value
+     * @param data
      * @returns
      */
-    encrypt(value) {
+    encrypt(data) {
         if (typeof this._key === "undefined") {
             this._key = new ByteArray(Crypto.randomBytes(this._cipherInfo.keyLength));
         }
         const iv = Crypto.randomBytes(this._cipherInfo.ivLength);
         const options = { authTagLength: this._authTagLength };
         const cipher = Crypto.createCipheriv(this._algorithm, this._key.uint8Array, iv, options);
-        const encrypted = Buffer.concat([cipher.update(StringObject.from(value).toByte()), cipher.final()]);
+        const encrypted = Buffer.concat([cipher.update(data), cipher.final()]);
         let authTag = undefined;
         const cipherObject = cipher;
         if (typeof cipherObject.getAuthTag === "function") {
@@ -81,7 +80,7 @@ export class Encrypter {
         };
     }
     /**
-     * 暗号化された文字列を復号化する。
+     * 暗号化されたデータを復号化する。
      *
      * @param encryptedData
      */
@@ -96,6 +95,6 @@ export class Encrypter {
             decipherObject.setAuthTag(encryptedData.authTag.uint8Array);
         }
         const decrypted = Buffer.concat([decipher.update(encryptedData.content.uint8Array), decipher.final()]);
-        return StringObject.from(decrypted).toString();
+        return decrypted;
     }
 }

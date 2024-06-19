@@ -14,7 +14,7 @@ export type EncryptedData = {
     authTag?: ByteArray;
 };
 /**
- * 文字列を暗号化するクラス。
+ * データを暗号化するクラス。
  *
  * @author hiro
  */
@@ -65,16 +65,16 @@ export declare class Encrypter {
     get authTagLength(): number;
     set authTagLength(length: number);
     /**
-     * 指定された値を暗号化する。
+     * 指定されたデータを暗号化する。
      *
-     * @param value
+     * @param data
      * @returns
      */
-    encrypt(value: string): EncryptedData;
+    encrypt(data: Uint8Array): EncryptedData;
     /**
-     * 暗号化された文字列を復号化する。
+     * 暗号化されたデータを復号化する。
      *
      * @param encryptedData
      */
-    decrypt(encryptedData: EncryptedData): string;
+    decrypt(encryptedData: EncryptedData): Uint8Array;
 }
