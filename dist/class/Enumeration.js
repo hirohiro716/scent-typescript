@@ -21,8 +21,10 @@ export default class Enumeration {
      */
     static findEnumeration(enumerations, physicalName) {
         for (const enumeration of Object.values(enumerations)) {
-            if (enumeration.physicalName === physicalName) {
-                return enumeration;
+            if (enumeration instanceof Enumeration) {
+                if (enumeration.physicalName === physicalName) {
+                    return enumeration;
+                }
             }
         }
         return null;

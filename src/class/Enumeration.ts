@@ -31,10 +31,12 @@ export default abstract class Enumeration {
      * @param physicalName 
      * @returns 
      */
-    public static findEnumeration<T extends Enumeration>(enumerations: Record<any, T>, physicalName: string): T | null {
+    public static findEnumeration<T extends Enumeration>(enumerations: Record<any, T | ((...args: any) => any)>, physicalName: string): T | null {
         for (const enumeration of Object.values(enumerations)) {
-            if (enumeration.physicalName === physicalName) {
-                return enumeration;
+            if (enumeration instanceof Enumeration) {
+                if (enumeration.physicalName === physicalName) {
+                    return enumeration;
+                }
             }
         }
         return null;

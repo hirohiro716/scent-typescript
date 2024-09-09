@@ -24,5 +24,5 @@ export default abstract class Enumeration {
      * @param physicalName
      * @returns
      */
-    static findEnumeration<T extends Enumeration>(enumerations: Record<any, T>, physicalName: string): T | null;
+    static findEnumeration<T extends Enumeration>(enumerations: Record<any, T | ((...args: any) => any)>, physicalName: string): T | null;
 }
