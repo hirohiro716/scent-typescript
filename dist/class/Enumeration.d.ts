@@ -1,7 +1,7 @@
 /**
  * 物理名と論理名を持つ定数のクラス。
  */
-export default abstract class Enumeration {
+export default class Enumeration {
     /**
      * コンストラクタ。物理名と論理名を指定する。
      *

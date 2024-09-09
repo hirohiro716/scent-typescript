@@ -11,7 +11,7 @@ export default class Property extends Enumeration {
      * @param physicalName プロパティの物理名。
      * @param logicalName プロパティの論理名。
      * @param defaultValue プロパティの初期値。
-     * @param maximumLength プロパティに入力できる最大文字数。
+     * @param maximumLength プロパティに入力できる最大文字数。負数は制限がないことを表す。
      */
     public constructor(physicalName: string, logicalName: string, defaultValue?: any, maximumLength: number = -1) {
         super(physicalName, logicalName);
@@ -25,7 +25,7 @@ export default class Property extends Enumeration {
     public readonly defaultValue: any;
 
     /**
-     * このプロパティの最大文字数。
+     * このプロパティの最大文字数。負数は制限がないことを表す。
      */
     public readonly maximumLength: number;
 
