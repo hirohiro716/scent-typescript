@@ -12,16 +12,16 @@ export default class Column extends Property {
      * @param defaultValue カラムの初期値。
      * @param maximumLength カラムに入力できる最大文字数。
      */
-    constructor(fullPhysicalName, logicalName, defaultValue, maximumLength) {
+    constructor(fullPhysicalName, logicalName, defaultValue, maximumLength = -1) {
         if (fullPhysicalName.includes(".")) {
             const names = StringObject.from(fullPhysicalName).split("\\.");
-            super(names[1].toString(), logicalName);
+            super(names[1].toString(), logicalName, defaultValue, maximumLength);
             if (names[0].length() > 0) {
                 this.tableName = names[0].toString();
             }
         }
         else {
-            super(fullPhysicalName, logicalName);
+            super(fullPhysicalName, logicalName, defaultValue, maximumLength);
         }
     }
     /**

@@ -11,7 +11,7 @@ export default class Property extends Enumeration {
      * @param defaultValue プロパティの初期値。
      * @param maximumLength プロパティに入力できる最大文字数。
      */
-    constructor(physicalName, logicalName, defaultValue, maximumLength) {
+    constructor(physicalName, logicalName, defaultValue, maximumLength = -1) {
         super(physicalName, logicalName);
         this.defaultValue = defaultValue;
         this.maximumLength = maximumLength;

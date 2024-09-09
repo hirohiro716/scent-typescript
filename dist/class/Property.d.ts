@@ -19,5 +19,5 @@ export default class Property extends Enumeration {
     /**
      * このプロパティの最大文字数。
      */
-    readonly maximumLength: number | undefined;
+    readonly maximumLength: number;
 }
