@@ -20,4 +20,12 @@ export default class Column extends Property {
      * テーブル名を含むカラムの物理名を取得する。
      */
     get fullPhysicalName(): string;
+    /**
+     * 指定された定数インスタンス内から、指定された物理名に一致する定数を返す。見つからなかった場合はnullを返す。
+     *
+     * @param columns
+     * @param physicalName
+     * @returns
+     */
+    static findColumn<T extends Column>(columns: Record<any, T | ((...args: any) => any)>, physicalName: string): T | null;
 }

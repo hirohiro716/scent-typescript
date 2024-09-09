@@ -42,4 +42,15 @@ export default class Column extends Property {
         fullPhysicalName.append(this.physicalName);
         return fullPhysicalName.toString();
     }
+
+    /**
+     * 指定された定数インスタンス内から、指定された物理名に一致する定数を返す。見つからなかった場合はnullを返す。
+     * 
+     * @param columns 
+     * @param physicalName 
+     * @returns 
+     */
+    public static findColumn<T extends Column>(columns: Record<any, T | ((...args: any) => any)>, physicalName: string): T | null {
+        return Property.findProperty(columns, physicalName);
+    }
 }
