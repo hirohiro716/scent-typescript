@@ -20,6 +20,13 @@ export class Datetime {
     public constructor(date?: Date);
 
     /**
+     * コンストラクタ。Datetimeインスタンスを指定する。
+     * 
+     * @param datetime 
+     */
+    public constructor(datetime?: Datetime);
+
+    /**
      * コンストラクタ。日時を数値で指定する。
      * 
      * @param year 
@@ -34,7 +41,7 @@ export class Datetime {
     /**
      * @deprecated
      */
-    public constructor(parameter1?: string | number | Date, month?: number, day?: number, hour?: number, minute?: number, second?: number) {
+    public constructor(parameter1?: string | number | Date | Datetime, month?: number, day?: number, hour?: number, minute?: number, second?: number) {
         this._date = new Date();
         if (typeof parameter1 === "string") {
             this.setYear(1970).setMonth(1).setDay(1).setHour(0).setMinute(0).setSecond(0).setMillisecond(0);
@@ -75,7 +82,11 @@ export class Datetime {
             return;
         }
         if (parameter1 instanceof Date) {
-            this._date = parameter1;
+            this._date = new Date(parameter1);
+            return;
+        }
+        if (parameter1 instanceof Datetime) {
+            this._date = new Date(parameter1.date);
             return;
         }
     }

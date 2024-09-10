@@ -63,7 +63,11 @@ export class Datetime {
             return;
         }
         if (parameter1 instanceof Date) {
-            this._date = parameter1;
+            this._date = new Date(parameter1);
+            return;
+        }
+        if (parameter1 instanceof Datetime) {
+            this._date = new Date(parameter1.date);
             return;
         }
     }

@@ -15,6 +15,12 @@ export declare class Datetime {
      */
     constructor(date?: Date);
     /**
+     * コンストラクタ。Datetimeインスタンスを指定する。
+     *
+     * @param datetime
+     */
+    constructor(datetime?: Datetime);
+    /**
      * コンストラクタ。日時を数値で指定する。
      *
      * @param year
