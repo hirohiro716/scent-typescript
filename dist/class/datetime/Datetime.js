@@ -1,3 +1,4 @@
+import Enumeration from "../Enumeration.js";
 import StringObject from "../StringObject.js";
 /**
  * 日時のクラス。
@@ -104,7 +105,9 @@ export class Datetime {
         return this._date.getDate();
     }
     /**
-     * 曜日を取得する。
+     * 曜日定数を取得する。
+     * @example
+     * new Datetime("2023-12-22 12:12").getDayOfWeek() returns DayOfWeek.friday
      *
      * @returns
      */
@@ -113,19 +116,19 @@ export class Datetime {
             case 0:
                 break;
             case 1:
-                return DayOfWeek.MONDAY;
+                return DayOfWeek.monday;
             case 2:
-                return DayOfWeek.TUESDAY;
+                return DayOfWeek.thursday;
             case 3:
-                return DayOfWeek.WEDNESDAY;
+                return DayOfWeek.wednesday;
             case 4:
-                return DayOfWeek.THURSDAY;
+                return DayOfWeek.thursday;
             case 5:
-                return DayOfWeek.FRIDAY;
+                return DayOfWeek.friday;
             case 6:
-                return DayOfWeek.SATURDAY;
+                return DayOfWeek.saturday;
         }
-        return DayOfWeek.SUNDAY;
+        return DayOfWeek.sunday;
     }
     /**
      * 時(0〜23)を取得する。
@@ -323,15 +326,15 @@ export class Datetime {
      * @example
      * new Datetime("2023-12-22 12:12").toString() returns "2023-12-22 12:12:00"
      *
-     * @param datetimeFormat 日時文字列フォーマットパターン。DatetimeFormat.DATE_TO_SECONDがデフォルト。
+     * @param datetimeFormat 日時文字列フォーマットパターン。DatetimeFormat.dateToSecondがデフォルト。
      * @returns
      */
-    toString(datetimeFormat = DatetimeFormat.DATE_TO_SECOND) {
+    toString(datetimeFormat = DatetimeFormat.dateToSecond) {
         const value = new StringObject();
         switch (datetimeFormat) {
-            case DatetimeFormat.DATE_ONLY:
-            case DatetimeFormat.DATE_TO_MINUTE:
-            case DatetimeFormat.DATE_TO_SECOND:
+            case DatetimeFormat.dateOnly:
+            case DatetimeFormat.dateToMinute:
+            case DatetimeFormat.dateToSecond:
                 value.append(this._date.getFullYear());
                 value.append(this.yearToDateSeparator);
                 value.append(StringObject.from(this._date.getMonth() + 1).paddingLeft(2, "0"));
@@ -339,10 +342,10 @@ export class Datetime {
                 value.append(StringObject.from(this._date.getDate()).paddingLeft(2, "0"));
         }
         switch (datetimeFormat) {
-            case DatetimeFormat.DATE_TO_MINUTE:
-            case DatetimeFormat.DATE_TO_SECOND:
-            case DatetimeFormat.HOUR_TO_MINUTE:
-            case DatetimeFormat.HOUR_TO_SECOND:
+            case DatetimeFormat.dateToMinute:
+            case DatetimeFormat.dateToSecond:
+            case DatetimeFormat.hourToMinute:
+            case DatetimeFormat.hourToSecond:
                 if (value.length() > 0) {
                     value.append(" ");
                 }
@@ -351,8 +354,8 @@ export class Datetime {
                 value.append(StringObject.from(this._date.getMinutes()).paddingLeft(2, "0"));
         }
         switch (datetimeFormat) {
-            case DatetimeFormat.DATE_TO_SECOND:
-            case DatetimeFormat.HOUR_TO_SECOND:
+            case DatetimeFormat.dateToSecond:
+            case DatetimeFormat.hourToSecond:
                 value.append(":");
                 value.append(StringObject.from(this._date.getSeconds()).paddingLeft(2, "0"));
         }
@@ -366,7 +369,7 @@ export class Datetime {
      * @returns
      */
     toStringOnlyDate() {
-        return this.toString(DatetimeFormat.DATE_ONLY);
+        return this.toString(DatetimeFormat.dateOnly);
     }
     /**
      * 時刻のみの文字列表現を取得する。
@@ -376,7 +379,7 @@ export class Datetime {
      * @returns
      */
     toStringOnlyTime() {
-        return this.toString(DatetimeFormat.HOUR_TO_SECOND);
+        return this.toString(DatetimeFormat.hourToSecond);
     }
     /**
      * このインスタンスのクローンを作成する。
@@ -476,26 +479,78 @@ export class Datetime {
     }
 }
 /**
- * 曜日の定数。
+ * 曜日の定数オブジェクト。
  */
-export var DayOfWeek;
-(function (DayOfWeek) {
-    DayOfWeek["SUNDAY"] = "sunday";
-    DayOfWeek["MONDAY"] = "monday";
-    DayOfWeek["TUESDAY"] = "tuesday";
-    DayOfWeek["WEDNESDAY"] = "wednesday";
-    DayOfWeek["THURSDAY"] = "thursday";
-    DayOfWeek["FRIDAY"] = "friday";
-    DayOfWeek["SATURDAY"] = "saturday";
-})(DayOfWeek || (DayOfWeek = {}));
+export const DayOfWeek = {
+    /**
+     * 日曜日。
+     */
+    sunday: new Enumeration("sunday", "日曜日"),
+    /**
+     * 月曜日。
+     */
+    monday: new Enumeration("monday", "月曜日"),
+    /**
+     * 火曜日。
+     */
+    tuesday: new Enumeration("tuesday", "火曜日"),
+    /**
+     * 水曜日。
+     */
+    wednesday: new Enumeration("wednesday", "水曜日"),
+    /**
+     * 木曜日。
+     */
+    thursday: new Enumeration("thursday", "木曜日"),
+    /**
+     * 金曜日。
+     */
+    friday: new Enumeration("friday", "金曜日"),
+    /**
+     * 土曜日。
+     */
+    saturday: new Enumeration("saturday", "土曜日"),
+    /**
+     * 指定された物理名に一致する定数を返す。見つからなかった場合はnullを返す。
+     *
+     * @param physicalName
+     * @returns
+     */
+    find: (physicalName) => {
+        return Enumeration.findEnumeration(DayOfWeek, physicalName);
+    },
+};
 /**
- * 日時文字列フォーマットパターンの定数。
+ * 日時文字列フォーマットパターンの定数オブジェクト。
  */
-export var DatetimeFormat;
-(function (DatetimeFormat) {
-    DatetimeFormat["DATE_ONLY"] = "date_only";
-    DatetimeFormat["DATE_TO_MINUTE"] = "date_to_minute";
-    DatetimeFormat["DATE_TO_SECOND"] = "date_to_second";
-    DatetimeFormat["HOUR_TO_SECOND"] = "hour_to_second";
-    DatetimeFormat["HOUR_TO_MINUTE"] = "hour_to_minute";
-})(DatetimeFormat || (DatetimeFormat = {}));
+export const DatetimeFormat = {
+    /**
+     * 年月日のみ。
+     */
+    dateOnly: new Enumeration("date_only", "年月日のみ"),
+    /**
+     * 年月日から分まで。
+     */
+    dateToMinute: new Enumeration("date_to_minute", "年月日から分まで"),
+    /**
+     * 年月日から秒まで。
+     */
+    dateToSecond: new Enumeration("date_to_second", "年月日から秒まで"),
+    /**
+     * 時から秒まで。
+     */
+    hourToSecond: new Enumeration("hour_to_second", "時から秒まで"),
+    /**
+     * 時から分まで。
+     */
+    hourToMinute: new Enumeration("hour_to_minute", "時から分まで"),
+    /**
+     * 指定された物理名に一致する定数を返す。見つからなかった場合はnullを返す。
+     *
+     * @param physicalName
+     * @returns
+     */
+    find: (physicalName) => {
+        return Enumeration.findEnumeration(DatetimeFormat, physicalName);
+    },
+};

@@ -1,3 +1,4 @@
+import Enumeration from "../Enumeration.js";
 /**
  * 日時のクラス。
  */
@@ -57,11 +58,13 @@ export declare class Datetime {
      */
     getDay(): number;
     /**
-     * 曜日を取得する。
+     * 曜日定数を取得する。
+     * @example
+     * new Datetime("2023-12-22 12:12").getDayOfWeek() returns DayOfWeek.friday
      *
      * @returns
      */
-    getDayOfWeek(): DayOfWeek;
+    getDayOfWeek(): Enumeration;
     /**
      * 時(0〜23)を取得する。
      *
@@ -210,10 +213,10 @@ export declare class Datetime {
      * @example
      * new Datetime("2023-12-22 12:12").toString() returns "2023-12-22 12:12:00"
      *
-     * @param datetimeFormat 日時文字列フォーマットパターン。DatetimeFormat.DATE_TO_SECONDがデフォルト。
+     * @param datetimeFormat 日時文字列フォーマットパターン。DatetimeFormat.dateToSecondがデフォルト。
      * @returns
      */
-    toString(datetimeFormat?: DatetimeFormat): string;
+    toString(datetimeFormat?: Enumeration): string;
     /**
      * 日付のみの文字列表現を取得する。
      * @example
@@ -266,24 +269,74 @@ export declare class Datetime {
     static from(dateValue?: string | Date): Datetime;
 }
 /**
- * 曜日の定数。
+ * 曜日の定数オブジェクト。
  */
-export declare enum DayOfWeek {
-    SUNDAY = "sunday",
-    MONDAY = "monday",
-    TUESDAY = "tuesday",
-    WEDNESDAY = "wednesday",
-    THURSDAY = "thursday",
-    FRIDAY = "friday",
-    SATURDAY = "saturday"
-}
+export declare const DayOfWeek: {
+    /**
+     * 日曜日。
+     */
+    sunday: Enumeration;
+    /**
+     * 月曜日。
+     */
+    monday: Enumeration;
+    /**
+     * 火曜日。
+     */
+    tuesday: Enumeration;
+    /**
+     * 水曜日。
+     */
+    wednesday: Enumeration;
+    /**
+     * 木曜日。
+     */
+    thursday: Enumeration;
+    /**
+     * 金曜日。
+     */
+    friday: Enumeration;
+    /**
+     * 土曜日。
+     */
+    saturday: Enumeration;
+    /**
+     * 指定された物理名に一致する定数を返す。見つからなかった場合はnullを返す。
+     *
+     * @param physicalName
+     * @returns
+     */
+    find: (physicalName: string) => Enumeration | null;
+};
 /**
- * 日時文字列フォーマットパターンの定数。
+ * 日時文字列フォーマットパターンの定数オブジェクト。
  */
-export declare enum DatetimeFormat {
-    DATE_ONLY = "date_only",
-    DATE_TO_MINUTE = "date_to_minute",
-    DATE_TO_SECOND = "date_to_second",
-    HOUR_TO_SECOND = "hour_to_second",
-    HOUR_TO_MINUTE = "hour_to_minute"
-}
+export declare const DatetimeFormat: {
+    /**
+     * 年月日のみ。
+     */
+    dateOnly: Enumeration;
+    /**
+     * 年月日から分まで。
+     */
+    dateToMinute: Enumeration;
+    /**
+     * 年月日から秒まで。
+     */
+    dateToSecond: Enumeration;
+    /**
+     * 時から秒まで。
+     */
+    hourToSecond: Enumeration;
+    /**
+     * 時から分まで。
+     */
+    hourToMinute: Enumeration;
+    /**
+     * 指定された物理名に一致する定数を返す。見つからなかった場合はnullを返す。
+     *
+     * @param physicalName
+     * @returns
+     */
+    find: (physicalName: string) => Enumeration | null;
+};

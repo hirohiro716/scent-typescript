@@ -22,19 +22,19 @@ export class StringValidator {
      * 対象が長さゼロの文字列、またはnullの場合に例外をスローする確認を予約する。
      */
     addBlankCheck() {
-        this.scheduledMethods.set(Method.BLANK, null);
+        this.scheduledMethods.set(Method.blank, null);
     }
     /**
      * 対象に整数以外の文字列が含まれる場合に例外をスローする確認を予約する。
      */
     addIntegerCheck() {
-        this.scheduledMethods.set(Method.INTEGER, null);
+        this.scheduledMethods.set(Method.integer, null);
     }
     /**
      * 対象に整数または小数点以外の文字列が含まれる場合に例外をスローする確認を予約する。
      */
     addDecimalCheck() {
-        this.scheduledMethods.set(Method.DECIMAL, null);
+        this.scheduledMethods.set(Method.decimal, null);
     }
     /**
      * 対象の文字数が指定された文字数と異なる場合に例外をスローする確認を予約する。引数に負数が指定された場合は確認を実行しない。
@@ -42,7 +42,7 @@ export class StringValidator {
      * @param length
      */
     addLengthCheck(length) {
-        this.scheduledMethods.set(Method.LENGTH, length);
+        this.scheduledMethods.set(Method.length, length);
     }
     /**
      * 対象の文字数が指定された文字数を超える場合に例外をスローする確認を予約する。引数に負数が指定された場合は確認を実行しない。
@@ -50,7 +50,7 @@ export class StringValidator {
      * @param length
      */
     addMaximumLengthCheck(length) {
-        this.scheduledMethods.set(Method.MAXIMUM_LENGTH, length);
+        this.scheduledMethods.set(Method.maximumLength, length);
     }
     /**
      * 対象の文字数が指定された文字数に満たない場合に例外をスローする確認を予約する。引数に負数が指定された場合は確認を実行しない。
@@ -58,13 +58,13 @@ export class StringValidator {
      * @param length
      */
     addMinimumLengthCheck(length) {
-        this.scheduledMethods.set(Method.MINIMUM_LENGTH, length);
+        this.scheduledMethods.set(Method.minimumLength, length);
     }
     /**
      * 対象がゼロと等しい場合に例外をスローする確認を予約する。
      */
     addZeroCheck() {
-        this.scheduledMethods.set(Method.ZERO, null);
+        this.scheduledMethods.set(Method.zero, null);
     }
     /**
      * 対象の数値が指定された値を超える場合に例外をスローする確認を予約する。
@@ -72,7 +72,7 @@ export class StringValidator {
      * @param value
      */
     addMaximumValueCheck(value) {
-        this.scheduledMethods.set(Method.MAXIMUM_VALUE, value);
+        this.scheduledMethods.set(Method.maximumValue, value);
     }
     /**
      * 対象の数値が指定された値に満たない場合に例外をスローする確認を予約する。
@@ -80,31 +80,31 @@ export class StringValidator {
      * @param value
      */
     addMinimumValueCheck(value) {
-        this.scheduledMethods.set(Method.MINIMUM_VALUE, value);
+        this.scheduledMethods.set(Method.minimumValue, value);
     }
     /**
      * 対象の値がDateインスタンスではない、または日時として有効ではない文字列の場合に例外をスローする確認を予約する。
      */
     addDatetimeCheck() {
-        this.scheduledMethods.set(Method.DATETIME, null);
+        this.scheduledMethods.set(Method.datetime, null);
     }
     /**
      * 対象の文字列が電話番号として有効ではない場合に例外をスローする確認を予約する。
      */
     addTelephoneNumberCheck() {
-        this.scheduledMethods.set(Method.TELEPHONE_NUMBER, null);
+        this.scheduledMethods.set(Method.telephoneNumber, null);
     }
     /**
      * 対象の文字列にひらがな以外の文字が含まれている場合に例外をスローする確認を予約する。
      */
     addHiraganaCheck() {
-        this.scheduledMethods.set(Method.HIRAGANA, null);
+        this.scheduledMethods.set(Method.hiragana, null);
     }
     /**
      * 対象の文字列にカタカナ以外の文字が含まれている場合に例外をスローする確認を予約する。
      */
     addKatakanaCheck() {
-        this.scheduledMethods.set(Method.KATAKANA, null);
+        this.scheduledMethods.set(Method.katakana, null);
     }
     /**
      * 対象の文字列が正規表現とマッチしない場合に例外をスローする確認を予約する。
@@ -112,7 +112,7 @@ export class StringValidator {
      * @param regex
      */
     addRegexCheck(regex) {
-        this.scheduledMethods.set(Method.REGEX, regex);
+        this.scheduledMethods.set(Method.regex, regex);
     }
     /**
      * 対象の文字列が正規表現とマッチする場合に例外をスローする確認を予約する。
@@ -120,7 +120,7 @@ export class StringValidator {
      * @param regex
      */
     addReverseRegexCheck(regex) {
-        this.scheduledMethods.set(Method.REVERSE_REGEX, regex);
+        this.scheduledMethods.set(Method.reverseRegex, regex);
     }
     /**
      * 指定された妥当性確認タイプに対するエラーを作成する。
@@ -131,49 +131,49 @@ export class StringValidator {
     createError(method) {
         const message = new StringObject(this.nameOfValue);
         switch (method) {
-            case Method.BLANK:
+            case Method.blank:
                 message.append("が入力されていません。");
                 break;
-            case Method.INTEGER:
-            case Method.DECIMAL:
+            case Method.integer:
+            case Method.decimal:
                 message.append("に数字以外の文字列が含まれています。");
                 break;
-            case Method.LENGTH:
+            case Method.length:
                 message.append("は");
                 message.append(this.scheduledMethods.get(method));
                 message.append("文字である必要があります。");
                 break;
-            case Method.MAXIMUM_LENGTH:
+            case Method.maximumLength:
                 message.append("の文字数が多すぎます。");
                 message.append(this.scheduledMethods.get(method));
                 message.append("文字以下にする必要があります。");
                 break;
-            case Method.MINIMUM_LENGTH:
+            case Method.minimumLength:
                 message.append("の文字数が足りません。");
                 message.append(this.scheduledMethods.get(method));
                 message.append("文字必要です。");
                 break;
-            case Method.ZERO:
+            case Method.zero:
                 message.append("にゼロは入力できません。");
                 break;
-            case Method.MAXIMUM_VALUE:
+            case Method.maximumValue:
                 message.append("は最大で「");
                 message.append(this.scheduledMethods.get(method));
                 message.append("まで入力することができます。");
                 break;
-            case Method.MINIMUM_VALUE:
+            case Method.minimumValue:
                 message.append("は「");
                 message.append(this.scheduledMethods.get(method));
                 message.append("」以上である必要があります。");
                 break;
-            case Method.DATETIME:
-            case Method.TELEPHONE_NUMBER:
-            case Method.REGEX:
-            case Method.REVERSE_REGEX:
+            case Method.datetime:
+            case Method.telephoneNumber:
+            case Method.regex:
+            case Method.reverseRegex:
                 message.append("が正しくありません。");
                 break;
-            case Method.HIRAGANA:
-            case Method.KATAKANA:
+            case Method.hiragana:
+            case Method.katakana:
                 message.append("に使用できない文字が含まれています。");
                 break;
         }
@@ -189,39 +189,39 @@ export class StringValidator {
         const value = new StringObject(valueLikeString);
         for (const [method, parameter] of this.scheduledMethods.entries()) {
             switch (method) {
-                case Method.BLANK:
+                case Method.blank:
                     if (value.length() === 0) {
                         throw this.createError(method);
                     }
                     break;
-                case Method.INTEGER:
+                case Method.integer:
                     if (value.length() > 0) {
                         if (value.clone().replace("[-0-9]", "").length() > 0 || value.toNumber() === null) {
                             throw this.createError(method);
                         }
                     }
                     break;
-                case Method.DECIMAL:
+                case Method.decimal:
                     if (value.length() > 0 && value.toNumber() === null) {
                         throw this.createError(method);
                     }
                     break;
-                case Method.LENGTH:
+                case Method.length:
                     if (value.length() > 0 && value.length() != parameter) {
                         throw this.createError(method);
                     }
                     break;
-                case Method.MAXIMUM_LENGTH:
+                case Method.maximumLength:
                     if (value.length() > 0 && value.length() > parameter) {
                         throw this.createError(method);
                     }
                     break;
-                case Method.MINIMUM_LENGTH:
+                case Method.minimumLength:
                     if (value.length() > 0 && value.length() < parameter) {
                         throw this.createError(method);
                     }
                     break;
-                case Method.ZERO:
+                case Method.zero:
                     if (value.length() > 0) {
                         const valueLikeNumber = value.toNumber();
                         if (valueLikeNumber != null && valueLikeNumber === 0) {
@@ -229,7 +229,7 @@ export class StringValidator {
                         }
                     }
                     break;
-                case Method.MAXIMUM_VALUE:
+                case Method.maximumValue:
                     if (value.length() > 0) {
                         const valueLikeNumber = value.toNumber();
                         if (valueLikeNumber != null && valueLikeNumber > parameter) {
@@ -237,7 +237,7 @@ export class StringValidator {
                         }
                     }
                     break;
-                case Method.MINIMUM_VALUE:
+                case Method.minimumValue:
                     if (value.length() > 0) {
                         const valueLikeNumber = value.toNumber();
                         if (valueLikeNumber != null && valueLikeNumber < parameter) {
@@ -245,7 +245,7 @@ export class StringValidator {
                         }
                     }
                     break;
-                case Method.DATETIME:
+                case Method.datetime:
                     if (value.length() > 0) {
                         const valueLikeDatetime = value.toDatetime();
                         if (valueLikeDatetime === null) {
@@ -253,7 +253,7 @@ export class StringValidator {
                         }
                     }
                     break;
-                case Method.TELEPHONE_NUMBER:
+                case Method.telephoneNumber:
                     if (value.length() > 0) {
                         const numbers = value.splitToStrings("-");
                         if (value.clone().replace("[-+0-9]{10,}", "").length() > 0 || numbers.length < 3 || numbers.includes("")) {
@@ -261,28 +261,28 @@ export class StringValidator {
                         }
                     }
                     break;
-                case Method.HIRAGANA:
+                case Method.hiragana:
                     if (value.length() > 0) {
                         if (value.clone().replace("[ぁ-んー]", "").length() > 0) {
                             throw this.createError(method);
                         }
                     }
                     break;
-                case Method.KATAKANA:
+                case Method.katakana:
                     if (value.length() > 0) {
                         if (value.clone().replace("[ァ-ヴー]", "").length() > 0) {
                             throw this.createError(method);
                         }
                     }
                     break;
-                case Method.REGEX:
+                case Method.regex:
                     if (value.length() > 0) {
                         if (value.clone().replace(parameter, "").length() === value.length()) {
                             throw this.createError(method);
                         }
                     }
                     break;
-                case Method.REVERSE_REGEX:
+                case Method.reverseRegex:
                     if (value.length() > 0) {
                         if (value.clone().replace(parameter, "").length() != value.length()) {
                             throw this.createError(method);
@@ -298,21 +298,21 @@ export class StringValidator {
  */
 var Method;
 (function (Method) {
-    Method["BLANK"] = "blank";
-    Method["INTEGER"] = "integer";
-    Method["DECIMAL"] = "decimal";
-    Method["LENGTH"] = "length";
-    Method["MAXIMUM_LENGTH"] = "maximumLength";
-    Method["MINIMUM_LENGTH"] = "minimumLength";
-    Method["ZERO"] = "zero";
-    Method["MAXIMUM_VALUE"] = "maximumValue";
-    Method["MINIMUM_VALUE"] = "minimumValue";
-    Method["DATETIME"] = "datetime";
-    Method["TELEPHONE_NUMBER"] = "telephoneNumber";
-    Method["HIRAGANA"] = "hiragana";
-    Method["KATAKANA"] = "katakana";
-    Method["REGEX"] = "regex";
-    Method["REVERSE_REGEX"] = "reverseRegex";
+    Method["blank"] = "blank";
+    Method["integer"] = "integer";
+    Method["decimal"] = "decimal";
+    Method["length"] = "length";
+    Method["maximumLength"] = "maximumLength";
+    Method["minimumLength"] = "minimumLength";
+    Method["zero"] = "zero";
+    Method["maximumValue"] = "maximumValue";
+    Method["minimumValue"] = "minimumValue";
+    Method["datetime"] = "datetime";
+    Method["telephoneNumber"] = "telephoneNumber";
+    Method["hiragana"] = "hiragana";
+    Method["katakana"] = "katakana";
+    Method["regex"] = "regex";
+    Method["reverseRegex"] = "reverseRegex";
 })(Method || (Method = {}));
 /**
  * 文字列が妥当ではない場合に発生するエラーのクラス。
