@@ -553,6 +553,35 @@ export default class StringObject {
     }
 
     /**
+     * 指定された長さの暗号学的にランダムな文字列の新しいインスタンスを生成する。
+     * 
+     * @param length 
+     * @param baseCharacters 生成に使用する文字。省略した場合は数字とアルファベットが使用される。
+     */
+    public static secureRandom(length: number, baseCharacters?: string): StringObject {
+        const base = new StringObject(baseCharacters);
+        if (base.length() > 255) {
+            throw new Error("Too many characters in Base Characters.")
+        }
+        if (base.length() === 0) {
+            base.append(this.randomBaseCharacters);
+        }
+        const material = base.clone();
+        while (material.length() + base.length() < 255) {
+            material.append(base);
+        }
+        const result = new StringObject();
+        while (result.length() < length) {
+            crypto.getRandomValues(new Uint8Array(length)).forEach((randomValue) => {
+                if (result.length() < length) {
+                    result.append(material.toString().charAt(randomValue));
+                }
+            });
+        }
+        return result;
+    }
+
+    /**
      * 指定された配列の値のtoStringメソッドの結果を連結した新しいインスタンスを作成する。
      * 
      * @param values 

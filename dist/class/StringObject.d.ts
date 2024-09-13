@@ -274,6 +274,13 @@ export default class StringObject {
      */
     static random(length: number, baseCharacters?: string): StringObject;
     /**
+     * 指定された長さの暗号学的にランダムな文字列の新しいインスタンスを生成する。
+     *
+     * @param length
+     * @param baseCharacters 生成に使用する文字。省略した場合は数字とアルファベットが使用される。
+     */
+    static secureRandom(length: number, baseCharacters?: string): StringObject;
+    /**
      * 指定された配列の値のtoStringメソッドの結果を連結した新しいインスタンスを作成する。
      *
      * @param values
