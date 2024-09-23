@@ -21,22 +21,47 @@ export class API {
     private method: string;
 
     /**
-     * APIにリクエストを実行する。
+     * APIにFormDataを送信するリクエストを実行する。
      * 
      * @param formData 
      * @returns 
      * @throws APIRequestError リクエストに失敗した場合。
      */
-    public async request(formData: FormData): Promise<Response> {
+    public async request(formData: FormData): Promise<Response>;
+
+    /**
+     * APIにJSONを送信するリクエストを実行する。
+     * 
+     * @param json 
+     * @returns 
+     * @throws APIRequestError リクエストに失敗した場合。
+     */
+    public async request(json: string): Promise<Response>;
+
+    /**
+     * @deprecated
+     */
+    public async request(parameters: FormData | string): Promise<Response> {
         const url = new StringObject(this.url);
-        const requestInit: RequestInit = { method: this.method };
+        const requestInit: RequestInit = {method: this.method};
+        const isFormData = parameters instanceof FormData;
+        if (isFormData) {
+            requestInit.headers = {"Content-Type": "multipart/form-data"};
+        } else {
+            requestInit.headers = {"Content-Type": "application/json"};
+        }
         switch(StringObject.from(this.method).lower().toString()) {
             case "post":
-                requestInit.body = formData;
+                requestInit.body = parameters;
                 break;
             case "get":
                 url.append("?");
-                url.append(StringObject.queryString(formData));
+                if (isFormData) {
+                    url.append(StringObject.queryString(parameters));
+                } else {
+                    const parametersObject = JSON.parse(parameters);
+                    url.append(StringObject.queryString(new FormData(parametersObject)));
+                }
                 break;
         }
         let response: Response;

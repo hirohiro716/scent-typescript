@@ -12,13 +12,21 @@ export declare class API {
     private url;
     private method;
     /**
-     * APIにリクエストを実行する。
+     * APIにFormDataを送信するリクエストを実行する。
      *
      * @param formData
      * @returns
      * @throws APIRequestError リクエストに失敗した場合。
      */
     request(formData: FormData): Promise<Response>;
+    /**
+     * APIにJSONを送信するリクエストを実行する。
+     *
+     * @param json
+     * @returns
+     * @throws APIRequestError リクエストに失敗した場合。
+     */
+    request(json: string): Promise<Response>;
     /**
      * ErrorObjectに含まれるエラーメッセージのキー。
      */

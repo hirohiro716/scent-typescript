@@ -14,22 +14,31 @@ export class API {
         this.method = method;
     }
     /**
-     * APIにリクエストを実行する。
-     *
-     * @param formData
-     * @returns
-     * @throws APIRequestError リクエストに失敗した場合。
+     * @deprecated
      */
-    async request(formData) {
+    async request(parameters) {
         const url = new StringObject(this.url);
         const requestInit = { method: this.method };
+        const isFormData = parameters instanceof FormData;
+        if (isFormData) {
+            requestInit.headers = { "Content-Type": "multipart/form-data" };
+        }
+        else {
+            requestInit.headers = { "Content-Type": "application/json" };
+        }
         switch (StringObject.from(this.method).lower().toString()) {
             case "post":
-                requestInit.body = formData;
+                requestInit.body = parameters;
                 break;
             case "get":
                 url.append("?");
-                url.append(StringObject.queryString(formData));
+                if (isFormData) {
+                    url.append(StringObject.queryString(parameters));
+                }
+                else {
+                    const parametersObject = JSON.parse(parameters);
+                    url.append(StringObject.queryString(new FormData(parametersObject)));
+                }
                 break;
         }
         let response;
