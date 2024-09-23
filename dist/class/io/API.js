@@ -19,20 +19,13 @@ export class API {
     async request(parameters) {
         const url = new StringObject(this.url);
         const requestInit = { method: this.method };
-        const isFormData = parameters instanceof FormData;
-        if (isFormData) {
-            requestInit.headers = { "Content-Type": "multipart/form-data" };
-        }
-        else {
-            requestInit.headers = { "Content-Type": "application/json" };
-        }
         switch (StringObject.from(this.method).lower().toString()) {
             case "post":
                 requestInit.body = parameters;
                 break;
             case "get":
                 url.append("?");
-                if (isFormData) {
+                if (parameters instanceof FormData) {
                     url.append(StringObject.queryString(parameters));
                 }
                 else {
