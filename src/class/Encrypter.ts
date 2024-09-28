@@ -38,7 +38,7 @@ export class Encrypter {
      * @param algorithm 
      * @param key 使用する共通鍵。未指定の場合は自動生成される。
      */
-    public constructor(algorithm: Crypto.CipherCCMTypes | Crypto.CipherOCBTypes | Crypto.CipherGCMTypes, key: ByteArray);
+    public constructor(algorithm: Crypto.CipherCCMTypes | Crypto.CipherOCBTypes | Crypto.CipherGCMTypes, key?: ByteArray);
 
     /**
      * コンストラクタ。
