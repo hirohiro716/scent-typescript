@@ -15,7 +15,6 @@ import { StringValidator, StringValidationError } from "./class/validation/Strin
 import { ObjectValidator, ObjectValidationError } from "./class/validation/ObjectValidator.js";
 
 import ByteArray from "./class/io/ByteArray.js";
-import { Encrypter, EncryptedData } from "./class/Encrypter.js";
 import { API, APIRequestError } from "./class/io/API.js";
 
 import Column from "./class/database/Column.js";
@@ -30,14 +29,14 @@ import JAN13Renderer from "./class/graphic/JAN13Renderer.js";
 import NW7Renderer from "./class/graphic/NW7Renderer.js";
 
 export type {
-    Dimension, Bounds, EncryptedData,
+    Dimension, Bounds,
 }
 
 export {
     Enumeration, Property, StringObject, RoundNumber, RoundNumbers, Price, Regex, RegexTypes,
     Datetime, DayOfWeek, DatetimeFormat, Period, CutoffPeriod,
     StringValidator, StringValidationError, ObjectValidator, ObjectValidationError,
-    ByteArray, Encrypter, API, APIRequestError,
+    ByteArray, API, APIRequestError,
     Column, Table, RecordMap,
     UserAgent, SoundPlayer,
     GraphicalString, JAN13Renderer, NW7Renderer,
