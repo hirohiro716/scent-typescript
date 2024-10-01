@@ -10,6 +10,12 @@ export default class RecordMap extends Map<Column, any> {
      */
     toObject(): Record<string, any>;
     /**
+     * このレコードの値を指定されたレコードの値で置き換える。
+     *
+     * @param record
+     */
+    merge(record: RecordMap | Record<string, any>): void;
+    /**
      * このレコードが属するテーブル名を返す。見つからなかった場合はnullを返す。
      *
      * @returns

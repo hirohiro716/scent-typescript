@@ -15,6 +15,25 @@ export default class RecordMap extends Map {
         return object;
     }
     /**
+     * このレコードの値を指定されたレコードの値で置き換える。
+     *
+     * @param record
+     */
+    merge(record) {
+        if (record instanceof RecordMap) {
+            for (const key of record.keys()) {
+                this.set(key, record.get(key));
+            }
+        }
+        else {
+            for (const column of this.keys()) {
+                if (Object.keys(record).includes(column.physicalName)) {
+                    this.set(column, record[column.physicalName]);
+                }
+            }
+        }
+    }
+    /**
      * このレコードが属するテーブル名を返す。見つからなかった場合はnullを返す。
      *
      * @returns
