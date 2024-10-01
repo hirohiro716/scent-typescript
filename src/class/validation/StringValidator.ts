@@ -48,7 +48,7 @@ export class StringValidator {
     }
 
     /**
-     * 対象の文字数が指定された文字数と異なる場合に例外をスローする確認を予約する。引数に負数が指定された場合は確認を実行しない。
+     * 対象の文字数が指定された文字数と異なる場合に例外をスローする確認を予約する。引数にゼロ以下が指定された場合は確認を実行しない。
      * 
      * @param length 
      */
@@ -57,7 +57,7 @@ export class StringValidator {
     }
 
     /**
-     * 対象の文字数が指定された文字数を超える場合に例外をスローする確認を予約する。引数に負数が指定された場合は確認を実行しない。
+     * 対象の文字数が指定された文字数を超える場合に例外をスローする確認を予約する。引数にゼロ以下が指定された場合は確認を実行しない。
      * 
      * @param length 
      */
@@ -66,7 +66,7 @@ export class StringValidator {
     }
 
     /**
-     * 対象の文字数が指定された文字数に満たない場合に例外をスローする確認を予約する。引数に負数が指定された場合は確認を実行しない。
+     * 対象の文字数が指定された文字数に満たない場合に例外をスローする確認を予約する。引数にゼロ以下が指定された場合は確認を実行しない。
      * 
      * @param length 
      */
@@ -231,17 +231,17 @@ export class StringValidator {
                     }
                     break;
                 case Method.length:
-                    if (value.length() > 0 && value.length() != parameter) {
+                    if (value.length() > 0 && parameter > 0 && value.length() != parameter) {
                         throw this.createError(method);
                     }
                     break;
                 case Method.maximumLength:
-                    if (value.length() > 0 && value.length() > parameter) {
+                    if (value.length() > 0 && parameter > 0 && value.length() > parameter) {
                         throw this.createError(method);
                     }
                     break;
                 case Method.minimumLength:
-                    if (value.length() > 0 && value.length() < parameter) {
+                    if (value.length() > 0 && parameter > 0 && value.length() < parameter) {
                         throw this.createError(method);
                     }
                     break;
