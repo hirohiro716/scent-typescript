@@ -48,4 +48,17 @@ export default class RecordMap extends Map {
         }
         return null;
     }
+    /**
+     * 指定された複数のレコードをオブジェクトの配列に変換する。
+     *
+     * @param records
+     * @returns
+     */
+    static toObject(records) {
+        const objects = [];
+        for (const record of records) {
+            objects.push(record.toObject());
+        }
+        return objects;
+    }
 }

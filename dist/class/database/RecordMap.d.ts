@@ -21,4 +21,11 @@ export default class RecordMap extends Map<Column, any> {
      * @returns
      */
     findTableName(): string | null;
+    /**
+     * 指定された複数のレコードをオブジェクトの配列に変換する。
+     *
+     * @param records
+     * @returns
+     */
+    static toObject(records: RecordMap[]): object[];
 }

@@ -52,4 +52,18 @@ export default class RecordMap extends Map<Column, any> {
         }
         return null;
     }
+
+    /**
+     * 指定された複数のレコードをオブジェクトの配列に変換する。
+     * 
+     * @param records 
+     * @returns 
+     */
+    public static toObject(records: RecordMap[]): object[] {
+        const objects = [];
+        for (const record of records) {
+            objects.push(record.toObject());
+        }
+        return objects;
+    }
 }
