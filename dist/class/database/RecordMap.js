@@ -61,4 +61,12 @@ export default class RecordMap extends Map {
         }
         return objects;
     }
+    /**
+     * このインスタンスのクローンを作成する。
+     *
+     * @returns
+     */
+    clone() {
+        return new RecordMap(this);
+    }
 }

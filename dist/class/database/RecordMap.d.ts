@@ -28,4 +28,10 @@ export default class RecordMap extends Map<Column, any> {
      * @returns
      */
     static toObject(records: RecordMap[]): object[];
+    /**
+     * このインスタンスのクローンを作成する。
+     *
+     * @returns
+     */
+    clone(): RecordMap;
 }
