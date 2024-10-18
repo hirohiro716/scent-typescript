@@ -70,4 +70,44 @@ export default class Period {
         }
         return typeof comparison !== "undefined" && this.startDatetime.equals(comparison.startDatetime) && this.endDatetime.equals(comparison.endDatetime);
     }
+    /**
+     * ミリ秒数で取得する。
+     *
+     * @returns
+     */
+    toMilliseconds() {
+        return this.endDatetime.getAllMilliseconds() - this.startDatetime.getAllMilliseconds();
+    }
+    /**
+     * 秒数で取得する。
+     *
+     * @returns
+     */
+    toSeconds() {
+        return this.toMilliseconds() / 1000;
+    }
+    /**
+     * 分数で取得する。
+     *
+     * @returns
+     */
+    toMinutes() {
+        return this.toMilliseconds() / 1000 / 60;
+    }
+    /**
+     * 時間数で取得する。
+     *
+     * @returns
+     */
+    toHours() {
+        return this.toMilliseconds() / 1000 / 60 / 60;
+    }
+    /**
+     * 日数で取得する。
+     *
+     * @returns
+     */
+    toDays() {
+        return this.toMilliseconds() / 1000 / 60 / 60 / 24;
+    }
 }

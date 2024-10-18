@@ -38,4 +38,34 @@ export default class Period {
      * @param endDate
      */
     equals(startDate: Datetime | Date, endDate: Datetime | Date): boolean;
+    /**
+     * ミリ秒数で取得する。
+     *
+     * @returns
+     */
+    toMilliseconds(): number;
+    /**
+     * 秒数で取得する。
+     *
+     * @returns
+     */
+    toSeconds(): number;
+    /**
+     * 分数で取得する。
+     *
+     * @returns
+     */
+    toMinutes(): number;
+    /**
+     * 時間数で取得する。
+     *
+     * @returns
+     */
+    toHours(): number;
+    /**
+     * 日数で取得する。
+     *
+     * @returns
+     */
+    toDays(): number;
 }
