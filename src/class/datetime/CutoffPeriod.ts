@@ -7,16 +7,16 @@ import Period from "./Period.js";
 export default class CutoffPeriod {
 
     /**
-     * コンストラクタ。締める日を指定する。
+     * コンストラクタ。
      * 
-     * @param cutoffDays 
+     * @param cutoffDays 締める日。28以上の数値は末日を表す。
      */
     public constructor(...cutoffDays: number[]) {
         this.cutoffDays = cutoffDays;
     }
 
     /**
-     * 締める日。
+     * 締める日。28以上の数値は末日を表す。
      */
     public readonly cutoffDays: number[];
 
