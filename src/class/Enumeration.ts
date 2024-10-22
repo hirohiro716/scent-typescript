@@ -25,7 +25,7 @@ export default class Enumeration {
     public readonly logicalName;
 
     /**
-     * 指定された定数インスタンス内から、指定された物理名に一致する定数を返す。見つからなかった場合はnullを返す。
+     * 指定された定数オブジェクト内から、指定された物理名に一致する定数を返す。見つからなかった場合はnullを返す。
      * 
      * @param enumerations 
      * @param physicalName 
@@ -40,5 +40,37 @@ export default class Enumeration {
             }
         }
         return null;
+    }
+
+    /**
+     * 指定された定数オブジェクト内の定数のみの配列を返す。
+     * 
+     * @param enumerations 
+     * @returns 
+     */
+    public static createEnumerations<T extends Enumeration>(enumerations: Record<any, T | ((...args: any) => any)>): T[] {
+        const constants = [];
+        for (const enumeration of Object.values(enumerations)) {
+            if (enumeration instanceof Enumeration) {
+                constants.push(enumeration);
+            }
+        }
+        return constants;
+    }
+
+    /**
+     * 指定された定数オブジェクト内の定数で、物理名がキー、論理名が値のマップを作成する。
+     * 
+     * @param enumerations 
+     * @returns 
+     */
+    public static createEnumerationNameMap<T extends Enumeration>(enumerations: Record<any, T | ((...args: any) => any)>): Map<string, string> {
+        const map = new Map();
+        for (const enumeration of Object.values(enumerations)) {
+            if (enumeration instanceof Enumeration) {
+                map.set(enumeration.physicalName, enumeration.logicalName);
+            }
+        }
+        return map;
     }
 }

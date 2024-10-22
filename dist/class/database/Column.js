@@ -36,7 +36,7 @@ export default class Column extends Property {
         return fullPhysicalName.toString();
     }
     /**
-     * 指定された定数インスタンス内から、指定された物理名に一致する定数を返す。見つからなかった場合はnullを返す。
+     * 指定された定数オブジェクト内から、指定された物理名に一致する定数を返す。見つからなかった場合はnullを返す。
      *
      * @param columns
      * @param physicalName
@@ -44,5 +44,23 @@ export default class Column extends Property {
      */
     static findColumn(columns, physicalName) {
         return Property.findProperty(columns, physicalName);
+    }
+    /**
+     * 指定された定数オブジェクト内の定数のみの配列を返す。
+     *
+     * @param columns
+     * @returns
+     */
+    static createColumns(columns) {
+        return Property.createProperties(columns);
+    }
+    /**
+     * 指定された定数オブジェクト内の定数で、物理名がキー、論理名が値のマップを作成する。
+     *
+     * @param properties
+     * @returns
+     */
+    static createColumnNameMap(columns) {
+        return Property.createPropertyNameMap(columns);
     }
 }

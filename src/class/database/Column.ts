@@ -1,3 +1,4 @@
+import Enumeration from "../Enumeration.js";
 import Property from "../Property.js";
 import StringObject from "../StringObject.js";
 
@@ -44,7 +45,7 @@ export default class Column extends Property {
     }
 
     /**
-     * 指定された定数インスタンス内から、指定された物理名に一致する定数を返す。見つからなかった場合はnullを返す。
+     * 指定された定数オブジェクト内から、指定された物理名に一致する定数を返す。見つからなかった場合はnullを返す。
      * 
      * @param columns 
      * @param physicalName 
@@ -52,5 +53,25 @@ export default class Column extends Property {
      */
     public static findColumn<T extends Column>(columns: Record<any, T | ((...args: any) => any)>, physicalName: string): T | null {
         return Property.findProperty(columns, physicalName);
+    }
+
+    /**
+     * 指定された定数オブジェクト内の定数のみの配列を返す。
+     * 
+     * @param columns 
+     * @returns 
+     */
+    public static createColumns<T extends Column>(columns: Record<any, T | ((...args: any) => any)>): T[] {
+        return Property.createProperties(columns);
+    }
+
+    /**
+     * 指定された定数オブジェクト内の定数で、物理名がキー、論理名が値のマップを作成する。
+     * 
+     * @param properties 
+     * @returns 
+     */
+    public static createColumnNameMap<T extends Column>(columns: Record<any, T | ((...args: any) => any)>): Map<string, string> {
+        return Property.createPropertyNameMap(columns);
     }
 }
