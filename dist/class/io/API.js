@@ -29,18 +29,14 @@ export class API {
                     url.append(StringObject.queryString(parameters));
                 }
                 else {
-                    const parametersObject = JSON.parse(parameters);
-                    url.append(StringObject.queryString(new FormData(parametersObject)));
+                    if (typeof parameters !== "undefined") {
+                        const parametersObject = JSON.parse(StringObject.from(parameters).toString());
+                        url.append(StringObject.queryString(new FormData(parametersObject)));
+                    }
                 }
                 break;
         }
-        let response;
-        try {
-            response = await fetch(url.toString(), requestInit);
-        }
-        catch (error) {
-            throw new APIRequestError({ message: error.message });
-        }
+        let response = await fetch(url.toString(), requestInit);
         switch (response.status) {
             case 200:
             case 201:
@@ -49,10 +45,10 @@ export class API {
                 let apiRequestError;
                 try {
                     const json = await response.json();
-                    apiRequestError = new APIRequestError(json);
+                    apiRequestError = new APIRequestError(response.status, json);
                 }
                 catch (error) {
-                    apiRequestError = new APIRequestError({ message: error.message });
+                    apiRequestError = new APIRequestError(response.status, { message: error.message });
                 }
                 throw apiRequestError;
         }
@@ -86,11 +82,12 @@ API.NAME_OF_ERROR_CAUSE_OBJECT = "cause";
  */
 export class APIRequestError extends Error {
     /**
-     * コンストラクタ。エラーのオブジェクトを指定する。
+     * コンストラクタ。レスポンスステータスとエラーのオブジェクトを指定する。
      *
+     * @param responseStatus
      * @param errorObject
      */
-    constructor(errorObject) {
+    constructor(responseStatus, errorObject) {
         super(errorObject[API.NAME_OF_ERROR_MESSAGE]);
         /**
          * 原因となったプロパティ名。
@@ -100,6 +97,7 @@ export class APIRequestError extends Error {
          * 原因となったプロパティ名とメッセージの連想配列。
          */
         this.causeMessages = {};
+        this.responseStatus = responseStatus;
         if (errorObject[API.NAME_OF_ERROR_CAUSE_OBJECT]) {
             this.causeMessages = errorObject[API.NAME_OF_ERROR_CAUSE_OBJECT];
             this.causePropertyNames = Object.keys(errorObject[API.NAME_OF_ERROR_CAUSE_OBJECT]);

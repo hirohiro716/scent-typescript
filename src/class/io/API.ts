@@ -39,9 +39,17 @@ export class API {
     public async request(json: string): Promise<Response>;
 
     /**
+     * APIにリクエストを実行する。
+     * 
+     * @returns 
+     * @throws APIRequestError リクエストに失敗した場合。
+     */
+    public async request(): Promise<Response>;
+
+    /**
      * @deprecated
      */
-    public async request(parameters: FormData | string): Promise<Response> {
+    public async request(parameters?: FormData | string): Promise<Response> {
         const url = new StringObject(this.url);
         const requestInit: RequestInit = {method: this.method};
         switch(StringObject.from(this.method).lower().toString()) {
@@ -53,17 +61,14 @@ export class API {
                 if (parameters instanceof FormData) {
                     url.append(StringObject.queryString(parameters));
                 } else {
-                    const parametersObject = JSON.parse(parameters);
-                    url.append(StringObject.queryString(new FormData(parametersObject)));
+                    if (typeof parameters !== "undefined") {
+                        const parametersObject = JSON.parse(StringObject.from(parameters).toString());
+                        url.append(StringObject.queryString(new FormData(parametersObject)));
+                    }
                 }
                 break;
         }
-        let response: Response;
-        try {
-            response = await fetch(url.toString(), requestInit);
-        } catch (error: any) {
-            throw new APIRequestError({ message: error.message});
-        }
+        let response = await fetch(url.toString(), requestInit);
         switch (response.status) {
             case 200:
             case 201:
@@ -72,9 +77,9 @@ export class API {
                 let apiRequestError: APIRequestError;
                 try {
                     const json = await response.json();
-                    apiRequestError = new APIRequestError(json);
+                    apiRequestError = new APIRequestError(response.status, json);
                 } catch (error: any) {
-                    apiRequestError = new APIRequestError({ message: error.message});
+                    apiRequestError = new APIRequestError(response.status, {message: error.message});
                 }
                 throw apiRequestError;
         }
@@ -113,17 +118,24 @@ export class API {
 export class APIRequestError extends Error {
 
     /**
-     * コンストラクタ。エラーのオブジェクトを指定する。
+     * コンストラクタ。レスポンスステータスとエラーのオブジェクトを指定する。
      * 
+     * @param responseStatus
      * @param errorObject 
      */
-    public constructor(errorObject: Record<string, any>) {
+    public constructor(responseStatus: number, errorObject: Record<string, any>) {
         super(errorObject[API.NAME_OF_ERROR_MESSAGE]);
+        this.responseStatus = responseStatus;
         if (errorObject[API.NAME_OF_ERROR_CAUSE_OBJECT]) {
             this.causeMessages = errorObject[API.NAME_OF_ERROR_CAUSE_OBJECT];
             this.causePropertyNames = Object.keys(errorObject[API.NAME_OF_ERROR_CAUSE_OBJECT]);
         }
     }
+
+    /**
+     * HTTPのレスポンスステータス。
+     */
+    public readonly responseStatus: number;
 
     /**
      * 原因となったプロパティ名。

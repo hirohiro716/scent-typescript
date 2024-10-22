@@ -28,6 +28,13 @@ export declare class API {
      */
     request(json: string): Promise<Response>;
     /**
+     * APIにリクエストを実行する。
+     *
+     * @returns
+     * @throws APIRequestError リクエストに失敗した場合。
+     */
+    request(): Promise<Response>;
+    /**
      * ErrorObjectに含まれるエラーメッセージのキー。
      */
     static readonly NAME_OF_ERROR_MESSAGE: string;
@@ -49,11 +56,16 @@ export declare class API {
  */
 export declare class APIRequestError extends Error {
     /**
-     * コンストラクタ。エラーのオブジェクトを指定する。
+     * コンストラクタ。レスポンスステータスとエラーのオブジェクトを指定する。
      *
+     * @param responseStatus
      * @param errorObject
      */
-    constructor(errorObject: Record<string, any>);
+    constructor(responseStatus: number, errorObject: Record<string, any>);
+    /**
+     * HTTPのレスポンスステータス。
+     */
+    readonly responseStatus: number;
     /**
      * 原因となったプロパティ名。
      */
