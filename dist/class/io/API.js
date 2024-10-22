@@ -21,9 +21,11 @@ export class API {
         const requestInit = { method: this.method };
         switch (StringObject.from(this.method).lower().toString()) {
             case "post":
+            case "put":
                 requestInit.body = parameters;
                 break;
             case "get":
+            case "delete":
                 url.append("?");
                 if (parameters instanceof FormData) {
                     url.append(StringObject.queryString(parameters));
