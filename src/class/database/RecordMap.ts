@@ -1,3 +1,4 @@
+import StringObject from "../StringObject.js";
 import Column from "./Column.js";
 
 /**
@@ -35,6 +36,27 @@ export default class RecordMap extends Map<Column, any> {
                 }
             }
         }
+    }
+
+    /**
+     * このレコードの値と指定されたレコードの値を文字列として比較し、すべてが等しい文字列の場合はtrueを返す。
+     * 
+     * @param record 
+     * @returns
+     */
+    public equals(record: RecordMap | Record<string, any>): boolean {
+        for (const column of this.keys()) {
+            const value = new StringObject();
+            if (record instanceof RecordMap) {
+                value.append(record.get(column));
+            } else {
+                value.append(record[column.physicalName]);
+            }
+            if (value.equals(this.get(column)) === false) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**

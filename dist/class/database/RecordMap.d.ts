@@ -16,6 +16,13 @@ export default class RecordMap extends Map<Column, any> {
      */
     merge(record: RecordMap | Record<string, any>): void;
     /**
+     * このレコードの値と指定されたレコードの値を文字列として比較し、すべてが等しい文字列の場合はtrueを返す。
+     *
+     * @param record
+     * @returns
+     */
+    equals(record: RecordMap | Record<string, any>): boolean;
+    /**
      * このレコードが属するテーブル名を返す。見つからなかった場合はnullを返す。
      *
      * @returns
