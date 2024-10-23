@@ -1,3 +1,4 @@
+import Property from "../Property.js";
 import StringObject from "../StringObject.js";
 
 /**
@@ -19,6 +20,21 @@ export class API {
     private url: string;
 
     private method: string;
+
+    /**
+     * リクエストエラーのメッセージを格納する場合に使用するプロパティ。
+     */
+    public static readonly propertyOfErrorMessage: Property = new Property("error_message", "エラーメッセージ");
+
+    /**
+     * リクエストエラーの原因となったオブジェクトを格納する場合に使用するプロパティ。
+     */
+    public static readonly propertyOfCauseObject: Property = new Property("cause_object", "エラーの原因となったオブジェクト");
+
+    /**
+     * リクエストエラーの原因となったプロパティ毎のエラーメッセージを格納する場合に使用するプロパティ。
+     */
+    public static readonly propertyOfPropertyAndErrorMessage: Property = new Property("property_and_error_message", "エラーの原因となったプロパティ毎のエラーメッセージ");
 
     /**
      * APIにFormDataを送信するリクエストを実行する。
@@ -78,37 +94,44 @@ export class API {
             default:
                 let apiRequestError: APIRequestError;
                 try {
-                    const json = await response.json();
-                    apiRequestError = new APIRequestError(response.status, json);
+                    const errorObject = await response.json();
+                    apiRequestError = new APIRequestError(response.status, errorObject[API.propertyOfErrorMessage.physicalName], errorObject[API.propertyOfCauseObject.physicalName], errorObject[API.propertyOfPropertyAndErrorMessage.physicalName]);
                 } catch (error: any) {
-                    apiRequestError = new APIRequestError(response.status, {message: error.message});
+                    apiRequestError = new APIRequestError(response.status, error.message);
                 }
                 throw apiRequestError;
         }
     }
 
     /**
-     * ErrorObjectに含まれるエラーメッセージのキー。
+     * APIで発生したエラーのオブジェクトを作成する。
+     * 
+     * @param message エラーメッセージ。
+     * @returns 
      */
-    public static readonly NAME_OF_ERROR_MESSAGE: string = "message";
-
-    /**
-     * ErrorObjectに含まれる原因オブジェクトのキー。
-     */
-    public static readonly NAME_OF_ERROR_CAUSE_OBJECT: string = "cause";
+    public static createErrorObject(message: string): {};
 
     /**
      * APIで発生したエラーのオブジェクトを作成する。
      * 
-     * @param message 
-     * @param causeObject 
+     * @param message エラーメッセージ。
+     * @param causeObject エラー発生の原因となったオブジェクト。
+     * @param propertyAndErrorMessage プロパティ毎のエラーメッセージ。
      * @returns 
      */
-    public static createErrorObject(message: string, causeObject?: Record<string, string>): {} {
+    public static createErrorObject(message: string, causeObject: Record<string, any>, propertyAndErrorMessage: Record<string, string>): {};
+    
+    /**
+     * @deprecated
+     */
+    public static createErrorObject(message: string, causeObject?: Record<string, any>, propertyAndErrorMessage?: Record<string, string>): {} {
         const object: Record<string, any> = {};
-        object[API.NAME_OF_ERROR_MESSAGE] = message;
+        object[API.propertyOfErrorMessage.physicalName] = message;
         if (causeObject) {
-            object[API.NAME_OF_ERROR_CAUSE_OBJECT] = causeObject;
+            object[API.propertyOfCauseObject.physicalName] = causeObject;
+        }
+        if (propertyAndErrorMessage) {
+            object[API.propertyOfPropertyAndErrorMessage.physicalName] = propertyAndErrorMessage;
         }
         return object;
     }
@@ -120,17 +143,21 @@ export class API {
 export class APIRequestError extends Error {
 
     /**
-     * コンストラクタ。レスポンスステータスとエラーのオブジェクトを指定する。
+     * コンストラクタ。
      * 
-     * @param responseStatus
-     * @param errorObject 
+     * @param responseStatus 400や401などのHTTPレスポンスステータス。
+     * @param message エラーメッセージ。
+     * @param causeObject エラー発生の原因となったオブジェクト。
+     * @param propertyAndErrorMessage プロパティ毎のエラーメッセージ。
      */
-    public constructor(responseStatus: number, errorObject: Record<string, any>) {
-        super(errorObject[API.NAME_OF_ERROR_MESSAGE]);
+    public constructor(responseStatus: number, message: string, causeObject?: Record<string, any>, propertyAndErrorMessage?: Record<string, string>) {
+        super(message);
         this.responseStatus = responseStatus;
-        if (errorObject[API.NAME_OF_ERROR_CAUSE_OBJECT]) {
-            this.causeMessages = errorObject[API.NAME_OF_ERROR_CAUSE_OBJECT];
-            this.causePropertyNames = Object.keys(errorObject[API.NAME_OF_ERROR_CAUSE_OBJECT]);
+        if (typeof causeObject !== "undefined") {
+            this.causeObject = causeObject;
+        }
+        if (typeof propertyAndErrorMessage !== "undefined") {
+            this.propertyAndErrorMessage = propertyAndErrorMessage;
         }
     }
 
@@ -140,26 +167,12 @@ export class APIRequestError extends Error {
     public readonly responseStatus: number;
 
     /**
-     * 原因となったプロパティ名。
+     * エラー発生の原因となったオブジェクト。
      */
-    public readonly causePropertyNames: string[] = [];
+    public readonly causeObject: Record<string, any> = {};
 
     /**
-     * 原因となったプロパティ名とメッセージの連想配列。
+     * プロパティ毎のエラーメッセージ。
      */
-    private readonly causeMessages: Record<string, string> = {};
-
-    /**
-     * 指定されたプロパティ名のエラーメッセージを取得する。
-     * 
-     * @param causePropertyName
-     * @returns 
-     */
-    public getMessage(causePropertyName: string): string {
-        const message = this.causeMessages[causePropertyName];
-        if (typeof message === "undefined") {
-            return "";
-        }
-        return message;
-    }
+    public readonly propertyAndErrorMessage: Record<string, string> = {};
 }

@@ -1,3 +1,4 @@
+import Property from "../Property.js";
 import StringObject from "../StringObject.js";
 /**
  * APIにリクエストするクラス。このクラスでリクエストできるAPIはエラーをJSONで返すものに限る。
@@ -46,76 +47,70 @@ export class API {
             default:
                 let apiRequestError;
                 try {
-                    const json = await response.json();
-                    apiRequestError = new APIRequestError(response.status, json);
+                    const errorObject = await response.json();
+                    apiRequestError = new APIRequestError(response.status, errorObject[API.propertyOfErrorMessage.physicalName], errorObject[API.propertyOfCauseObject.physicalName], errorObject[API.propertyOfPropertyAndErrorMessage.physicalName]);
                 }
                 catch (error) {
-                    apiRequestError = new APIRequestError(response.status, { message: error.message });
+                    apiRequestError = new APIRequestError(response.status, error.message);
                 }
                 throw apiRequestError;
         }
     }
     /**
-     * APIで発生したエラーのオブジェクトを作成する。
-     *
-     * @param message
-     * @param causeObject
-     * @returns
+     * @deprecated
      */
-    static createErrorObject(message, causeObject) {
+    static createErrorObject(message, causeObject, propertyAndErrorMessage) {
         const object = {};
-        object[API.NAME_OF_ERROR_MESSAGE] = message;
+        object[API.propertyOfErrorMessage.physicalName] = message;
         if (causeObject) {
-            object[API.NAME_OF_ERROR_CAUSE_OBJECT] = causeObject;
+            object[API.propertyOfCauseObject.physicalName] = causeObject;
+        }
+        if (propertyAndErrorMessage) {
+            object[API.propertyOfPropertyAndErrorMessage.physicalName] = propertyAndErrorMessage;
         }
         return object;
     }
 }
 /**
- * ErrorObjectに含まれるエラーメッセージのキー。
+ * リクエストエラーのメッセージを格納する場合に使用するプロパティ。
  */
-API.NAME_OF_ERROR_MESSAGE = "message";
+API.propertyOfErrorMessage = new Property("error_message", "エラーメッセージ");
 /**
- * ErrorObjectに含まれる原因オブジェクトのキー。
+ * リクエストエラーの原因となったオブジェクトを格納する場合に使用するプロパティ。
  */
-API.NAME_OF_ERROR_CAUSE_OBJECT = "cause";
+API.propertyOfCauseObject = new Property("cause_object", "エラーの原因となったオブジェクト");
+/**
+ * リクエストエラーの原因となったプロパティ毎のエラーメッセージを格納する場合に使用するプロパティ。
+ */
+API.propertyOfPropertyAndErrorMessage = new Property("property_and_error_message", "エラーの原因となったプロパティ毎のエラーメッセージ");
 /**
  * リクエストで発生したエラーのクラス。
  */
 export class APIRequestError extends Error {
     /**
-     * コンストラクタ。レスポンスステータスとエラーのオブジェクトを指定する。
+     * コンストラクタ。
      *
-     * @param responseStatus
-     * @param errorObject
+     * @param responseStatus 400や401などのHTTPレスポンスステータス。
+     * @param message エラーメッセージ。
+     * @param causeObject エラー発生の原因となったオブジェクト。
+     * @param propertyAndErrorMessage プロパティ毎のエラーメッセージ。
      */
-    constructor(responseStatus, errorObject) {
-        super(errorObject[API.NAME_OF_ERROR_MESSAGE]);
+    constructor(responseStatus, message, causeObject, propertyAndErrorMessage) {
+        super(message);
         /**
-         * 原因となったプロパティ名。
+         * エラー発生の原因となったオブジェクト。
          */
-        this.causePropertyNames = [];
+        this.causeObject = {};
         /**
-         * 原因となったプロパティ名とメッセージの連想配列。
+         * プロパティ毎のエラーメッセージ。
          */
-        this.causeMessages = {};
+        this.propertyAndErrorMessage = {};
         this.responseStatus = responseStatus;
-        if (errorObject[API.NAME_OF_ERROR_CAUSE_OBJECT]) {
-            this.causeMessages = errorObject[API.NAME_OF_ERROR_CAUSE_OBJECT];
-            this.causePropertyNames = Object.keys(errorObject[API.NAME_OF_ERROR_CAUSE_OBJECT]);
+        if (typeof causeObject !== "undefined") {
+            this.causeObject = causeObject;
         }
-    }
-    /**
-     * 指定されたプロパティ名のエラーメッセージを取得する。
-     *
-     * @param causePropertyName
-     * @returns
-     */
-    getMessage(causePropertyName) {
-        const message = this.causeMessages[causePropertyName];
-        if (typeof message === "undefined") {
-            return "";
+        if (typeof propertyAndErrorMessage !== "undefined") {
+            this.propertyAndErrorMessage = propertyAndErrorMessage;
         }
-        return message;
     }
 }

@@ -1,3 +1,4 @@
+import Property from "../Property.js";
 /**
  * APIにリクエストするクラス。このクラスでリクエストできるAPIはエラーをJSONで返すものに限る。
  */
@@ -11,6 +12,18 @@ export declare class API {
     constructor(url: string, method: string);
     private url;
     private method;
+    /**
+     * リクエストエラーのメッセージを格納する場合に使用するプロパティ。
+     */
+    static readonly propertyOfErrorMessage: Property;
+    /**
+     * リクエストエラーの原因となったオブジェクトを格納する場合に使用するプロパティ。
+     */
+    static readonly propertyOfCauseObject: Property;
+    /**
+     * リクエストエラーの原因となったプロパティ毎のエラーメッセージを格納する場合に使用するプロパティ。
+     */
+    static readonly propertyOfPropertyAndErrorMessage: Property;
     /**
      * APIにFormDataを送信するリクエストを実行する。
      *
@@ -35,50 +48,45 @@ export declare class API {
      */
     request(): Promise<Response>;
     /**
-     * ErrorObjectに含まれるエラーメッセージのキー。
+     * APIで発生したエラーのオブジェクトを作成する。
+     *
+     * @param message エラーメッセージ。
+     * @returns
      */
-    static readonly NAME_OF_ERROR_MESSAGE: string;
-    /**
-     * ErrorObjectに含まれる原因オブジェクトのキー。
-     */
-    static readonly NAME_OF_ERROR_CAUSE_OBJECT: string;
+    static createErrorObject(message: string): {};
     /**
      * APIで発生したエラーのオブジェクトを作成する。
      *
-     * @param message
-     * @param causeObject
+     * @param message エラーメッセージ。
+     * @param causeObject エラー発生の原因となったオブジェクト。
+     * @param propertyAndErrorMessage プロパティ毎のエラーメッセージ。
      * @returns
      */
-    static createErrorObject(message: string, causeObject?: Record<string, string>): {};
+    static createErrorObject(message: string, causeObject: Record<string, any>, propertyAndErrorMessage: Record<string, string>): {};
 }
 /**
  * リクエストで発生したエラーのクラス。
  */
 export declare class APIRequestError extends Error {
     /**
-     * コンストラクタ。レスポンスステータスとエラーのオブジェクトを指定する。
+     * コンストラクタ。
      *
-     * @param responseStatus
-     * @param errorObject
+     * @param responseStatus 400や401などのHTTPレスポンスステータス。
+     * @param message エラーメッセージ。
+     * @param causeObject エラー発生の原因となったオブジェクト。
+     * @param propertyAndErrorMessage プロパティ毎のエラーメッセージ。
      */
-    constructor(responseStatus: number, errorObject: Record<string, any>);
+    constructor(responseStatus: number, message: string, causeObject?: Record<string, any>, propertyAndErrorMessage?: Record<string, string>);
     /**
      * HTTPのレスポンスステータス。
      */
     readonly responseStatus: number;
     /**
-     * 原因となったプロパティ名。
+     * エラー発生の原因となったオブジェクト。
      */
-    readonly causePropertyNames: string[];
+    readonly causeObject: Record<string, any>;
     /**
-     * 原因となったプロパティ名とメッセージの連想配列。
+     * プロパティ毎のエラーメッセージ。
      */
-    private readonly causeMessages;
-    /**
-     * 指定されたプロパティ名のエラーメッセージを取得する。
-     *
-     * @param causePropertyName
-     * @returns
-     */
-    getMessage(causePropertyName: string): string;
+    readonly propertyAndErrorMessage: Record<string, string>;
 }
