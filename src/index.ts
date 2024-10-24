@@ -20,6 +20,7 @@ import { API, APIRequestError } from "./class/io/API.js";
 import Column from "./class/database/Column.js";
 import Table from "./class/database/Table.js";
 import RecordMap from "./class/database/RecordMap.js";
+import SearchResult from "./class/database/SearchResult.js";
 
 import UserAgent from "./class/UserAgent.js";
 import SoundPlayer from "./class/SoundPlayer.js";
@@ -37,7 +38,7 @@ export {
     Datetime, DayOfWeek, DatetimeFormat, Period, CutoffPeriod,
     StringValidator, StringValidationError, ObjectValidator, ObjectValidationError,
     ByteArray, API, APIRequestError,
-    Column, Table, RecordMap,
+    Column, Table, RecordMap, SearchResult,
     UserAgent, SoundPlayer,
     GraphicalString, JAN13Renderer, NW7Renderer,
 };
