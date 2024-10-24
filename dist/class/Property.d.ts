@@ -29,12 +29,12 @@ export default class Property extends Enumeration {
      */
     static findProperty<T extends Property>(properties: Record<any, T | ((...args: any) => any)>, physicalName: string): T | null;
     /**
-     * 指定された定数オブジェクト内の定数のみの配列を返す。
+     * 指定された定数オブジェクト内の定数のみを抽出する。
      *
      * @param properties
      * @returns
      */
-    static createProperties<T extends Property>(properties: Record<any, T | ((...args: any) => any)>): T[];
+    static extractProperties<T extends Property>(properties: Record<any, T | ((...args: any) => any)>): T[];
     /**
      * 指定された定数オブジェクト内の定数で、物理名がキー、論理名が値のマップを作成する。
      *

@@ -43,12 +43,12 @@ export default class Enumeration {
     }
 
     /**
-     * 指定された定数オブジェクト内の定数のみの配列を返す。
+     * 指定された定数オブジェクト内の定数のみを抽出する。
      * 
      * @param enumerations 
      * @returns 
      */
-    public static createEnumerations<T extends Enumeration>(enumerations: Record<any, T | ((...args: any) => any)>): T[] {
+    public static extractEnumerations<T extends Enumeration>(enumerations: Record<any, T | ((...args: any) => any)>): T[] {
         const constants = [];
         for (const enumeration of Object.values(enumerations)) {
             if (enumeration instanceof Enumeration) {

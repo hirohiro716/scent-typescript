@@ -56,13 +56,13 @@ export default class Column extends Property {
     }
 
     /**
-     * 指定された定数オブジェクト内の定数のみの配列を返す。
+     * 指定された定数オブジェクト内の定数のみを抽出する。
      * 
      * @param columns 
      * @returns 
      */
-    public static createColumns<T extends Column>(columns: Record<any, T | ((...args: any) => any)>): T[] {
-        return Property.createProperties(columns);
+    public static extractColumns<T extends Column>(columns: Record<any, T | ((...args: any) => any)>): T[] {
+        return Property.extractProperties(columns);
     }
 
     /**

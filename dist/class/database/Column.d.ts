@@ -29,12 +29,12 @@ export default class Column extends Property {
      */
     static findColumn<T extends Column>(columns: Record<any, T | ((...args: any) => any)>, physicalName: string): T | null;
     /**
-     * 指定された定数オブジェクト内の定数のみの配列を返す。
+     * 指定された定数オブジェクト内の定数のみを抽出する。
      *
      * @param columns
      * @returns
      */
-    static createColumns<T extends Column>(columns: Record<any, T | ((...args: any) => any)>): T[];
+    static extractColumns<T extends Column>(columns: Record<any, T | ((...args: any) => any)>): T[];
     /**
      * 指定された定数オブジェクト内の定数で、物理名がキー、論理名が値のマップを作成する。
      *

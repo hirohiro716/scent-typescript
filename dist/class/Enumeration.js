@@ -30,12 +30,12 @@ export default class Enumeration {
         return null;
     }
     /**
-     * 指定された定数オブジェクト内の定数のみの配列を返す。
+     * 指定された定数オブジェクト内の定数のみを抽出する。
      *
      * @param enumerations
      * @returns
      */
-    static createEnumerations(enumerations) {
+    static extractEnumerations(enumerations) {
         const constants = [];
         for (const enumeration of Object.values(enumerations)) {
             if (enumeration instanceof Enumeration) {

@@ -41,13 +41,13 @@ export default class Property extends Enumeration {
     }
 
     /**
-     * 指定された定数オブジェクト内の定数のみの配列を返す。
+     * 指定された定数オブジェクト内の定数のみを抽出する。
      * 
      * @param properties 
      * @returns 
      */
-    public static createProperties<T extends Property>(properties: Record<any, T | ((...args: any) => any)>): T[] {
-        return Enumeration.createEnumerations(properties);
+    public static extractProperties<T extends Property>(properties: Record<any, T | ((...args: any) => any)>): T[] {
+        return Enumeration.extractEnumerations(properties);
     }
 
     /**

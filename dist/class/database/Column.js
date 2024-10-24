@@ -46,13 +46,13 @@ export default class Column extends Property {
         return Property.findProperty(columns, physicalName);
     }
     /**
-     * 指定された定数オブジェクト内の定数のみの配列を返す。
+     * 指定された定数オブジェクト内の定数のみを抽出する。
      *
      * @param columns
      * @returns
      */
-    static createColumns(columns) {
-        return Property.createProperties(columns);
+    static extractColumns(columns) {
+        return Property.extractProperties(columns);
     }
     /**
      * 指定された定数オブジェクト内の定数で、物理名がキー、論理名が値のマップを作成する。
