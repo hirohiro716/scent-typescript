@@ -30,23 +30,49 @@ export class RoundNumber extends Enumeration {
         }
         return value;
     }
+}
 
+/**
+ * 数値の端数処理の定数オブジェクト。
+ */
+export const RoundNumbers = {
+    /**
+     * 四捨五入。
+     */
+    round: new RoundNumber("round", "四捨五入"),
+    /**
+     * 切り下げ。
+     */
+    floor: new RoundNumber("floor", "切り下げ"),
+    /**
+     * 切り上げ。
+     */
+    ceil: new RoundNumber("ceil", "切り上げ"),
     /**
      * 指定された物理名に一致する定数を返す。見つからなかった場合はnullを返す。
      * 
      * @param physicalName 
      * @returns 
      */
-    public static findRoundNumber(physicalName: string): RoundNumber | null {
-        return RoundNumber.findEnumeration(RoundNumbers, physicalName);
-    }
-}
-
-/**
- * 数値の端数処理の種類。
- */
-export const RoundNumbers = {
-    round: new RoundNumber("round", "四捨五入"),
-    floor: new RoundNumber("floor", "切り下げ"),
-    ceil: new RoundNumber("ceil", "切り上げ"),
-}
+    find: (physicalName: string): RoundNumber | null => {
+        const enumeration: any = Enumeration.findEnumeration(RoundNumbers, physicalName);
+        return enumeration;
+    },
+    /**
+     * 定数オブジェクト内の定数のみの配列を返す。
+     * 
+     * @returns 
+     */
+    getEnumerations: (): RoundNumber[] => {
+        const enumerations: any = Enumeration.extractEnumerations(RoundNumbers);
+        return enumerations;
+    },
+    /**
+     * すべての定数で、物理名がキー、論理名が値のマップを作成する。
+     * 
+     * @returns 
+     */
+    createNameMap: (): Map<string, string> => {
+        return Enumeration.createEnumerationNameMap(RoundNumbers);
+    },
+};

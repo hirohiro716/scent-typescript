@@ -11,19 +11,40 @@ export declare class RoundNumber extends Enumeration {
      * @returns
      */
     calculate(value: number, digit?: number): number;
+}
+/**
+ * 数値の端数処理の定数オブジェクト。
+ */
+export declare const RoundNumbers: {
+    /**
+     * 四捨五入。
+     */
+    round: RoundNumber;
+    /**
+     * 切り下げ。
+     */
+    floor: RoundNumber;
+    /**
+     * 切り上げ。
+     */
+    ceil: RoundNumber;
     /**
      * 指定された物理名に一致する定数を返す。見つからなかった場合はnullを返す。
      *
      * @param physicalName
      * @returns
      */
-    static findRoundNumber(physicalName: string): RoundNumber | null;
-}
-/**
- * 数値の端数処理の種類。
- */
-export declare const RoundNumbers: {
-    round: RoundNumber;
-    floor: RoundNumber;
-    ceil: RoundNumber;
+    find: (physicalName: string) => RoundNumber | null;
+    /**
+     * 定数オブジェクト内の定数のみの配列を返す。
+     *
+     * @returns
+     */
+    getEnumerations: () => RoundNumber[];
+    /**
+     * すべての定数で、物理名がキー、論理名が値のマップを作成する。
+     *
+     * @returns
+     */
+    createNameMap: () => Map<string, string>;
 };

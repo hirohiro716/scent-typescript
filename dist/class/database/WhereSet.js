@@ -1,7 +1,7 @@
 import StringObject from "../StringObject.js";
 import { Datetime } from "../datetime/Datetime.js";
 import Column from "./Column.js";
-import { Comparison, Comparisons } from "./Comparison.js";
+import { Comparisons } from "./Comparison.js";
 /**
  * SQLのWHERE句をプレースホルダとバインド変数を使用して作成するクラス。
  * 最終的に下記のような、WHEREで使用するプレースホルダと、レコード検索で使用するバインド変数を作成することができる。
@@ -25,14 +25,14 @@ export class WhereSet {
                 }
                 else {
                     if ("isNegate" in where) {
-                        const comparison = Comparison.findComparison(where.comparison);
+                        const comparison = Comparisons.find(where.comparison);
                         if (comparison) {
                             this._wheres.push(new Where(where.column, comparison, where.values, where.isNegate));
                         }
                     }
                     // For scent-java library
                     if ("is_negate" in where) {
-                        for (const comparison of Object.values(Comparisons)) {
+                        for (const comparison of Comparisons.getComparisons()) {
                             if (StringObject.from(where.comparison).equals(comparison.physicalName)) {
                                 if (where.values.length === 1) {
                                     this._wheres.push(new Where(where.column, comparison, where.values[0].value, where.is_negate));

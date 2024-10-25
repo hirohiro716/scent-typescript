@@ -308,6 +308,12 @@ export declare const DayOfWeek: {
      */
     find: (physicalName: string) => Enumeration | null;
     /**
+     * 定数オブジェクト内の定数のみの配列を返す。
+     *
+     * @returns
+     */
+    getEnumerations: () => Enumeration[];
+    /**
      * すべての定数で、物理名がキー、論理名が値のマップを作成する。
      *
      * @returns
@@ -345,6 +351,12 @@ export declare const DatetimeFormat: {
      * @returns
      */
     find: (physicalName: string) => Enumeration | null;
+    /**
+     * 定数オブジェクト内の定数のみの配列を返す。
+     *
+     * @returns
+     */
+    getEnumerations: () => Enumeration[];
     /**
      * すべての定数で、物理名がキー、論理名が値のマップを作成する。
      *

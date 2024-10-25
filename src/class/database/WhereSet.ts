@@ -52,14 +52,14 @@ export class WhereSet {
                     this._wheres.push(where);
                 } else {
                     if ("isNegate" in where) {
-                        const comparison = Comparison.findComparison(where.comparison);
+                        const comparison = Comparisons.find(where.comparison);
                         if (comparison) {
                             this._wheres.push(new Where(where.column, comparison, where.values, where.isNegate));
                         }
                     }
                     // For scent-java library
                     if ("is_negate" in where) {
-                        for (const comparison of Object.values(Comparisons)) {
+                        for (const comparison of Comparisons.getComparisons()) {
                             if (StringObject.from(where.comparison).equals(comparison.physicalName)) {
                                 if (where.values.length === 1) {
                                     this._wheres.push(new Where(where.column, comparison, where.values[0].value, where.is_negate));

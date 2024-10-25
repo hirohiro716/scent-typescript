@@ -573,6 +573,14 @@ export const DayOfWeek = {
         return Enumeration.findEnumeration(DayOfWeek, physicalName);
     },
     /**
+     * 定数オブジェクト内の定数のみの配列を返す。
+     * 
+     * @returns 
+     */
+    getEnumerations: (): Enumeration[] => {
+        return Enumeration.extractEnumerations(DayOfWeek);
+    },
+    /**
      * すべての定数で、物理名がキー、論理名が値のマップを作成する。
      * 
      * @returns 
@@ -614,6 +622,14 @@ export const DatetimeFormat = {
      */
     find: (physicalName: string): Enumeration | null => {
         return Enumeration.findEnumeration(DatetimeFormat, physicalName);
+    },
+    /**
+     * 定数オブジェクト内の定数のみの配列を返す。
+     * 
+     * @returns 
+     */
+    getEnumerations: (): Enumeration[] => {
+        return Enumeration.extractEnumerations(DayOfWeek);
     },
     /**
      * すべての定数で、物理名がキー、論理名が値のマップを作成する。
