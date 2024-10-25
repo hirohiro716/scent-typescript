@@ -1,4 +1,4 @@
-import Enumeration from "../Enumeration";
+import Enumeration from "../Enumeration.js";
 /**
  * データベースで使用する比較演算子の定数クラス。
  */
