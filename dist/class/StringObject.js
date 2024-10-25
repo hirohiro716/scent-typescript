@@ -427,7 +427,6 @@ class StringObject {
             yield new StringObject(one);
         }
     }
-    ;
     /**
      * この文字列を指定された回数繰り返す。
      *

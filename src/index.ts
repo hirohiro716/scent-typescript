@@ -43,4 +43,4 @@ export {
     Column, Table, RecordMap, SearchResult, Comparison, Comparisons, WhereSet, Where,
     UserAgent, SoundPlayer,
     GraphicalString, JAN13Renderer, NW7Renderer,
-};
+}

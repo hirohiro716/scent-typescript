@@ -75,4 +75,4 @@ export const RoundNumbers = {
     createNameMap: (): Map<string, string> => {
         return Enumeration.createEnumerationNameMap(RoundNumbers);
     },
-};
+}
