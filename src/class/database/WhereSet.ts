@@ -298,6 +298,20 @@ export class WhereSet {
     public clone(): WhereSet {
         return new WhereSet(this.toObject());
     }
+
+    /**
+     * 指定された複数のWhereSetインスタンスをオブジェクトの配列に変換する。
+     * 
+     * @param whereSets 
+     * @returns 
+     */
+    public static toObjects(whereSets: WhereSet[]): object[] {
+        const objects = [];
+        for (const whereSet of whereSets) {
+            objects.push(whereSet.toObject());
+        }
+        return objects;
+    }
 }
 
 /**

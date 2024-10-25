@@ -142,6 +142,13 @@ export declare class WhereSet {
      * @returns
      */
     clone(): WhereSet;
+    /**
+     * 指定された複数のWhereSetインスタンスをオブジェクトの配列に変換する。
+     *
+     * @param whereSets
+     * @returns
+     */
+    static toObjects(whereSets: WhereSet[]): object[];
 }
 /**
  * SQLのWHERE句をプレースホルダとバインド変数を使用して作成するクラス。

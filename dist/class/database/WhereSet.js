@@ -247,6 +247,19 @@ export class WhereSet {
     clone() {
         return new WhereSet(this.toObject());
     }
+    /**
+     * 指定された複数のWhereSetインスタンスをオブジェクトの配列に変換する。
+     *
+     * @param whereSets
+     * @returns
+     */
+    static toObjects(whereSets) {
+        const objects = [];
+        for (const whereSet of whereSets) {
+            objects.push(whereSet.toObject());
+        }
+        return objects;
+    }
 }
 /**
  * SQLのWHERE句をプレースホルダとバインド変数を使用して作成するクラス。
