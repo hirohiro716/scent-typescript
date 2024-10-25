@@ -21,6 +21,8 @@ import Column from "./class/database/Column.js";
 import Table from "./class/database/Table.js";
 import RecordMap from "./class/database/RecordMap.js";
 import SearchResult from "./class/database/SearchResult.js";
+import { Comparison, Comparisons } from "./class/database/Comparison.js";
+import { WhereSet, Where } from "./class/database/WhereSet.js";
 
 import UserAgent from "./class/UserAgent.js";
 import SoundPlayer from "./class/SoundPlayer.js";
@@ -38,7 +40,7 @@ export {
     Datetime, DayOfWeek, DatetimeFormat, Period, CutoffPeriod,
     StringValidator, StringValidationError, ObjectValidator, ObjectValidationError,
     ByteArray, API, APIRequestError,
-    Column, Table, RecordMap, SearchResult,
+    Column, Table, RecordMap, SearchResult, Comparison, Comparisons, WhereSet, Where,
     UserAgent, SoundPlayer,
     GraphicalString, JAN13Renderer, NW7Renderer,
 };
