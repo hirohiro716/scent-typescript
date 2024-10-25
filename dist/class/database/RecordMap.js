@@ -76,7 +76,7 @@ export default class RecordMap extends Map {
      * @param records
      * @returns
      */
-    static toObject(records) {
+    static toObjects(records) {
         const objects = [];
         for (const record of records) {
             objects.push(record.toObject());

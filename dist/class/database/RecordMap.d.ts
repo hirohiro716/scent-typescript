@@ -34,7 +34,7 @@ export default class RecordMap extends Map<Column, any> {
      * @param records
      * @returns
      */
-    static toObject(records: RecordMap[]): object[];
+    static toObjects(records: RecordMap[]): object[];
     /**
      * このインスタンスのクローンを作成する。
      *
