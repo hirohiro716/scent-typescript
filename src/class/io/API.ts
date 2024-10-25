@@ -17,9 +17,15 @@ export class API {
         this.method = method;
     }
 
-    private url: string;
+    /**
+     * リクエストを送信するURL。
+     */
+    public readonly url: string;
 
-    private method: string;
+    /**
+     * リクエストで使用するメソッド。
+     */
+    public readonly method: string;
 
     /**
      * リクエストエラーのメッセージを格納する場合に使用するプロパティ。

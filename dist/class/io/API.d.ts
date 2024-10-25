@@ -10,8 +10,14 @@ export declare class API {
      * @param method
      */
     constructor(url: string, method: string);
-    private url;
-    private method;
+    /**
+     * リクエストを送信するURL。
+     */
+    readonly url: string;
+    /**
+     * リクエストで使用するメソッド。
+     */
+    readonly method: string;
     /**
      * リクエストエラーのメッセージを格納する場合に使用するプロパティ。
      */
