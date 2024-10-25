@@ -572,6 +572,14 @@ export const DayOfWeek = {
     find: (physicalName: string): Enumeration | null => {
         return Enumeration.findEnumeration(DayOfWeek, physicalName);
     },
+    /**
+     * すべての定数で、物理名がキー、論理名が値のマップを作成する。
+     * 
+     * @returns 
+     */
+    createNameMap: (): Map<string, string> => {
+        return Enumeration.createEnumerationNameMap(DayOfWeek);
+    },
 }
 
 /**
@@ -606,5 +614,13 @@ export const DatetimeFormat = {
      */
     find: (physicalName: string): Enumeration | null => {
         return Enumeration.findEnumeration(DatetimeFormat, physicalName);
+    },
+    /**
+     * すべての定数で、物理名がキー、論理名が値のマップを作成する。
+     * 
+     * @returns 
+     */
+    createNameMap: (): Map<string, string> => {
+        return Enumeration.createEnumerationNameMap(DatetimeFormat);
     },
 }

@@ -307,6 +307,12 @@ export declare const DayOfWeek: {
      * @returns
      */
     find: (physicalName: string) => Enumeration | null;
+    /**
+     * すべての定数で、物理名がキー、論理名が値のマップを作成する。
+     *
+     * @returns
+     */
+    createNameMap: () => Map<string, string>;
 };
 /**
  * 日時文字列フォーマットパターンの定数オブジェクト。
@@ -339,4 +345,10 @@ export declare const DatetimeFormat: {
      * @returns
      */
     find: (physicalName: string) => Enumeration | null;
+    /**
+     * すべての定数で、物理名がキー、論理名が値のマップを作成する。
+     *
+     * @returns
+     */
+    createNameMap: () => Map<string, string>;
 };
