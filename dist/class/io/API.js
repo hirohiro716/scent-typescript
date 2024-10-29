@@ -27,14 +27,16 @@ export class API {
                 break;
             case "get":
             case "delete":
-                url.append("?");
-                if (parameters instanceof FormData) {
-                    url.append(StringObject.queryString(parameters));
-                }
-                else {
-                    if (typeof parameters !== "undefined") {
-                        const parametersObject = JSON.parse(StringObject.from(parameters).toString());
-                        url.append(StringObject.queryString(new FormData(parametersObject)));
+                if (typeof parameters !== "undefined") {
+                    url.append("?");
+                    if (parameters instanceof FormData) {
+                        url.append(StringObject.queryString(parameters));
+                    }
+                    else {
+                        if (typeof parameters !== "undefined") {
+                            const parametersObject = JSON.parse(StringObject.from(parameters).toString());
+                            url.append(StringObject.queryString(new FormData(parametersObject)));
+                        }
                     }
                 }
                 break;
