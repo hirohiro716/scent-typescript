@@ -68,4 +68,11 @@ export default class Period {
      * @returns
      */
     toDays(): number;
+    /**
+     * コンストラクタの呼び出しと同じで新しいインスタンスを作成する。
+     *
+     * @param startDatetime
+     * @param endDatetime
+     */
+    static from(startDatetime: Datetime | Date, endDatetime: Datetime | Date): Period;
 }

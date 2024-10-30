@@ -110,4 +110,13 @@ export default class Period {
     toDays() {
         return this.toMilliseconds() / 1000 / 60 / 60 / 24;
     }
+    /**
+     * コンストラクタの呼び出しと同じで新しいインスタンスを作成する。
+     *
+     * @param startDatetime
+     * @param endDatetime
+     */
+    static from(startDatetime, endDatetime) {
+        return new Period(startDatetime, endDatetime);
+    }
 }
