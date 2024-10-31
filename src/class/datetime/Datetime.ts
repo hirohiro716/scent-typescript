@@ -307,7 +307,13 @@ export class Datetime {
      * @returns このインスタンス。
      */
     public addMonth(month: number): Datetime {
-        return this.setMonth(this.getMonth() + month);
+        const originalDay = this.getDay();
+        this.setMonth(this.getMonth() + month);
+        if (originalDay !== this.getDay()) {
+            this.addDay(-5);
+            this.changeToLastDayOfMonth();
+        }
+        return this;
     }
 
     /**
@@ -361,12 +367,26 @@ export class Datetime {
     }
 
     /**
-     * 月末に変更する。
+     * 月末の場合はtrueを返す。
+     * 
+     * @returns 
      */
-    public changeToLastDayOfMonth(): void {
-        this.addMonth(1);
-        this.setDay(1);
-        this.addDay(-1);
+    public isLastDayOfMonth(): boolean {
+        return this.clone().addDay(1).getMonth() > this.getMonth();
+    }
+
+    /**
+     * 月末に変更する。
+     * 
+     * @returns このインスタンス。
+     */
+    public changeToLastDayOfMonth(): Datetime {
+        if (this.isLastDayOfMonth() === false) {
+            this.addMonth(1);
+            this.setDay(1);
+            this.addDay(-1);
+        }
+        return this;
     }
 
     /**

@@ -266,7 +266,13 @@ export class Datetime {
      * @returns このインスタンス。
      */
     addMonth(month) {
-        return this.setMonth(this.getMonth() + month);
+        const originalDay = this.getDay();
+        this.setMonth(this.getMonth() + month);
+        if (originalDay !== this.getDay()) {
+            this.addDay(-5);
+            this.changeToLastDayOfMonth();
+        }
+        return this;
     }
     /**
      * 日を加算する。
@@ -314,12 +320,25 @@ export class Datetime {
         return this.setMillisecond(this.getMillisecond() + millisecond);
     }
     /**
+     * 月末の場合はtrueを返す。
+     *
+     * @returns
+     */
+    isLastDayOfMonth() {
+        return this.clone().addDay(1).getMonth() > this.getMonth();
+    }
+    /**
      * 月末に変更する。
+     *
+     * @returns このインスタンス。
      */
     changeToLastDayOfMonth() {
-        this.addMonth(1);
-        this.setDay(1);
-        this.addDay(-1);
+        if (this.isLastDayOfMonth() === false) {
+            this.addMonth(1);
+            this.setDay(1);
+            this.addDay(-1);
+        }
+        return this;
     }
     /**
      * 文字列表現を取得する。

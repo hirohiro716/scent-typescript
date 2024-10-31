@@ -201,9 +201,17 @@ export declare class Datetime {
      */
     addMillisecond(millisecond: number): Datetime;
     /**
-     * 月末に変更する。
+     * 月末の場合はtrueを返す。
+     *
+     * @returns
      */
-    changeToLastDayOfMonth(): void;
+    isLastDayOfMonth(): boolean;
+    /**
+     * 月末に変更する。
+     *
+     * @returns このインスタンス。
+     */
+    changeToLastDayOfMonth(): Datetime;
     /**
      * 年〜日までの区切り文字。
      */
