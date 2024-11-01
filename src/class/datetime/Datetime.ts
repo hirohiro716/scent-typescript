@@ -50,24 +50,24 @@ export class Datetime {
             const yyyymmdd = datetimeString.clone().extract("^[0-9\\-]{5,}").split("-|/");
             if (yyyymmdd.length == 3) {
                 const yyyy = yyyymmdd[0].toNumber();
-                if (yyyy) this.setYear(yyyy);
+                if (yyyy !== null) this.setYear(yyyy);
                 const mm = yyyymmdd[1].toNumber();
-                if (mm) this.setMonth(mm);
+                if (mm !== null) this.setMonth(mm);
                 const dd = yyyymmdd[2].toNumber();
-                if (dd) this.setDay(dd);
+                if (dd !== null) this.setDay(dd);
             }
             const hhmmss = datetimeString.clone().extract("[0-9:\\.]{3,}$").split(":|\\.");
             if (hhmmss.length >= 2) {
                 const hh = hhmmss[0].toNumber();
-                if (hh) this.setHour(hh);
+                if (hh !== null) this.setHour(hh);
                 const mm = hhmmss[1].toNumber();
-                if (mm) this.setMinute(mm);
+                if (mm !== null) this.setMinute(mm);
                 if (hhmmss.length >= 3) {
                     const ss = hhmmss[2].toNumber();
-                    if (ss) this.setSecond(ss);
+                    if (ss !== null) this.setSecond(ss);
                     if (hhmmss.length === 4) {
                         const ms = hhmmss[3].toNumber();
-                        if (ms) this.setMillisecond(ms);
+                        if (ms !== null) this.setMillisecond(ms);
                     }
                 }
             }
@@ -75,11 +75,11 @@ export class Datetime {
         }
         if (typeof parameter1 === "number") {
             this.setYear(parameter1);
-            if (month) this.setMonth(month);
-            if (day) this.setDay(day);
-            if (hour) this.setHour(hour);
-            if (minute) this.setMinute(minute);
-            if (second) this.setSecond(second);
+            if (typeof month !== "undefined") this.setMonth(month);
+            if (typeof day !== "undefined") this.setDay(day);
+            if (typeof hour !== "undefined") this.setHour(hour);
+            if (typeof minute !== "undefined") this.setMinute(minute);
+            if (typeof second !== "undefined") this.setSecond(second);
             return;
         }
         if (parameter1 instanceof Date) {
