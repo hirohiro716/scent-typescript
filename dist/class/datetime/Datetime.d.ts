@@ -345,13 +345,17 @@ export declare const DatetimeFormat: {
      */
     dateToSecond: Enumeration;
     /**
+     * 月と日。
+     */
+    monthAndDay: Enumeration;
+    /**
      * 時から秒まで。
      */
     hourToSecond: Enumeration;
     /**
-     * 時から分まで。
+     * 時と分。
      */
-    hourToMinute: Enumeration;
+    hourAndMinute: Enumeration;
     /**
      * 指定された物理名に一致する定数を返す。見つからなかった場合はnullを返す。
      *

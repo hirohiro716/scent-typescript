@@ -363,7 +363,7 @@ export class Datetime {
         switch (datetimeFormat) {
             case DatetimeFormat.dateToMinute:
             case DatetimeFormat.dateToSecond:
-            case DatetimeFormat.hourToMinute:
+            case DatetimeFormat.hourAndMinute:
             case DatetimeFormat.hourToSecond:
                 if (value.length() > 0) {
                     value.append(" ");
@@ -377,6 +377,11 @@ export class Datetime {
             case DatetimeFormat.hourToSecond:
                 value.append(":");
                 value.append(StringObject.from(this._date.getSeconds()).paddingLeft(2, "0"));
+        }
+        if (datetimeFormat === DatetimeFormat.monthAndDay) {
+            value.append(StringObject.from(this._date.getMonth() + 1));
+            value.append(this.yearToDateSeparator);
+            value.append(StringObject.from(this._date.getDate()));
         }
         return value.toString();
     }
@@ -572,13 +577,17 @@ export const DatetimeFormat = {
      */
     dateToSecond: new Enumeration("date_to_second", "年月日から秒まで"),
     /**
+     * 月と日。
+     */
+    monthAndDay: new Enumeration("month_and_day", "月と日"),
+    /**
      * 時から秒まで。
      */
     hourToSecond: new Enumeration("hour_to_second", "時から秒まで"),
     /**
-     * 時から分まで。
+     * 時と分。
      */
-    hourToMinute: new Enumeration("hour_to_minute", "時から分まで"),
+    hourAndMinute: new Enumeration("hour_and_minute", "時と分"),
     /**
      * 指定された物理名に一致する定数を返す。見つからなかった場合はnullを返す。
      *
