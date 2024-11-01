@@ -14,7 +14,7 @@ export class Datetime {
         this.yearToDateSeparator = "-";
         this._date = new Date();
         if (typeof parameter1 === "string") {
-            this.setYear(1970).setMonth(1).setDay(1).setHour(0).setMinute(0).setSecond(0).setMillisecond(0);
+            this.setAllMilliseconds(0);
             const datetimeString = new StringObject(parameter1);
             const yyyymmdd = datetimeString.clone().extract("^[0-9\\-]{5,}").split("-|/");
             if (yyyymmdd.length == 3) {
