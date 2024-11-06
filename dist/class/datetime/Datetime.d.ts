@@ -345,6 +345,10 @@ export declare const DatetimeFormat: {
      */
     dateToSecond: Enumeration;
     /**
+     * 年と月。
+     */
+    yearAndMonth: Enumeration;
+    /**
      * 月と日。
      */
     monthAndDay: Enumeration;
