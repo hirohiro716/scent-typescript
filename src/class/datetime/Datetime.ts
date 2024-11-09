@@ -546,7 +546,7 @@ export class Datetime {
     }
 
     /**
-     * 時間の文字列(00:00)を時分に変換する。
+     * 時間の文字列(00:00、00時00分)を時数と分数に変換する。
      * 
      * @param timeString 
      * @returns 
@@ -569,6 +569,31 @@ export class Datetime {
             return null;
         }
         return {hours: hours, minutes: minutes};
+    }
+
+    /**
+     * 年月の文字列(0000-00、0000/00、0000年00月)を年数と月数に変換する。
+     * 
+     * @param timeString 
+     * @returns 
+     */
+    public static monthStringToYearsAndMonths(timeString: string | undefined | null): {years: number, months: number} | null {
+        let years: number | null = null;
+        let months: number | null = null;
+        const monthParts = StringObject.from(timeString).split("[^0-9]");
+        if (monthParts.length > 1) {
+            years = monthParts[0].toNumber();
+            months = monthParts[1].toNumber();
+        }
+        if (years === null || months === null) {
+            return null;
+        }
+        const validator = new Datetime();
+        validator.setMonth(months);
+        if (months !== validator.getMonth()) {
+            return null;
+        }
+        return {years: years, months: months};
     }
 
     /**

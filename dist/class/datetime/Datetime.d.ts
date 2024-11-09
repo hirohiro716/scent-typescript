@@ -269,7 +269,7 @@ export declare class Datetime {
      */
     equalsTime(comparison: Datetime | Date | string): boolean;
     /**
-     * 時間の文字列(00:00)を時分に変換する。
+     * 時間の文字列(00:00、00時00分)を時数と分数に変換する。
      *
      * @param timeString
      * @returns
@@ -277,6 +277,16 @@ export declare class Datetime {
     static timeStringToHoursAndMinutes(timeString: string | undefined | null): {
         hours: number;
         minutes: number;
+    } | null;
+    /**
+     * 年月の文字列(0000-00、0000/00、0000年00月)を年数と月数に変換する。
+     *
+     * @param timeString
+     * @returns
+     */
+    static monthStringToYearsAndMonths(timeString: string | undefined | null): {
+        years: number;
+        months: number;
     } | null;
     /**
      * 分数を時間の文字列(00:00)に変換する。
