@@ -1,4 +1,5 @@
 import Enumeration from "../Enumeration.js";
+import { RoundNumbers } from "../RoundNumber.js";
 import StringObject from "../StringObject.js";
 
 /**
@@ -542,6 +543,50 @@ export class Datetime {
         }
         return this.getHour() === datetimeForComparison.getHour() && this.getMinute() === datetimeForComparison.getMinute()
             && this.getSecond() === datetimeForComparison.getSecond() && this.getMillisecond() === datetimeForComparison.getMillisecond();
+    }
+
+    /**
+     * 時間の文字列(00:00)を時分に変換する。
+     * 
+     * @param timeString 
+     * @returns 
+     */
+    public static timeStringToHoursAndMinutes(timeString: string | undefined | null): {hours: number, minutes: number} | null {
+        const timeParts = StringObject.from(timeString).split("[^0-9]");
+        let hours: number | null = null;
+        let minutes: number | null = null;
+        for (const timePart of timeParts) {
+            const number = timePart.toNumber();
+            if (number !== null) {
+                if (hours === null) {
+                    hours = number;
+                } else if (minutes === null) {
+                    minutes = number;
+                }
+            }
+        }
+        if (hours === null || minutes === null) {
+            return null;
+        }
+        return {hours: hours, minutes: minutes};
+    }
+
+    /**
+     * 分数を時間の文字列(00:00)に変換する。
+     * 
+     * @param numberOfMinutes 
+     * @returns 
+     */
+    public static minutesToTimeString(numberOfMinutes: number | undefined | null): string {
+        const result = new StringObject("00:00");
+        if (typeof numberOfMinutes !== "undefined" && numberOfMinutes !== null) {
+            const hours = RoundNumbers.floor.calculate(numberOfMinutes / 60);
+            const minutes = numberOfMinutes % 60;
+            result.set(hours).paddingLeft(2, "0");
+            result.append(":");
+            result.append(StringObject.from(minutes).paddingLeft(2, "0"));
+        }
+        return result.toString();
     }
 
     /**

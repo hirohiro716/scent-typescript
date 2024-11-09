@@ -269,6 +269,23 @@ export declare class Datetime {
      */
     equalsTime(comparison: Datetime | Date | string): boolean;
     /**
+     * 時間の文字列(00:00)を時分に変換する。
+     *
+     * @param timeString
+     * @returns
+     */
+    static timeStringToHoursAndMinutes(timeString: string | undefined | null): {
+        hours: number;
+        minutes: number;
+    } | null;
+    /**
+     * 分数を時間の文字列(00:00)に変換する。
+     *
+     * @param numberOfMinutes
+     * @returns
+     */
+    static minutesToTimeString(numberOfMinutes: number | undefined | null): string;
+    /**
      * コンストラクタの呼び出しと同じで新しいインスタンスを作成する。
      *
      * @param dateValue
