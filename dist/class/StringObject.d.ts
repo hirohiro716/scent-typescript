@@ -8,7 +8,7 @@ export default class StringObject {
      *
      * @param value
      */
-    constructor(value?: string | Uint8Array | any);
+    constructor(value?: string | Date | Uint8Array | any);
     private parts;
     /**
      * 内部の配列に保持している文字列を結合して取得する。

@@ -10,11 +10,13 @@ export default class StringObject {
      * 
      * @param value 
      */
-    public constructor(value?: string | Uint8Array | any) {
+    public constructor(value?: string | Date | Uint8Array | any) {
         if (typeof value === "undefined" || value === null) {
             return;
         }
-        if (value instanceof Uint8Array) {
+        if (value instanceof Date) {
+            this.parts.push(Datetime.from(value).toString());
+        } else if (value instanceof Uint8Array) {
             this.parts.push(new TextDecoder().decode(value));
         } else {
             this.parts.push(new String(value).toString());

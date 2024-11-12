@@ -13,7 +13,10 @@ class StringObject {
         if (typeof value === "undefined" || value === null) {
             return;
         }
-        if (value instanceof Uint8Array) {
+        if (value instanceof Date) {
+            this.parts.push(Datetime.from(value).toString());
+        }
+        else if (value instanceof Uint8Array) {
             this.parts.push(new TextDecoder().decode(value));
         }
         else {
