@@ -145,7 +145,7 @@ export class Datetime {
             case 1:
                 return DayOfWeek.monday;
             case 2:
-                return DayOfWeek.thursday;
+                return DayOfWeek.tuesday;
             case 3:
                 return DayOfWeek.wednesday;
             case 4:
