@@ -606,7 +606,7 @@ export class Datetime {
         const result = new StringObject("00:00");
         if (typeof numberOfMinutes !== "undefined" && numberOfMinutes !== null) {
             const hours = RoundNumbers.floor.calculate(numberOfMinutes / 60);
-            const minutes = numberOfMinutes % 60;
+            const minutes = RoundNumbers.floor.calculate(numberOfMinutes % 60);
             result.set(hours).paddingLeft(2, "0");
             result.append(":");
             result.append(StringObject.from(minutes).paddingLeft(2, "0"));
