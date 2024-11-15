@@ -32,31 +32,29 @@ export class WhereSet {
                     }
                     // For scent-java library
                     if ("is_negate" in where) {
-                        for (const comparison of Comparisons.getComparisons()) {
-                            if (StringObject.from(where.comparison).equals(comparison.physicalName)) {
-                                if (where.values.length === 1) {
-                                    this._wheres.push(new Where(where.column, comparison, where.values[0].value, where.is_negate));
-                                }
-                                else {
-                                    const stringValues = [];
-                                    const numberValues = [];
-                                    for (const valueObject of where.values) {
-                                        const value = valueObject.value;
-                                        if (typeof value === "string") {
-                                            stringValues.push(value);
-                                        }
-                                        if (typeof value === "number") {
-                                            numberValues.push(value);
-                                        }
+                        const comparison = Comparisons.find(where.comparison);
+                        if (comparison !== null) {
+                            if (where.values.length === 1) {
+                                this._wheres.push(new Where(where.column, comparison, where.values[0].value, where.is_negate));
+                            }
+                            else {
+                                const stringValues = [];
+                                const numberValues = [];
+                                for (const valueObject of where.values) {
+                                    const value = valueObject.value;
+                                    if (typeof value === "string") {
+                                        stringValues.push(value);
                                     }
-                                    if (stringValues.length > 0) {
-                                        this._wheres.push(new Where(where.column, comparison, stringValues, where.is_negate));
-                                    }
-                                    if (numberValues.length > 0) {
-                                        this._wheres.push(new Where(where.column, comparison, numberValues, where.is_negate));
+                                    if (typeof value === "number") {
+                                        numberValues.push(value);
                                     }
                                 }
-                                break;
+                                if (stringValues.length > 0) {
+                                    this._wheres.push(new Where(where.column, comparison, stringValues, where.is_negate));
+                                }
+                                if (numberValues.length > 0) {
+                                    this._wheres.push(new Where(where.column, comparison, numberValues, where.is_negate));
+                                }
                             }
                         }
                     }

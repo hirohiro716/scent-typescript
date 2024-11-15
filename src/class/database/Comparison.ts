@@ -1,4 +1,5 @@
 import Enumeration from "../Enumeration.js";
+import StringObject from "../StringObject.js";
 
 /**
  * データベースで使用する比較演算子の定数クラス。
@@ -40,6 +41,14 @@ export const Comparisons = {
      */
     find: (physicalName: string): Comparison | null => {
         const enumeration: any = Enumeration.findEnumeration(Comparisons, physicalName);
+        if (enumeration === null) {
+            const maybeLogicalName = StringObject.from(physicalName).replace("_", "").lower();
+            for (const comparison of Comparisons.getComparisons()) {
+                if (StringObject.from(comparison.logicalName).lower().equals(maybeLogicalName)) {
+                    return comparison;
+                }
+            }
+        }
         return enumeration;
     },
     /**
