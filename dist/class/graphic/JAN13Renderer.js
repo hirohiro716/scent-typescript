@@ -1,6 +1,8 @@
 import StringObject from "../StringObject.js";
 /**
  * JAN-13のバーコードを描画するクラス。
+ *
+ * @template C 二次元描画コンテキストの型。
  */
 class JAN13Renderer {
     /**
@@ -107,9 +109,9 @@ class JAN13Renderer {
         const barcode = new StringObject(this._barcode);
         let renderingX = bounds.x;
         // ノーマルガードバー
-        this._context.fillRect(renderingX, bounds.y, oneModule, bounds.height);
+        this.fillRectangle(this._context, renderingX, bounds.y, oneModule, bounds.height);
         renderingX += oneModule * 2;
-        this._context.fillRect(renderingX, bounds.y, oneModule, bounds.height);
+        this.fillRectangle(this._context, renderingX, bounds.y, oneModule, bounds.height);
         // リーディングディジットを取得する
         const readingDigit = barcode.clone().extract(0, 1).toNumber();
         // センターガードバーの左側を描画する
@@ -120,16 +122,16 @@ class JAN13Renderer {
             const parities = JAN13Renderer.LEFT_PARITIES[typeIndex][rendering];
             for (const parity of parities) {
                 if (parity === 1) {
-                    this._context.fillRect(renderingX, bounds.y, oneModule, bounds.height);
+                    this.fillRectangle(this._context, renderingX, bounds.y, oneModule, bounds.height);
                 }
                 renderingX += oneModule;
             }
         }
         // センターガードバー
         renderingX += oneModule;
-        this._context.fillRect(renderingX, bounds.y, oneModule, bounds.height);
+        this.fillRectangle(this._context, renderingX, bounds.y, oneModule, bounds.height);
         renderingX += oneModule * 2;
-        this._context.fillRect(renderingX, bounds.y, oneModule, bounds.height);
+        this.fillRectangle(this._context, renderingX, bounds.y, oneModule, bounds.height);
         renderingX += oneModule * 2;
         // センターガードバーの右側を描画する
         for (let index = 7; index <= 12; index++) {
@@ -137,15 +139,15 @@ class JAN13Renderer {
             const parities = JAN13Renderer.RIGHT_PARITIES[rendering];
             for (const parity of parities) {
                 if (parity === 1) {
-                    this._context.fillRect(renderingX, bounds.y, oneModule, bounds.height);
+                    this.fillRectangle(this._context, renderingX, bounds.y, oneModule, bounds.height);
                 }
                 renderingX += oneModule;
             }
         }
         // ライトガードバー
-        this._context.fillRect(renderingX, bounds.y, oneModule, bounds.height);
+        this.fillRectangle(this._context, renderingX, bounds.y, oneModule, bounds.height);
         renderingX += oneModule * 2;
-        this._context.fillRect(renderingX, bounds.y, oneModule, bounds.height);
+        this.fillRectangle(this._context, renderingX, bounds.y, oneModule, bounds.height);
     }
 }
 /**

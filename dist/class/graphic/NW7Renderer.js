@@ -1,6 +1,8 @@
 import StringObject from "../StringObject.js";
 /**
  * NW7のバーコードを描画するクラス。
+ *
+ * @template C 二次元描画コンテキストの型。
  */
 class NW7Renderer {
     /**
@@ -57,9 +59,6 @@ class NW7Renderer {
      * @param bounds
      */
     render(bounds) {
-        if (typeof this._context === "undefined") {
-            return;
-        }
         const barcode = new StringObject(this._barcode);
         // キャラクタ間のギャップの比率
         const gapWidthRatio = 4;
@@ -86,7 +85,7 @@ class NW7Renderer {
                     paused = false;
                 }
                 else {
-                    this._context.fillRect(renderingX, bounds.y, barWidth, bounds.height);
+                    this.fillRectangle(this._context, renderingX, bounds.y, barWidth, bounds.height);
                     paused = true;
                 }
                 renderingX += barWidth;

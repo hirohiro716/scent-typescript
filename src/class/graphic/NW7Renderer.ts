@@ -3,8 +3,10 @@ import StringObject from "../StringObject.js";
 
 /**
  * NW7のバーコードを描画するクラス。
+ * 
+ * @template C 二次元描画コンテキストの型。
  */
-export default class NW7Renderer {
+export default abstract class NW7Renderer<C> {
 
     /**
      * コンストラクタ。描画する内容と二次元描画コンテキストを指定する。
@@ -12,7 +14,7 @@ export default class NW7Renderer {
      * @param barcode 
      * @param context 
      */
-    public constructor(barcode: string, context: CanvasRenderingContext2D) {
+    public constructor(barcode: string, context: C) {
         this._barcode = barcode;
         this._context = context;
     }
@@ -26,12 +28,12 @@ export default class NW7Renderer {
         return this._barcode;
     }
 
-    private _context: CanvasRenderingContext2D | undefined;
+    private _context: C;
 
     /**
      * 描画する二次元描画コンテキスト。
      */
-    public get context(): CanvasRenderingContext2D | undefined {
+    public get context(): C {
         return this._context;
     }
 
@@ -64,14 +66,22 @@ export default class NW7Renderer {
     }
 
     /**
+     * 二次元描画コンテキストを使用して、指定位置に塗りつぶした矩形を描画する。
+     * 
+     * @param context
+     * @param x 
+     * @param y 
+     * @param width 
+     * @param height 
+     */
+    protected abstract fillRectangle(context: C, x: number, y: number, width: number, height: number): void;
+
+    /**
      * JAN-13のバーコードを描画する。
      * 
      * @param bounds 
      */
     public render(bounds: Bounds): void {
-        if (typeof this._context === "undefined") {
-            return;
-        }
         const barcode = new StringObject(this._barcode);
         // キャラクタ間のギャップの比率
         const gapWidthRatio: number = 4;
@@ -97,7 +107,7 @@ export default class NW7Renderer {
                 if (paused) {
                     paused = false;
                 } else {
-                    this._context.fillRect(renderingX, bounds.y, barWidth, bounds.height);
+                    this.fillRectangle(this._context, renderingX, bounds.y, barWidth, bounds.height);
                     paused = true;
                 }
                 renderingX += barWidth;

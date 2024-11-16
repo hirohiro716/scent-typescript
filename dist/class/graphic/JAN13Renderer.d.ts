@@ -1,15 +1,17 @@
 import { Bounds } from "../Bounds.js";
 /**
  * JAN-13のバーコードを描画するクラス。
+ *
+ * @template C 二次元描画コンテキストの型。
  */
-export default class JAN13Renderer {
+export default abstract class JAN13Renderer<C> {
     /**
      * コンストラクタ。描画する内容と二次元描画コンテキストを指定する。
      *
      * @param barcode
      * @param context
      */
-    constructor(barcode: string, context: CanvasRenderingContext2D | undefined);
+    constructor(barcode: string, context: C);
     private _barcode;
     /**
      * 描画するバーコード。
@@ -19,7 +21,7 @@ export default class JAN13Renderer {
     /**
      * 描画する二次元描画コンテキスト。
      */
-    get context(): CanvasRenderingContext2D | undefined;
+    get context(): C;
     /**
      * JAN-13の値13桁のうち、チェックディジットを削除した12桁を返す。
      *
@@ -41,6 +43,16 @@ export default class JAN13Renderer {
      * @returns
      */
     static isValid(barcode: string): boolean;
+    /**
+     * 二次元描画コンテキストを使用して、指定位置に塗りつぶした矩形を描画する。
+     *
+     * @param context
+     * @param x
+     * @param y
+     * @param width
+     * @param height
+     */
+    protected abstract fillRectangle(context: C, x: number, y: number, width: number, height: number): void;
     /**
      * JAN-13のバーコードを描画する。
      *

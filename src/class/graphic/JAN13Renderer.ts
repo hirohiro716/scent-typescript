@@ -3,8 +3,10 @@ import StringObject from "../StringObject.js";
 
 /**
  * JAN-13のバーコードを描画するクラス。
+ * 
+ * @template C 二次元描画コンテキストの型。
  */
-export default class JAN13Renderer {
+export default abstract class JAN13Renderer<C> {
 
     /**
      * コンストラクタ。描画する内容と二次元描画コンテキストを指定する。
@@ -12,7 +14,7 @@ export default class JAN13Renderer {
      * @param barcode 
      * @param context 
      */
-    public constructor(barcode: string, context: CanvasRenderingContext2D | undefined) {
+    public constructor(barcode: string, context: C) {
         this._barcode = barcode;
         this._context = context;
     }
@@ -26,12 +28,12 @@ export default class JAN13Renderer {
         return this._barcode;
     }
 
-    private _context: CanvasRenderingContext2D | undefined;
+    private _context: C;
 
     /**
      * 描画する二次元描画コンテキスト。
      */
-    public get context(): CanvasRenderingContext2D | undefined {
+    public get context(): C {
         return this._context;
     }
 
@@ -107,6 +109,17 @@ export default class JAN13Renderer {
     }
 
     /**
+     * 二次元描画コンテキストを使用して、指定位置に塗りつぶした矩形を描画する。
+     * 
+     * @param context
+     * @param x 
+     * @param y 
+     * @param width 
+     * @param height 
+     */
+    protected abstract fillRectangle(context: C, x: number, y: number, width: number, height: number): void;
+
+    /**
      * JAN-13のバーコードを描画する。
      * 
      * @param bounds 
@@ -119,9 +132,9 @@ export default class JAN13Renderer {
         const barcode = new StringObject(this._barcode);
         let renderingX = bounds.x;
         // ノーマルガードバー
-        this._context.fillRect(renderingX, bounds.y, oneModule, bounds.height);
+        this.fillRectangle(this._context, renderingX, bounds.y, oneModule, bounds.height);
         renderingX += oneModule * 2;
-        this._context.fillRect(renderingX, bounds.y, oneModule, bounds.height);
+        this.fillRectangle(this._context, renderingX, bounds.y, oneModule, bounds.height);
         // リーディングディジットを取得する
         const readingDigit = barcode.clone().extract(0, 1).toNumber()!;
         // センターガードバーの左側を描画する
@@ -132,16 +145,16 @@ export default class JAN13Renderer {
             const parities = JAN13Renderer.LEFT_PARITIES[typeIndex][rendering];
             for (const parity of parities) {
                 if (parity === 1) {
-                    this._context.fillRect(renderingX, bounds.y, oneModule, bounds.height);
+                    this.fillRectangle(this._context, renderingX, bounds.y, oneModule, bounds.height);
                 }
                 renderingX += oneModule;
             }
         }
         // センターガードバー
         renderingX += oneModule;
-        this._context.fillRect(renderingX, bounds.y, oneModule, bounds.height);
+        this.fillRectangle(this._context, renderingX, bounds.y, oneModule, bounds.height);
         renderingX += oneModule * 2;
-        this._context.fillRect(renderingX, bounds.y, oneModule, bounds.height);
+        this.fillRectangle(this._context, renderingX, bounds.y, oneModule, bounds.height);
         renderingX += oneModule * 2;
         // センターガードバーの右側を描画する
         for (let index = 7; index <= 12; index++) {
@@ -149,15 +162,15 @@ export default class JAN13Renderer {
             const parities = JAN13Renderer.RIGHT_PARITIES[rendering];
             for (const parity of parities) {
                 if (parity === 1) {
-                    this._context.fillRect(renderingX, bounds.y, oneModule, bounds.height);
+                    this.fillRectangle(this._context, renderingX, bounds.y, oneModule, bounds.height);
                 }
                 renderingX += oneModule;
             }
         }
         // ライトガードバー
-        this._context.fillRect(renderingX, bounds.y, oneModule, bounds.height);
+        this.fillRectangle(this._context, renderingX, bounds.y, oneModule, bounds.height);
         renderingX += oneModule * 2;
-        this._context.fillRect(renderingX, bounds.y, oneModule, bounds.height);
+        this.fillRectangle(this._context, renderingX, bounds.y, oneModule, bounds.height);
     }
 
     /**
