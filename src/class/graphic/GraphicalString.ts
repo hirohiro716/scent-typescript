@@ -2,15 +2,9 @@ import { Bounds } from "../Bounds.js";
 import { Dimension } from "../Dimension.js";
 import StringObject from "../StringObject.js";
 
-type VerticalPosition = "top" | "middle" | "alphabetic" | "bottom";
+type VerticalPosition = "top" | "middle" | "bottom";
 
 type HorizontalPosition = "left" | "center" | "right";
-
-type TextMetrics = {
-    width: number,
-    ascent: number,
-    descent: number
-}
 
 type Layout = {
     lines: string[],
@@ -68,7 +62,7 @@ export default abstract class GraphicalString<C> {
         this._horizontalPosition = horizontalPosition;
     }
 
-    private _verticalPosition: VerticalPosition = "alphabetic";
+    private _verticalPosition: VerticalPosition = "top";
 
     /**
      * 描画する垂直方向の基準。
@@ -151,9 +145,9 @@ export default abstract class GraphicalString<C> {
     /**
      * 指定された文字列のサイズを計測する。
      * 
-     * @returns TextMetrics widthは全体の幅、ascentはベースラインから上端までの高さ、descentはベースラインから下端までの高さ。
+     * @returns
      */
-    protected abstract measureTextSize(text: string): TextMetrics;
+    protected abstract measureTextSize(text: string): Dimension;
 
     /**
      * 文字列を描画するレイアウトを作成する。
@@ -189,7 +183,7 @@ export default abstract class GraphicalString<C> {
                 if (height > 0 && this._leading) {
                     height += this._leading;
                 }
-                height += metrics.ascent + metrics.descent;
+                height += metrics.height;
             }
             let laidout = true;
             if (fontSize > 1) {
@@ -229,7 +223,7 @@ export default abstract class GraphicalString<C> {
      * @returns
      */
     public measureSize(): Dimension {
-        const defaultFontSize = this.getFontSizeFromContext()
+        const defaultFontSize = this.getFontSizeFromContext();
         const layout = this.createLayout();
         this.setFontSizeToContext(defaultFontSize);
         return {width: layout.width, height: layout.height};
@@ -278,8 +272,7 @@ export default abstract class GraphicalString<C> {
         if (typeof leading === "undefined") {
             leading = 0;
         }
-        // 実際に描画される文字列のベースラインから最上部までの高さ＋フォント全体のベースラインから最下部までの高さ
-        const height = metrics.ascent + metrics.descent;
+        const height = metrics.height;
         return {width: metrics.width, height: height + leading};
     }
 
@@ -293,48 +286,27 @@ export default abstract class GraphicalString<C> {
     public fill(x: number, y: number): Dimension {
         const defaultFontSize = this.getFontSizeFromContext();
         const layout = this.createLayout();
+        this.setFontSizeToContext(this.lastAdjustedFontSize!);
         const metrics = this.measureTextSize("あ");
         let filledY: number = y;
-        let filledX: number = x;
         switch (this._verticalPosition) {
             case "top":
-                filledY += metrics.ascent;
                 for (const line of layout.lines) {
-                    const dimension = this.fillOneLine(line, filledX, filledY);
+                    const dimension = this.fillOneLine(line, x, filledY);
                     filledY += dimension.height;
                 }
                 break;
             case "middle":
-                filledY += metrics.ascent;
-                if (this._maximumHeight) {
-                    filledY += this._maximumHeight / 2;
-                }
                 filledY -= layout.height / 2;
                 for (const line of layout.lines) {
-                    const dimension = this.fillOneLine(line, filledX, filledY);
-                    filledY += dimension.height;
-                }
-                break;
-            case "alphabetic":
-                // 実際に描画される文字列のベースラインから最上部までの高さ＋フォント全体のベースラインから最下部までの高さ
-                filledY += metrics.ascent + metrics.descent;
-                if (this._maximumHeight) {
-                    filledY += this._maximumHeight;
-                }
-                filledY -= layout.height;
-                for (const line of layout.lines) {
-                    const dimension = this.fillOneLine(line, filledX, filledY);
+                    const dimension = this.fillOneLine(line, x, filledY);
                     filledY += dimension.height;
                 }
                 break;
             case "bottom":
-                filledY += metrics.ascent;
-                if (this._maximumHeight) {
-                    filledY += this._maximumHeight;
-                }
                 filledY -= layout.height;
                 for (const line of layout.lines) {
-                    const dimension = this.fillOneLine(line, filledX, filledY);
+                    const dimension = this.fillOneLine(line, x, filledY);
                     filledY += dimension.height;
                 }
                 break;                        
@@ -349,13 +321,45 @@ export default abstract class GraphicalString<C> {
      * @param bounds
      */
     public fillInBox(bounds: Bounds): Dimension {
+        const defaultFontSize = this.getFontSizeFromContext();
+        const layout = this.createLayout();
+        const metrics = this.measureTextSize("あ");
         const defaultMaximumWidth = this._maximumWidth;
         const defaultMaximumHeight = this._maximumHeight;
         this._maximumWidth = bounds.width;
         this._maximumHeight = bounds.height;
-        const dimension = this.fill(bounds.x, bounds.y);
+        let filledY: number = bounds.y;
+        let filledX: number = bounds.x;
+        switch (this._verticalPosition) {
+            case "top":
+                filledY += metrics.height;
+                for (const line of layout.lines) {
+                    const dimension = this.fillOneLine(line, filledX, filledY);
+                    filledY += dimension.height;
+                }
+                break;
+            case "middle":
+                filledY += metrics.height;
+                filledY += this._maximumHeight / 2;
+                filledY -= layout.height / 2;
+                for (const line of layout.lines) {
+                    const dimension = this.fillOneLine(line, filledX, filledY);
+                    filledY += dimension.height;
+                }
+                break;
+            case "bottom":
+                filledY += metrics.height;
+                filledY += this._maximumHeight;
+                filledY -= layout.height;
+                for (const line of layout.lines) {
+                    const dimension = this.fillOneLine(line, filledX, filledY);
+                    filledY += dimension.height;
+                }
+                break;                        
+        }
         this._maximumWidth = defaultMaximumWidth;
         this._maximumHeight = defaultMaximumHeight;
-        return dimension;
+        this.setFontSizeToContext(defaultFontSize);
+        return {width: layout.width, height: layout.height};
     }
 }

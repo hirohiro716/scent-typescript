@@ -1,12 +1,7 @@
 import { Bounds } from "../Bounds.js";
 import { Dimension } from "../Dimension.js";
-type VerticalPosition = "top" | "middle" | "alphabetic" | "bottom";
+type VerticalPosition = "top" | "middle" | "bottom";
 type HorizontalPosition = "left" | "center" | "right";
-type TextMetrics = {
-    width: number;
-    ascent: number;
-    descent: number;
-};
 /**
  * 文字列を描画する抽象クラス。
  *
@@ -82,9 +77,9 @@ export default abstract class GraphicalString<C> {
     /**
      * 指定された文字列のサイズを計測する。
      *
-     * @returns TextMetrics widthは全体の幅、ascentはベースラインから上端までの高さ、descentはベースラインから下端までの高さ。
+     * @returns
      */
-    protected abstract measureTextSize(text: string): TextMetrics;
+    protected abstract measureTextSize(text: string): Dimension;
     /**
      * 文字列を描画するレイアウトを作成する。
      *
