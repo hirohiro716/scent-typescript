@@ -287,7 +287,6 @@ export default abstract class GraphicalString<C> {
         const defaultFontSize = this.getFontSizeFromContext();
         const layout = this.createLayout();
         this.setFontSizeToContext(this.lastAdjustedFontSize!);
-        const metrics = this.measureTextSize("あ");
         let filledY: number = y;
         switch (this._verticalPosition) {
             case "top":
@@ -332,14 +331,12 @@ export default abstract class GraphicalString<C> {
         let filledX: number = bounds.x;
         switch (this._verticalPosition) {
             case "top":
-                filledY += metrics.height;
                 for (const line of layout.lines) {
                     const dimension = this.fillOneLine(line, filledX, filledY);
                     filledY += dimension.height;
                 }
                 break;
             case "middle":
-                filledY += metrics.height;
                 filledY += this._maximumHeight / 2;
                 filledY -= layout.height / 2;
                 for (const line of layout.lines) {
@@ -348,7 +345,6 @@ export default abstract class GraphicalString<C> {
                 }
                 break;
             case "bottom":
-                filledY += metrics.height;
                 filledY += this._maximumHeight;
                 filledY -= layout.height;
                 for (const line of layout.lines) {
