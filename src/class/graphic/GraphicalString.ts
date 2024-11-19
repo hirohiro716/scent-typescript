@@ -6,17 +6,25 @@ type VerticalPosition = "top" | "middle" | "alphabetic" | "bottom";
 
 type HorizontalPosition = "left" | "center" | "right";
 
+type TextMetrics = {
+    width: number,
+    ascent: number,
+    descent: number
+}
+
 type Layout = {
     lines: string[],
     width: number,
     height: number,
-    font: string
+    fontSize: number
 }
 
 /**
- * 文字列を描画するクラス。
+ * 文字列を描画する抽象クラス。
+ * 
+ * @template C 二次元描画コンテキストの型。
  */
-export default class GraphicalString {
+export default abstract class GraphicalString<C> {
 
     /**
      * コンストラクタ。描画する文字列と二次元描画コンテキストを指定する。
@@ -24,7 +32,7 @@ export default class GraphicalString {
      * @param string 
      * @param context 
      */
-    public constructor(string: string, context: CanvasRenderingContext2D | undefined) {
+    public constructor(string: string, context: C) {
         this._string = StringObject.from(string).replaceCRLF("\n").replaceCR("\n").toString();
         this._context = context;
     }
@@ -38,33 +46,13 @@ export default class GraphicalString {
         return this._string;
     }
 
-    private _context: CanvasRenderingContext2D | undefined;
+    private _context: C;
 
     /**
      * 文字列を描画する二次元描画コンテキスト。
      */
-    public get context(): CanvasRenderingContext2D | undefined {
+    public get context(): C {
         return this._context;
-    }
-
-    /**
-     * 指定されたフォント文字列からサイズと単位を抽出する。
-     * 
-     * @param font 
-     * @returns 
-     */
-    private extractSizeAndUnit(font: string): {size: number, unit:string} | undefined {
-        const fontParts: StringObject[] = StringObject.from(font).split(" ");
-        for (const fontPart of fontParts) {
-            if (fontPart.length() >= 2 && fontPart.clone().replace("[0-9]{1,}[0-9\.]{0,}[a-zA-Z]{1,4}", "").length() == 0) {
-                const size = fontPart.clone().extract("[0-9\\.]").toNumber();
-                const unit = fontPart.clone().extract("[^0-9\\.]").toString();
-                if (size !== null && unit.length > 0) {
-                    return {size: size, unit: unit};
-                }
-            }
-        }
-        return undefined;
     }
 
     private _horizontalPosition: HorizontalPosition = "left";
@@ -146,43 +134,41 @@ export default class GraphicalString {
     }
 
     /**
-     * 指定されたフォントのサイズを変更した文字列を返す。
+     * コンストラクタで指定されたコンテキストからフォントサイズを取得する。
      * 
-     * @param font
-     * @param size 
+     * @param context 
      */
-    private changeFontSize(font: string, size: number): string {
-        const newFont = new StringObject(font);
-        const sizeAndUnit = this.extractSizeAndUnit(font);
-        if (typeof sizeAndUnit === "undefined") {
-            return font;
-        }
-        newFont.replace(StringObject.from(sizeAndUnit.size).toString() + StringObject.from(sizeAndUnit.unit).toString(), size + StringObject.from(sizeAndUnit.unit).toString());
-        return newFont.toString();
-    }
+    protected abstract getFontSizeFromContext(): number;
+
+    /**
+     * コンストラクタで指定されたコンテキストに指定されたフォントサイズをセットする。
+     * 
+     * @param context 
+     * @param fontSize 
+     */
+    protected abstract setFontSizeToContext(fontSize: number): void;
+
+    /**
+     * 指定された文字列のサイズを計測する。
+     * 
+     * @returns TextMetrics widthは全体の幅、ascentはベースラインから上端までの高さ、descentはベースラインから下端までの高さ。
+     */
+    protected abstract measureTextSize(text: string): TextMetrics;
 
     /**
      * 文字列を描画するレイアウトを作成する。
      * 
      * @returns 
      */
-    private createLayout(): Layout | undefined {
-        if (typeof this._context === "undefined") {
-            return undefined;
-        }
-        const font = this._context.font;
-        const sizeAndUnit = this.extractSizeAndUnit(font);
-        if (typeof sizeAndUnit === "undefined") {
-            return undefined;
-        }
-        let fontSize = sizeAndUnit.size;
+    private createLayout(): Layout {
+        let fontSize = this.getFontSizeFromContext();
         let lines: string[] = [];
         let layout: Layout | undefined;
         while (typeof layout === "undefined") {
             let line = new StringObject();
             for (let index = 0; index < this._string.length; index++) {
                 const one = new StringObject(this._string).extract(index, index + 1);
-                const metrics = this._context.measureText(line.clone().append(one).toString());
+                const metrics = this.measureTextSize(line.clone().append(one).toString());
                 if (this._allowAutomaticLineFeed && typeof this._maximumWidth !== "undefined" && this._maximumWidth < metrics.width || one.equals("\n")) {
                     if (line.length() > 0) {
                         lines.push(line.toString());
@@ -196,15 +182,14 @@ export default class GraphicalString {
             let width = 0;
             let height = 0;
             for (const line of lines) {
-                const metrics = this._context.measureText(line);
+                const metrics = this.measureTextSize(line);
                 if (width < metrics.width) {
                     width = metrics.width;
                 }
                 if (height > 0 && this._leading) {
                     height += this._leading;
                 }
-                // 実際に描画される文字列のベースラインから最上部までの高さ＋フォント全体のベースラインから最下部までの高さ
-                height += metrics.actualBoundingBoxAscent + metrics.fontBoundingBoxDescent;
+                height += metrics.ascent + metrics.descent;
             }
             let laidout = true;
             if (fontSize > 1) {
@@ -216,26 +201,26 @@ export default class GraphicalString {
                 }
             }
             if (laidout) {
-                layout = {lines: lines, font: this.changeFontSize(font, fontSize), width: width, height: height};
+                layout = {lines: lines, fontSize: fontSize, width: width, height: height};
                 break;
             }
             lines = [];
             fontSize -= 0.5;
-            this._context.font = this.changeFontSize(font, fontSize);
+            this.setFontSizeToContext(fontSize);
         }
-        this._lastAdjustedFont = layout.font;
+        this._lastAdjustedFontSize = layout.fontSize;
         return layout;
     }
 
-    private _lastAdjustedFont: string | undefined;
+    private _lastAdjustedFontSize: number | undefined;
 
     /**
-     * 最後に自動調整されたフォントを取得する。
+     * 最後に自動調整されたフォントのサイズを取得する。
      * 
      * @returns
      */
-    public get lastAdjustedFont(): string | undefined {
-        return this._lastAdjustedFont;
+    public get lastAdjustedFontSize(): number | undefined {
+        return this._lastAdjustedFontSize;
     }
 
     /**
@@ -244,19 +229,20 @@ export default class GraphicalString {
      * @returns
      */
     public measureSize(): Dimension {
-        let width = 0;
-        let height = 0;
-        if (typeof this._context !== "undefined") {
-            const defaultFont = this._context.font;
-            const layout = this.createLayout();
-            this._context.font = defaultFont;
-            if (typeof layout !== "undefined") {
-                width = layout.width;
-                height = layout.height;
-            }
-        }
-        return {width: width, height: height};
+        const defaultFontSize = this.getFontSizeFromContext()
+        const layout = this.createLayout();
+        this.setFontSizeToContext(defaultFontSize);
+        return {width: layout.width, height: layout.height};
     }
+
+    /**
+     * 指定されたテキストを描画して塗りつぶす。
+     * 
+     * @param text 
+     * @param x 
+     * @param y 
+     */
+    protected abstract fillText(text: string, x: number, y: number): void;
 
     /**
      * 指定された一行のテキストを描画して塗りつぶす。
@@ -267,28 +253,25 @@ export default class GraphicalString {
      * @returns 描画したテキストのサイズ。
      */
     private fillOneLine(oneLine: string, x: number, y: number): Dimension {
-        if (typeof this._context === "undefined") {
-            return {width: 0, height: 0};
-        }
-        const metrics = this._context.measureText(oneLine);
+        const metrics = this.measureTextSize(oneLine);
         let filledX: number = x;
         switch (this._horizontalPosition) {
         case "left":
-            this._context.fillText(oneLine, filledX, y);
+            this.fillText(oneLine, filledX, y);
             break;
         case "center":
             if (this._maximumWidth) {
                 filledX += this._maximumWidth / 2;
             }
             filledX -= metrics.width / 2;
-            this._context.fillText(oneLine, filledX, y);
+            this.fillText(oneLine, filledX, y);
             break;
         case "right":
             if (this._maximumWidth) {
                 filledX += this._maximumWidth;
             }
             filledX -= metrics.width;
-            this._context.fillText(oneLine, filledX, y);
+            this.fillText(oneLine, filledX, y);
             break;
         }
         let leading = this._leading;
@@ -296,7 +279,7 @@ export default class GraphicalString {
             leading = 0;
         }
         // 実際に描画される文字列のベースラインから最上部までの高さ＋フォント全体のベースラインから最下部までの高さ
-        const height = metrics.actualBoundingBoxAscent + metrics.fontBoundingBoxDescent;
+        const height = metrics.ascent + metrics.descent;
         return {width: metrics.width, height: height + leading};
     }
 
@@ -308,64 +291,56 @@ export default class GraphicalString {
      * @returns 描画したテキストのサイズ。
      */
     public fill(x: number, y: number): Dimension {
-        let width = 0;
-        let height = 0;
-        if (typeof this._context !== "undefined") {
-            const defaultFont = this._context.font;
-            const layout = this.createLayout();
-            if (typeof layout !== "undefined") {
-                const metrics = this._context.measureText("あ");
-                let filledY: number = y;
-                let filledX: number = x;
-                switch (this._verticalPosition) {
-                    case "top":
-                        filledY += metrics.actualBoundingBoxAscent;
-                        for (const line of layout.lines) {
-                            const dimension = this.fillOneLine(line, filledX, filledY);
-                            filledY += dimension.height;
-                        }
-                        break;
-                    case "middle":
-                        filledY += metrics.actualBoundingBoxAscent;
-                        if (this._maximumHeight) {
-                            filledY += this._maximumHeight / 2;
-                        }
-                        filledY -= layout.height / 2;
-                        for (const line of layout.lines) {
-                            const dimension = this.fillOneLine(line, filledX, filledY);
-                            filledY += dimension.height;
-                        }
-                        break;
-                    case "alphabetic":
-                        // 実際に描画される文字列のベースラインから最上部までの高さ＋フォント全体のベースラインから最下部までの高さ
-                        filledY += metrics.actualBoundingBoxAscent + metrics.fontBoundingBoxDescent;
-                        if (this._maximumHeight) {
-                            filledY += this._maximumHeight;
-                        }
-                        filledY -= layout.height;
-                        for (const line of layout.lines) {
-                            const dimension = this.fillOneLine(line, filledX, filledY);
-                            filledY += dimension.height;
-                        }
-                        break;
-                    case "bottom":
-                        filledY += metrics.actualBoundingBoxAscent;
-                        if (this._maximumHeight) {
-                            filledY += this._maximumHeight;
-                        }
-                        filledY -= layout.height;
-                        for (const line of layout.lines) {
-                            const dimension = this.fillOneLine(line, filledX, filledY);
-                            filledY += dimension.height;
-                        }
-                        break;                        
+        const defaultFontSize = this.getFontSizeFromContext();
+        const layout = this.createLayout();
+        const metrics = this.measureTextSize("あ");
+        let filledY: number = y;
+        let filledX: number = x;
+        switch (this._verticalPosition) {
+            case "top":
+                filledY += metrics.ascent;
+                for (const line of layout.lines) {
+                    const dimension = this.fillOneLine(line, filledX, filledY);
+                    filledY += dimension.height;
                 }
-                width = layout.width;
-                height = layout.height;
-            }
-            this._context.font = defaultFont;
+                break;
+            case "middle":
+                filledY += metrics.ascent;
+                if (this._maximumHeight) {
+                    filledY += this._maximumHeight / 2;
+                }
+                filledY -= layout.height / 2;
+                for (const line of layout.lines) {
+                    const dimension = this.fillOneLine(line, filledX, filledY);
+                    filledY += dimension.height;
+                }
+                break;
+            case "alphabetic":
+                // 実際に描画される文字列のベースラインから最上部までの高さ＋フォント全体のベースラインから最下部までの高さ
+                filledY += metrics.ascent + metrics.descent;
+                if (this._maximumHeight) {
+                    filledY += this._maximumHeight;
+                }
+                filledY -= layout.height;
+                for (const line of layout.lines) {
+                    const dimension = this.fillOneLine(line, filledX, filledY);
+                    filledY += dimension.height;
+                }
+                break;
+            case "bottom":
+                filledY += metrics.ascent;
+                if (this._maximumHeight) {
+                    filledY += this._maximumHeight;
+                }
+                filledY -= layout.height;
+                for (const line of layout.lines) {
+                    const dimension = this.fillOneLine(line, filledX, filledY);
+                    filledY += dimension.height;
+                }
+                break;                        
         }
-        return {width: width, height: height};
+        this.setFontSizeToContext(defaultFontSize);
+        return {width: layout.width, height: layout.height};
     }
 
     /**
