@@ -52,7 +52,7 @@ export default abstract class GraphicalString<C> {
     private _horizontalPosition: HorizontalPosition = "left";
 
     /**
-     * 描画する水平方向の基準。
+     * 描画する水平方向の基準。"left"が初期値。
      */
     public get horizontalPosition(): HorizontalPosition {
         return this._horizontalPosition;
@@ -65,7 +65,7 @@ export default abstract class GraphicalString<C> {
     private _verticalPosition: VerticalPosition = "top";
 
     /**
-     * 描画する垂直方向の基準。
+     * 描画する垂直方向の基準。"top"が初期値。
      */
     public get verticalPosition(): VerticalPosition {
         return this._verticalPosition;
@@ -101,23 +101,23 @@ export default abstract class GraphicalString<C> {
         this._maximumHeight = maximumHeight;
     }
 
-    private _leading: number | undefined;
+    private _leading: number = 0;
 
     /**
-     * 行と行との間隔。
+     * 行と行との間隔。0が初期値。
      */
-    public get leading(): number | undefined {
+    public get leading(): number {
         return this._leading;
     }
 
-    public set leading(leading: number | undefined) {
+    public set leading(leading: number) {
         this._leading = leading;
     }
 
     private _allowAutomaticLineFeed: boolean = true;
 
     /**
-     * 文字列の自動改行が許可されている場合はtrue。初期値はtrue。
+     * 文字列の自動改行が許可されている場合はtrue。trueが初期値。
      */
     public get allowAutomaticLineFeed(): boolean {
         return this._allowAutomaticLineFeed;

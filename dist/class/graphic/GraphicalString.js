@@ -14,6 +14,7 @@ export default class GraphicalString {
     constructor(string, context) {
         this._horizontalPosition = "left";
         this._verticalPosition = "top";
+        this._leading = 0;
         this._allowAutomaticLineFeed = true;
         this._string = StringObject.from(string).replaceCRLF("\n").replaceCR("\n").toString();
         this._context = context;
@@ -31,7 +32,7 @@ export default class GraphicalString {
         return this._context;
     }
     /**
-     * 描画する水平方向の基準。
+     * 描画する水平方向の基準。"left"が初期値。
      */
     get horizontalPosition() {
         return this._horizontalPosition;
@@ -40,7 +41,7 @@ export default class GraphicalString {
         this._horizontalPosition = horizontalPosition;
     }
     /**
-     * 描画する垂直方向の基準。
+     * 描画する垂直方向の基準。"top"が初期値。
      */
     get verticalPosition() {
         return this._verticalPosition;
@@ -67,7 +68,7 @@ export default class GraphicalString {
         this._maximumHeight = maximumHeight;
     }
     /**
-     * 行と行との間隔。
+     * 行と行との間隔。0が初期値。
      */
     get leading() {
         return this._leading;
@@ -76,7 +77,7 @@ export default class GraphicalString {
         this._leading = leading;
     }
     /**
-     * 文字列の自動改行が許可されている場合はtrue。初期値はtrue。
+     * 文字列の自動改行が許可されている場合はtrue。trueが初期値。
      */
     get allowAutomaticLineFeed() {
         return this._allowAutomaticLineFeed;

@@ -27,13 +27,13 @@ export default abstract class GraphicalString<C> {
     get context(): C;
     private _horizontalPosition;
     /**
-     * 描画する水平方向の基準。
+     * 描画する水平方向の基準。"left"が初期値。
      */
     get horizontalPosition(): HorizontalPosition;
     set horizontalPosition(horizontalPosition: HorizontalPosition);
     private _verticalPosition;
     /**
-     * 描画する垂直方向の基準。
+     * 描画する垂直方向の基準。"top"が初期値。
      */
     get verticalPosition(): VerticalPosition;
     set verticalPosition(verticalPosition: VerticalPosition);
@@ -51,13 +51,13 @@ export default abstract class GraphicalString<C> {
     set maximumHeight(maximumHeight: number | undefined);
     private _leading;
     /**
-     * 行と行との間隔。
+     * 行と行との間隔。0が初期値。
      */
-    get leading(): number | undefined;
-    set leading(leading: number | undefined);
+    get leading(): number;
+    set leading(leading: number);
     private _allowAutomaticLineFeed;
     /**
-     * 文字列の自動改行が許可されている場合はtrue。初期値はtrue。
+     * 文字列の自動改行が許可されている場合はtrue。trueが初期値。
      */
     get allowAutomaticLineFeed(): boolean;
     set allowAutomaticLineFeed(allowAutomaticLineFeed: boolean);
