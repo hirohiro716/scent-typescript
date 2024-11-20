@@ -170,24 +170,18 @@ export default class GraphicalString {
      */
     fillOneLine(oneLine, x, y) {
         const metrics = this.measureTextSize(oneLine);
-        let filledX = x;
+        let fillingX = x;
         switch (this._horizontalPosition) {
             case "left":
-                this.fillText(oneLine, filledX, y);
+                this.fillText(oneLine, fillingX, y);
                 break;
             case "center":
-                if (this._maximumWidth) {
-                    filledX += this._maximumWidth / 2;
-                }
-                filledX -= metrics.width / 2;
-                this.fillText(oneLine, filledX, y);
+                fillingX -= metrics.width / 2;
+                this.fillText(oneLine, fillingX, y);
                 break;
             case "right":
-                if (this._maximumWidth) {
-                    filledX += this._maximumWidth;
-                }
-                filledX -= metrics.width;
-                this.fillText(oneLine, filledX, y);
+                fillingX -= metrics.width;
+                this.fillText(oneLine, fillingX, y);
                 break;
         }
         let leading = this._leading;
@@ -241,18 +235,29 @@ export default class GraphicalString {
      */
     fillInBox(bounds) {
         const defaultFontSize = this.getFontSizeFromContext();
-        const layout = this.createLayout();
-        const metrics = this.measureTextSize("あ");
+        let layout = this.createLayout();
+        this.setFontSizeToContext(this.lastAdjustedFontSize);
         const defaultMaximumWidth = this._maximumWidth;
         const defaultMaximumHeight = this._maximumHeight;
         this._maximumWidth = bounds.width;
         this._maximumHeight = bounds.height;
+        layout = this.createLayout();
+        let fillingX = bounds.x;
+        switch (this._horizontalPosition) {
+            case "left":
+                break;
+            case "center":
+                fillingX += bounds.width / 2;
+                break;
+            case "right":
+                fillingX += bounds.width;
+                break;
+        }
         let filledY = bounds.y;
-        let filledX = bounds.x;
         switch (this._verticalPosition) {
             case "top":
                 for (const line of layout.lines) {
-                    const dimension = this.fillOneLine(line, filledX, filledY);
+                    const dimension = this.fillOneLine(line, fillingX, filledY);
                     filledY += dimension.height;
                 }
                 break;
@@ -260,7 +265,7 @@ export default class GraphicalString {
                 filledY += this._maximumHeight / 2;
                 filledY -= layout.height / 2;
                 for (const line of layout.lines) {
-                    const dimension = this.fillOneLine(line, filledX, filledY);
+                    const dimension = this.fillOneLine(line, fillingX, filledY);
                     filledY += dimension.height;
                 }
                 break;
@@ -268,7 +273,7 @@ export default class GraphicalString {
                 filledY += this._maximumHeight;
                 filledY -= layout.height;
                 for (const line of layout.lines) {
-                    const dimension = this.fillOneLine(line, filledX, filledY);
+                    const dimension = this.fillOneLine(line, fillingX, filledY);
                     filledY += dimension.height;
                 }
                 break;
