@@ -57,7 +57,7 @@ export default abstract class GraphicalString<C> {
     set leading(leading: number | undefined);
     private _allowAutomaticLineFeed;
     /**
-     * 文字列を描画する際の自動改行が許可されている場合はtrue。
+     * 文字列の自動改行が許可されている場合はtrue。初期値はtrue。
      */
     get allowAutomaticLineFeed(): boolean;
     set allowAutomaticLineFeed(allowAutomaticLineFeed: boolean);

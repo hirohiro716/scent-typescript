@@ -14,7 +14,7 @@ export default class GraphicalString {
     constructor(string, context) {
         this._horizontalPosition = "left";
         this._verticalPosition = "top";
-        this._allowAutomaticLineFeed = false;
+        this._allowAutomaticLineFeed = true;
         this._string = StringObject.from(string).replaceCRLF("\n").replaceCR("\n").toString();
         this._context = context;
     }
@@ -76,7 +76,7 @@ export default class GraphicalString {
         this._leading = leading;
     }
     /**
-     * 文字列を描画する際の自動改行が許可されている場合はtrue。
+     * 文字列の自動改行が許可されている場合はtrue。初期値はtrue。
      */
     get allowAutomaticLineFeed() {
         return this._allowAutomaticLineFeed;

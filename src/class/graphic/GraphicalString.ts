@@ -114,10 +114,10 @@ export default abstract class GraphicalString<C> {
         this._leading = leading;
     }
 
-    private _allowAutomaticLineFeed: boolean = false;
+    private _allowAutomaticLineFeed: boolean = true;
 
     /**
-     * 文字列を描画する際の自動改行が許可されている場合はtrue。
+     * 文字列の自動改行が許可されている場合はtrue。初期値はtrue。
      */
     public get allowAutomaticLineFeed(): boolean {
         return this._allowAutomaticLineFeed;
