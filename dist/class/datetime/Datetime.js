@@ -534,6 +534,7 @@ export class Datetime {
             return null;
         }
         const validator = new Datetime();
+        validator.setDay(1);
         validator.setMonth(months);
         if (months !== validator.getMonth()) {
             return null;
