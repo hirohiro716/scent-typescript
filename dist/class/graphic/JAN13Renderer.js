@@ -112,6 +112,7 @@ class JAN13Renderer {
         this.fillRectangle(this._context, renderingX, bounds.y, oneModule, bounds.height);
         renderingX += oneModule * 2;
         this.fillRectangle(this._context, renderingX, bounds.y, oneModule, bounds.height);
+        renderingX += oneModule;
         // リーディングディジットを取得する
         const readingDigit = barcode.clone().extract(0, 1).toNumber();
         // センターガードバーの左側を描画する
