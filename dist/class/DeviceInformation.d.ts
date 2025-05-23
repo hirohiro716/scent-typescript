@@ -29,6 +29,10 @@ export default class DeviceInformation {
      */
     readonly screenOrientation: string;
     /**
+     * ダークモードの場合にtrue。
+     */
+    readonly isDarkMode: boolean;
+    /**
      * 画面の最大タッチポイント数。
      */
     readonly maximumNumberOfScreenTouchPoints: number;

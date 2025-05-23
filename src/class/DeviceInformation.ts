@@ -14,6 +14,7 @@ export default class DeviceInformation {
         this.viewportWidth = 0;
         this.viewportHeight = 0;
         this.screenOrientation = "";
+        this.isDarkMode = false;
         this.maximumNumberOfScreenTouchPoints = 0;
         this.numberOfHardwareConcurrency = 0;
         this.languages = [];
@@ -32,6 +33,7 @@ export default class DeviceInformation {
                         this.screenOrientation = window.screen.orientation.type;
                     }
                 }
+                this.isDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches;
                 if (window.navigator) {
                     this.maximumNumberOfScreenTouchPoints = window.navigator.maxTouchPoints;
                     this.numberOfHardwareConcurrency = window.navigator.hardwareConcurrency;
@@ -50,6 +52,7 @@ export default class DeviceInformation {
             this.viewportWidth = object["viewportWidth"];
             this.viewportHeight = object["viewportHeight"];
             this.screenOrientation = object["screenOrientation"];
+            this.isDarkMode = object["isDarkMode"];
             this.maximumNumberOfScreenTouchPoints = object["maximumNumberOfScreenTouchPoints"];
             this.numberOfHardwareConcurrency = object["numberOfHardwareConcurrency"];
             this.languages = object["languages"];
@@ -84,6 +87,11 @@ export default class DeviceInformation {
      * 画面の向き。
      */
     public readonly screenOrientation: string;
+
+    /**
+     * ダークモードの場合にtrue。
+     */
+    public readonly isDarkMode: boolean;
 
     /**
      * 画面の最大タッチポイント数。
@@ -132,6 +140,7 @@ export default class DeviceInformation {
         object["viewportWidth"] = this.viewportWidth;
         object["viewportHeight"] = this.viewportHeight;
         object["screenOrientation"] = this.screenOrientation;
+        object["isDarkMode"] = this.isDarkMode;
         object["maximumNumberOfScreenTouchPoints"] = this.maximumNumberOfScreenTouchPoints;
         object["numberOfHardwareConcurrency"] = this.numberOfHardwareConcurrency;
         object["languages"] = this.languages;
