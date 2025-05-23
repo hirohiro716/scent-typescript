@@ -45,9 +45,9 @@ export default class DeviceInformation {
      */
     readonly languages: string[];
     /**
-     * JavaScriptのユーザーエージェント文字列。
+     * ユーザーエージェント。
      */
-    readonly javascriptUserAgentText: string;
+    readonly userAgent: string;
     /**
      * Chromium系と判断できる場合にtrue。
      */

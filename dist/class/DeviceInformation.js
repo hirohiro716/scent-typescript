@@ -17,7 +17,7 @@ export default class DeviceInformation {
         this.maximumNumberOfScreenTouchPoints = 0;
         this.numberOfHardwareConcurrency = 0;
         this.languages = [];
-        this.javascriptUserAgentText = "";
+        this.userAgent = "";
         this.isChromium = false;
         this.isFirefox = false;
         this.isSafari = false;
@@ -38,7 +38,7 @@ export default class DeviceInformation {
                     this.numberOfHardwareConcurrency = window.navigator.hardwareConcurrency;
                     this.languages = [...window.navigator.languages];
                     if (window.navigator.userAgent) {
-                        this.javascriptUserAgentText = window.navigator.userAgent;
+                        this.userAgent = window.navigator.userAgent;
                         this.isChromium = window.navigator.userAgent.toLowerCase().includes("chrom");
                         this.isFirefox = window.navigator.userAgent.toLowerCase().includes("firefox");
                         this.isSafari = window.navigator.userAgent.toLowerCase().includes("safari") && window.navigator.userAgent.toLowerCase().includes("chrom") === false;
@@ -56,7 +56,7 @@ export default class DeviceInformation {
             this.maximumNumberOfScreenTouchPoints = object["maximumNumberOfScreenTouchPoints"];
             this.numberOfHardwareConcurrency = object["numberOfHardwareConcurrency"];
             this.languages = object["languages"];
-            this.javascriptUserAgentText = object["javascriptUserAgentText"];
+            this.userAgent = object["userAgent"];
             this.isChromium = object["isChromium"];
             this.isFirefox = object["isFirefox"];
             this.isSafari = object["isSafari"];
@@ -78,7 +78,7 @@ export default class DeviceInformation {
         object["maximumNumberOfScreenTouchPoints"] = this.maximumNumberOfScreenTouchPoints;
         object["numberOfHardwareConcurrency"] = this.numberOfHardwareConcurrency;
         object["languages"] = this.languages;
-        object["javascriptUserAgentText"] = this.javascriptUserAgentText;
+        object["userAgent"] = this.userAgent;
         object["isChromium"] = this.isChromium;
         object["isFirefox"] = this.isFirefox;
         object["isSafari"] = this.isSafari;
