@@ -24,7 +24,7 @@ import SearchResult from "./class/database/SearchResult.js";
 import { Comparison, Comparisons } from "./class/database/Comparison.js";
 import { WhereSet, Where } from "./class/database/WhereSet.js";
 
-import UserAgent from "./class/UserAgent.js";
+import DeviceInformation from "./class/DeviceInformation.js";
 import SoundPlayer from "./class/SoundPlayer.js";
 
 import MillimeterValue from "./class/graphic/MillimeterValue.js";
@@ -42,6 +42,6 @@ export {
     StringValidator, StringValidationError, ObjectValidator, ObjectValidationError,
     ByteArray, API, APIRequestError,
     Column, Table, RecordMap, SearchResult, Comparison, Comparisons, WhereSet, Where,
-    UserAgent, SoundPlayer,
+    DeviceInformation, SoundPlayer,
     MillimeterValue, GraphicalString, JAN13Renderer, NW7Renderer,
 }
