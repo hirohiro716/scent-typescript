@@ -384,6 +384,15 @@ export class Datetime {
             value.append(this.yearToDateSeparator);
             value.append(StringObject.from(this._date.getMonth() + 1).paddingLeft(2, "0"));
         }
+        if (datetimeFormat === DatetimeFormat.monthToMinute) {
+            value.append(StringObject.from(this._date.getMonth() + 1));
+            value.append(this.yearToDateSeparator);
+            value.append(StringObject.from(this._date.getDate()));
+            value.append(" ");
+            value.append(StringObject.from(this._date.getHours()).paddingLeft(2, "0"));
+            value.append(":");
+            value.append(StringObject.from(this._date.getMinutes()).paddingLeft(2, "0"));
+        }
         if (datetimeFormat === DatetimeFormat.monthAndDay) {
             value.append(StringObject.from(this._date.getMonth() + 1));
             value.append(this.yearToDateSeparator);
@@ -656,6 +665,10 @@ export const DatetimeFormat = {
      * 年と月。
      */
     yearAndMonth: new Enumeration("year_and_month", "年と月"),
+    /**
+     * 月から分まで。
+     */
+    monthToMinute: new Enumeration("month_to_minute", "月から分まで"),
     /**
      * 月と日。
      */

@@ -376,6 +376,10 @@ export declare const DatetimeFormat: {
      */
     yearAndMonth: Enumeration;
     /**
+     * 月から分まで。
+     */
+    monthToMinute: Enumeration;
+    /**
      * 月と日。
      */
     monthAndDay: Enumeration;
