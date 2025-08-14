@@ -37,6 +37,19 @@ export default abstract class JAN13Renderer<C> {
         return this._context;
     }
 
+    private _barScale: number = 1;
+
+    /**
+     * バーの拡大率。1が初期値。
+     */
+    public get barScale(): number {
+        return this._barScale;
+    }
+
+    public set barScale(barScale: number) {
+        this._barScale = barScale;
+    }
+    
     /**
      * JAN-13の値13桁のうち、チェックディジットを削除した12桁を返す。
      * 
@@ -132,9 +145,9 @@ export default abstract class JAN13Renderer<C> {
         const barcode = new StringObject(this._barcode);
         let renderingX = bounds.x;
         // ノーマルガードバー
-        this.fillRectangle(this._context, renderingX, bounds.y, oneModule, bounds.height);
+        this.fillRectangle(this._context, renderingX, bounds.y, oneModule * this._barScale, bounds.height);
         renderingX += oneModule * 2;
-        this.fillRectangle(this._context, renderingX, bounds.y, oneModule, bounds.height);
+        this.fillRectangle(this._context, renderingX, bounds.y, oneModule * this._barScale, bounds.height);
         renderingX += oneModule;
         // リーディングディジットを取得する
         const readingDigit = barcode.clone().extract(0, 1).toNumber()!;
@@ -146,16 +159,16 @@ export default abstract class JAN13Renderer<C> {
             const parities = JAN13Renderer.LEFT_PARITIES[typeIndex][rendering];
             for (const parity of parities) {
                 if (parity === 1) {
-                    this.fillRectangle(this._context, renderingX, bounds.y, oneModule, bounds.height);
+                    this.fillRectangle(this._context, renderingX, bounds.y, oneModule * this._barScale, bounds.height);
                 }
                 renderingX += oneModule;
             }
         }
         // センターガードバー
         renderingX += oneModule;
-        this.fillRectangle(this._context, renderingX, bounds.y, oneModule, bounds.height);
+        this.fillRectangle(this._context, renderingX, bounds.y, oneModule * this._barScale, bounds.height);
         renderingX += oneModule * 2;
-        this.fillRectangle(this._context, renderingX, bounds.y, oneModule, bounds.height);
+        this.fillRectangle(this._context, renderingX, bounds.y, oneModule * this._barScale, bounds.height);
         renderingX += oneModule * 2;
         // センターガードバーの右側を描画する
         for (let index = 7; index <= 12; index++) {
@@ -163,15 +176,15 @@ export default abstract class JAN13Renderer<C> {
             const parities = JAN13Renderer.RIGHT_PARITIES[rendering];
             for (const parity of parities) {
                 if (parity === 1) {
-                    this.fillRectangle(this._context, renderingX, bounds.y, oneModule, bounds.height);
+                    this.fillRectangle(this._context, renderingX, bounds.y, oneModule * this._barScale, bounds.height);
                 }
                 renderingX += oneModule;
             }
         }
         // ライトガードバー
-        this.fillRectangle(this._context, renderingX, bounds.y, oneModule, bounds.height);
+        this.fillRectangle(this._context, renderingX, bounds.y, oneModule * this._barScale, bounds.height);
         renderingX += oneModule * 2;
-        this.fillRectangle(this._context, renderingX, bounds.y, oneModule, bounds.height);
+        this.fillRectangle(this._context, renderingX, bounds.y, oneModule * this._barScale, bounds.height);
     }
 
     /**

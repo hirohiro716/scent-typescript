@@ -22,6 +22,12 @@ export default abstract class JAN13Renderer<C> {
      * 描画する二次元描画コンテキスト。
      */
     get context(): C;
+    private _barScale;
+    /**
+     * バーの拡大率。1が初期値。
+     */
+    get barScale(): number;
+    set barScale(barScale: number);
     /**
      * JAN-13の値13桁のうち、チェックディジットを削除した12桁を返す。
      *
