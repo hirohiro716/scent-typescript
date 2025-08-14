@@ -35,7 +35,7 @@ export default class ByteArray {
      * @returns
      */
     toBlob() {
-        return new Blob([this.uint8Array]);
+        return new Blob([this.uint8Array.buffer]);
     }
     /**
      * このバイト配列をBufferに変換する。
@@ -63,6 +63,10 @@ export default class ByteArray {
         if (byteArrayLike instanceof Blob) {
             const arrayBuffer = await byteArrayLike.arrayBuffer();
             const uint8Array = new Uint8Array(arrayBuffer);
+            return new ByteArray(uint8Array);
+        }
+        if (byteArrayLike instanceof Buffer) {
+            const uint8Array = new Uint8Array(byteArrayLike);
             return new ByteArray(uint8Array);
         }
         return new ByteArray(byteArrayLike);

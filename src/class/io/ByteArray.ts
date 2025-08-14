@@ -42,7 +42,7 @@ export default class ByteArray {
      * @returns 
      */
     public toBlob(): Blob {
-        return new Blob([this.uint8Array]);
+        return new Blob([this.uint8Array.buffer as ArrayBuffer]);
     }
 
     /**
@@ -69,10 +69,14 @@ export default class ByteArray {
      * @param byteArrayLike 
      * @returns 
      */
-    public static async from(byteArrayLike: Uint8Array | string | Blob): Promise<ByteArray> {
+    public static async from(byteArrayLike: Uint8Array | string | Blob | Buffer): Promise<ByteArray> {
         if (byteArrayLike instanceof Blob) {
             const arrayBuffer = await byteArrayLike.arrayBuffer();
             const uint8Array = new Uint8Array(arrayBuffer);
+            return new ByteArray(uint8Array);
+        }
+        if (byteArrayLike instanceof Buffer) {
+            const uint8Array = new Uint8Array(byteArrayLike);
             return new ByteArray(uint8Array);
         }
         return new ByteArray(byteArrayLike);

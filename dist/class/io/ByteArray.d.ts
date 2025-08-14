@@ -43,5 +43,5 @@ export default class ByteArray {
      * @param byteArrayLike
      * @returns
      */
-    static from(byteArrayLike: Uint8Array | string | Blob): Promise<ByteArray>;
+    static from(byteArrayLike: Uint8Array | string | Blob | Buffer): Promise<ByteArray>;
 }
