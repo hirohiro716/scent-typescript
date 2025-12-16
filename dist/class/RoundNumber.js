@@ -5,6 +5,25 @@ import StringObject from "./StringObject.js";
  */
 export class RoundNumber extends Enumeration {
     /**
+     * 指定された数と一番近い整数、または一番近いポイントファイブを比較して、
+     * 差が0.000001未満の場合は整数やポイントファイブを、それ以上の場合は元の値を返す。
+     *
+     * @param value
+     * @returns
+     */
+    humanize(value) {
+        const epsilon = 0.000001;
+        const nearestInt = Math.round(value);
+        if (Math.abs(value - nearestInt) < epsilon) {
+            return nearestInt;
+        }
+        const fraction = Math.abs(value % 1);
+        if (Math.abs(fraction - 0.5) < epsilon) {
+            return Math.round(value * 2) / 2;
+        }
+        return value;
+    }
+    /**
      * 指定された数値を丸める。
      *
      * @param value 数値。
@@ -12,6 +31,7 @@ export class RoundNumber extends Enumeration {
      * @returns
      */
     calculate(value, digit = 0) {
+        const humanized = this.humanize(value);
         let multiplier = 1;
         if (digit > 0) {
             multiplier = StringObject.from("1").paddingRight(digit + 1, "0").toNumber();
@@ -21,13 +41,13 @@ export class RoundNumber extends Enumeration {
         }
         switch (this.physicalName) {
             case RoundNumbers.round.physicalName:
-                return Math.round(value * multiplier) / multiplier;
+                return Math.round(humanized * multiplier) / multiplier;
             case RoundNumbers.floor.physicalName:
-                return Math.floor(value * multiplier) / multiplier;
+                return Math.floor(humanized * multiplier) / multiplier;
             case RoundNumbers.ceil.physicalName:
-                return Math.ceil(value * multiplier) / multiplier;
+                return Math.ceil(humanized * multiplier) / multiplier;
         }
-        return value;
+        return humanized;
     }
 }
 /**

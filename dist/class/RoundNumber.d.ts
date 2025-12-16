@@ -4,6 +4,14 @@ import Enumeration from "./Enumeration.js";
  */
 export declare class RoundNumber extends Enumeration {
     /**
+     * 指定された数と一番近い整数、または一番近いポイントファイブを比較して、
+     * 差が0.000001未満の場合は整数やポイントファイブを、それ以上の場合は元の値を返す。
+     *
+     * @param value
+     * @returns
+     */
+    private humanize;
+    /**
      * 指定された数値を丸める。
      *
      * @param value 数値。
