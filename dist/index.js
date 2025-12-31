@@ -11,6 +11,7 @@ import { StringValidator, StringValidationError } from "./class/validation/Strin
 import { ObjectValidator, ObjectValidationError } from "./class/validation/ObjectValidator.js";
 import ByteArray from "./class/io/ByteArray.js";
 import { API, APIRequestError } from "./class/io/API.js";
+import { ImageLoadValidator, ImageLoadError } from "./class/io/ImageLoadValidator.js";
 import Column from "./class/database/Column.js";
 import Table from "./class/database/Table.js";
 import RecordMap from "./class/database/RecordMap.js";
@@ -23,4 +24,4 @@ import MillimeterValue from "./class/graphic/MillimeterValue.js";
 import GraphicalString from "./class/graphic/GraphicalString.js";
 import JAN13Renderer from "./class/graphic/JAN13Renderer.js";
 import NW7Renderer from "./class/graphic/NW7Renderer.js";
-export { Enumeration, Property, StringObject, RoundNumber, RoundNumbers, Price, Regex, RegexTypes, Datetime, DayOfWeek, DatetimeFormat, Period, CutoffPeriod, StringValidator, StringValidationError, ObjectValidator, ObjectValidationError, ByteArray, API, APIRequestError, Column, Table, RecordMap, SearchResult, Comparison, Comparisons, WhereSet, Where, DeviceInformation, SoundPlayer, MillimeterValue, GraphicalString, JAN13Renderer, NW7Renderer, };
+export { Enumeration, Property, StringObject, RoundNumber, RoundNumbers, Price, Regex, RegexTypes, Datetime, DayOfWeek, DatetimeFormat, Period, CutoffPeriod, StringValidator, StringValidationError, ObjectValidator, ObjectValidationError, ByteArray, API, APIRequestError, ImageLoadValidator, ImageLoadError, Column, Table, RecordMap, SearchResult, Comparison, Comparisons, WhereSet, Where, DeviceInformation, SoundPlayer, MillimeterValue, GraphicalString, JAN13Renderer, NW7Renderer, };

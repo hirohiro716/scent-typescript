@@ -16,6 +16,7 @@ import { ObjectValidator, ObjectValidationError } from "./class/validation/Objec
 
 import ByteArray from "./class/io/ByteArray.js";
 import { API, APIRequestError } from "./class/io/API.js";
+import { ImageLoadValidator, ImageLoadError } from "./class/io/ImageLoadValidator.js";
 
 import Column from "./class/database/Column.js";
 import Table from "./class/database/Table.js";
@@ -40,7 +41,7 @@ export {
     Enumeration, Property, StringObject, RoundNumber, RoundNumbers, Price, Regex, RegexTypes,
     Datetime, DayOfWeek, DatetimeFormat, Period, CutoffPeriod,
     StringValidator, StringValidationError, ObjectValidator, ObjectValidationError,
-    ByteArray, API, APIRequestError,
+    ByteArray, API, APIRequestError, ImageLoadValidator, ImageLoadError,
     Column, Table, RecordMap, SearchResult, Comparison, Comparisons, WhereSet, Where,
     DeviceInformation, SoundPlayer,
     MillimeterValue, GraphicalString, JAN13Renderer, NW7Renderer,
