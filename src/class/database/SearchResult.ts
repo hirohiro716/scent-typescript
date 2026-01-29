@@ -1,5 +1,5 @@
-import Column from "./Column";
-import Table from "./Table";
+import Column from "./Column.js";
+import Table from "./Table.js";
 
 /**
  * 検索結果の抽象クラス。
