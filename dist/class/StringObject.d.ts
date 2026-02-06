@@ -162,14 +162,6 @@ export default class StringObject {
      */
     katakana(): StringObject;
     /**
-     * 指定された長さまで左側を文字で埋める。
-     *
-     * @param length
-     * @param addition
-     * @returns このインスタンス。
-     */
-    paddingLeft(length: number, addition: any): StringObject;
-    /**
      * 指定された長さまで右側を文字で埋める。
      *
      * @param length
@@ -217,6 +209,26 @@ export default class StringObject {
      * @returns
      */
     toDate(): Date | null;
+    /**
+     * 文字列から半角/全角/小文字/大文字/ひらがな/カタカナに変換したすべてのバリエーションを生成する。
+     *
+     * @returns
+     */
+    toVariantStrings(): string[];
+    /**
+     * 文字列から半角/全角/小文字/大文字/ひらがな/カタカナに変換したすべてのバリエーションを生成する。
+     *
+     * @returns
+     */
+    toVariants(): StringObject[];
+    /**
+     * 指定された長さまで左側を文字で埋める。
+     *
+     * @param length
+     * @param addition
+     * @returns このインスタンス。
+     */
+    paddingLeft(length: number, addition: any): StringObject;
     /**
      * このインスタンスのクローンを作成する。
      *

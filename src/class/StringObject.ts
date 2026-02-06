@@ -339,22 +339,6 @@ export default class StringObject {
     }
 
     /**
-     * 指定された長さまで左側を文字で埋める。
-     * 
-     * @param length 
-     * @param addition 
-     * @returns このインスタンス。
-     */
-    public paddingLeft(length: number, addition: any): StringObject {
-        if (typeof addition !== "undefined" && addition !== null) {
-            let before: string = this.joinAndResetParts();
-            let after: string = before.padStart(length, addition);
-            this.parts = [after];
-        }
-        return this;
-    }
-
-    /**
      * 指定された長さまで右側を文字で埋める。
      * 
      * @param length 
@@ -446,6 +430,54 @@ export default class StringObject {
             return null;
         }
         return datetime.date;
+    }
+
+    /**
+     * 文字列から半角/全角/小文字/大文字/ひらがな/カタカナに変換したすべてのバリエーションを生成する。
+     * 
+     * @returns 
+     */
+    public toVariantStrings(): string[] {
+        const values: string[] = [this.toString()];
+        for (let number = 1; number <= 3; number++) {
+            for (const value of [...values]) {
+                for (const temporaryValue of [StringObject.from(value).narrow(), StringObject.from(value).wide(), StringObject.from(value).lower(), StringObject.from(value).upper(), StringObject.from(value).hiragana(), StringObject.from(value).katakana()]) {
+                    if (values.includes(temporaryValue.toString()) === false) {
+                        values.push(temporaryValue.toString());
+                    }
+                }
+            }
+        }
+        return values;
+    }
+
+    /**
+     * 文字列から半角/全角/小文字/大文字/ひらがな/カタカナに変換したすべてのバリエーションを生成する。
+     * 
+     * @returns 
+     */
+    public toVariants(): StringObject[] {
+        const values: StringObject[] = [];
+        for (const value of this.toVariantStrings()) {
+            values.push(StringObject.from(value));
+        }
+        return values;
+    }
+
+    /**
+     * 指定された長さまで左側を文字で埋める。
+     * 
+     * @param length 
+     * @param addition 
+     * @returns このインスタンス。
+     */
+    public paddingLeft(length: number, addition: any): StringObject {
+        if (typeof addition !== "undefined" && addition !== null) {
+            let before: string = this.joinAndResetParts();
+            let after: string = before.padStart(length, addition);
+            this.parts = [after];
+        }
+        return this;
     }
 
     /**
