@@ -27,6 +27,7 @@ import { WhereSet, Where } from "./class/database/WhereSet.js";
 
 import DeviceInformation from "./class/DeviceInformation.js";
 import SoundPlayer from "./class/SoundPlayer.js";
+import IPAddress from "./class/IPAddress.js";
 
 import MillimeterValue from "./class/graphic/MillimeterValue.js";
 import GraphicalString from "./class/graphic/GraphicalString.js";
@@ -43,6 +44,6 @@ export {
     StringValidator, StringValidationError, ObjectValidator, ObjectValidationError,
     ByteArray, API, APIRequestError, ImageLoadValidator, ImageLoadError,
     Column, Table, RecordMap, SearchResult, Comparison, Comparisons, WhereSet, Where,
-    DeviceInformation, SoundPlayer,
+    DeviceInformation, SoundPlayer, IPAddress,
     MillimeterValue, GraphicalString, JAN13Renderer, NW7Renderer,
 }
