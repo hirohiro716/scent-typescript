@@ -1,4 +1,3 @@
-/// <reference types="node" />
 /**
  * バイト配列のクラス。
  */
@@ -30,7 +29,7 @@ export default class ByteArray {
      *
      * @returns
      */
-    toBuffer(): Buffer;
+    toBuffer(): ArrayBufferLike;
     /**
      * このバイト配列を文字列に変換する。
      *
@@ -43,5 +42,5 @@ export default class ByteArray {
      * @param byteArrayLike
      * @returns
      */
-    static from(byteArrayLike: Uint8Array | string | Blob | Buffer): Promise<ByteArray>;
+    static from(byteArrayLike: Uint8Array | string | Blob | ArrayBuffer): Promise<ByteArray>;
 }

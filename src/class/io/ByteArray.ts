@@ -1,3 +1,5 @@
+import StringObject from "../StringObject.js";
+
 /**
  * バイト配列のクラス。
  */
@@ -10,8 +12,12 @@ export default class ByteArray {
      */
     public constructor(byteArrayLike: Uint8Array | string) {
         if (typeof byteArrayLike === "string") {
-            const uint8Array = new Uint8Array(Buffer.from(byteArrayLike, "hex"));
-            this.uint8Array = uint8Array;
+            const matches = byteArrayLike.match(/[0-9a-fA-F]{2}/gi);
+            if (matches !== null) {
+                this.uint8Array = new Uint8Array(matches.map((hex) => parseInt(hex, 16)));
+            } else {
+                this.uint8Array = new Uint8Array();
+            }
         } else {
             this.uint8Array = byteArrayLike;
         }
@@ -50,8 +56,8 @@ export default class ByteArray {
      * 
      * @returns 
      */
-    public toBuffer(): Buffer {
-        return Buffer.from(this.uint8Array);
+    public toBuffer(): ArrayBufferLike {
+        return this.uint8Array.buffer;
     }
 
     /**
@@ -60,7 +66,11 @@ export default class ByteArray {
      * @returns 
      */
     public toString(): string {
-        return this.toBuffer().toString("hex");
+        const hex = new StringObject();
+        for (const bit of this.uint8Array) {
+            hex.append(StringObject.from(bit.toString(16)).paddingLeft(2, "0"));
+        }
+        return hex.toString();
     }
 
     /**
@@ -69,13 +79,13 @@ export default class ByteArray {
      * @param byteArrayLike 
      * @returns 
      */
-    public static async from(byteArrayLike: Uint8Array | string | Blob | Buffer): Promise<ByteArray> {
+    public static async from(byteArrayLike: Uint8Array | string | Blob | ArrayBuffer): Promise<ByteArray> {
         if (byteArrayLike instanceof Blob) {
             const arrayBuffer = await byteArrayLike.arrayBuffer();
             const uint8Array = new Uint8Array(arrayBuffer);
             return new ByteArray(uint8Array);
         }
-        if (byteArrayLike instanceof Buffer) {
+        if (byteArrayLike instanceof ArrayBuffer) {
             const uint8Array = new Uint8Array(byteArrayLike);
             return new ByteArray(uint8Array);
         }

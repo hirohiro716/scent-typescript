@@ -1,3 +1,4 @@
+import StringObject from "../StringObject.js";
 /**
  * バイト配列のクラス。
  */
@@ -9,8 +10,13 @@ export default class ByteArray {
      */
     constructor(byteArrayLike) {
         if (typeof byteArrayLike === "string") {
-            const uint8Array = new Uint8Array(Buffer.from(byteArrayLike, "hex"));
-            this.uint8Array = uint8Array;
+            const matches = byteArrayLike.match(/[0-9a-fA-F]{2}/gi);
+            if (matches !== null) {
+                this.uint8Array = new Uint8Array(matches.map((hex) => parseInt(hex, 16)));
+            }
+            else {
+                this.uint8Array = new Uint8Array();
+            }
         }
         else {
             this.uint8Array = byteArrayLike;
@@ -43,7 +49,7 @@ export default class ByteArray {
      * @returns
      */
     toBuffer() {
-        return Buffer.from(this.uint8Array);
+        return this.uint8Array.buffer;
     }
     /**
      * このバイト配列を文字列に変換する。
@@ -51,7 +57,11 @@ export default class ByteArray {
      * @returns
      */
     toString() {
-        return this.toBuffer().toString("hex");
+        const hex = new StringObject();
+        for (const bit of this.uint8Array) {
+            hex.append(StringObject.from(bit.toString(16)).paddingLeft(2, "0"));
+        }
+        return hex.toString();
     }
     /**
      * コンストラクタの呼び出しと同じで新しいインスタンスを作成する。
@@ -65,7 +75,7 @@ export default class ByteArray {
             const uint8Array = new Uint8Array(arrayBuffer);
             return new ByteArray(uint8Array);
         }
-        if (byteArrayLike instanceof Buffer) {
+        if (byteArrayLike instanceof ArrayBuffer) {
             const uint8Array = new Uint8Array(byteArrayLike);
             return new ByteArray(uint8Array);
         }
