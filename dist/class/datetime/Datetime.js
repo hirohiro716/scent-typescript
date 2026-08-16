@@ -15,36 +15,41 @@ export class Datetime {
         this.yearToDateSeparator = "-";
         this._date = new Date();
         if (typeof parameter1 === "string") {
-            this.setAllMilliseconds(0);
-            const datetimeString = new StringObject(parameter1);
-            const yyyymmdd = datetimeString.clone().extract("^[0-9\\-]{5,}").split("-|/");
-            if (yyyymmdd.length == 3) {
-                const yyyy = yyyymmdd[0].toNumber();
-                if (yyyy !== null)
-                    this.setYear(yyyy);
-                const mm = yyyymmdd[1].toNumber();
-                if (mm !== null)
-                    this.setMonth(mm);
-                const dd = yyyymmdd[2].toNumber();
-                if (dd !== null)
-                    this.setDay(dd);
+            if (parameter1.match("[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}\.[0-9]{3}Z{0,1}")) {
+                this._date = new Date(parameter1);
             }
-            const hhmmss = datetimeString.clone().extract("[0-9:\\.]{3,}$").split(":|\\.");
-            if (hhmmss.length >= 2) {
-                const hh = hhmmss[0].toNumber();
-                if (hh !== null)
-                    this.setHour(hh);
-                const mm = hhmmss[1].toNumber();
-                if (mm !== null)
-                    this.setMinute(mm);
-                if (hhmmss.length >= 3) {
-                    const ss = hhmmss[2].toNumber();
-                    if (ss !== null)
-                        this.setSecond(ss);
-                    if (hhmmss.length === 4) {
-                        const ms = hhmmss[3].toNumber();
-                        if (ms !== null)
-                            this.setMillisecond(ms);
+            else {
+                this.setAllMilliseconds(0);
+                const datetimeString = new StringObject(parameter1);
+                const yyyymmdd = datetimeString.clone().extract("^[0-9\\-]{5,}").split("-|/");
+                if (yyyymmdd.length == 3) {
+                    const yyyy = yyyymmdd[0].toNumber();
+                    if (yyyy !== null)
+                        this.setYear(yyyy);
+                    const mm = yyyymmdd[1].toNumber();
+                    if (mm !== null)
+                        this.setMonth(mm);
+                    const dd = yyyymmdd[2].toNumber();
+                    if (dd !== null)
+                        this.setDay(dd);
+                }
+                const hhmmss = datetimeString.clone().extract("[0-9:\\.]{3,}$").split(":|\\.");
+                if (hhmmss.length >= 2) {
+                    const hh = hhmmss[0].toNumber();
+                    if (hh !== null)
+                        this.setHour(hh);
+                    const mm = hhmmss[1].toNumber();
+                    if (mm !== null)
+                        this.setMinute(mm);
+                    if (hhmmss.length >= 3) {
+                        const ss = hhmmss[2].toNumber();
+                        if (ss !== null)
+                            this.setSecond(ss);
+                        if (hhmmss.length === 4) {
+                            const ms = hhmmss[3].toNumber();
+                            if (ms !== null)
+                                this.setMillisecond(ms);
+                        }
                     }
                 }
             }
