@@ -431,7 +431,7 @@ export class Datetime {
      * @returns
      */
     clone() {
-        let datetime = new Datetime(new Date(this._date));
+        const datetime = new Datetime(new Date(this._date));
         return datetime;
     }
     /**

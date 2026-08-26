@@ -35,7 +35,7 @@ class StringObject {
         if (this.parts.length === 1) {
             return this.parts[0];
         }
-        let value = this.parts.join("");
+        const value = this.parts.join("");
         this.parts = [value];
         return value;
     }
@@ -89,7 +89,7 @@ class StringObject {
      */
     insert(addition, index) {
         if (typeof addition !== "undefined" && addition !== null) {
-            let value = this.joinAndResetParts();
+            const value = this.joinAndResetParts();
             this.parts = [value.slice(0, index)];
             this.parts.push(new String(addition).toString());
             this.parts.push(value.slice(index));
@@ -101,13 +101,13 @@ class StringObject {
      */
     extract(parameter1, parameter2) {
         if (typeof parameter1 === "number") {
-            let value = this.joinAndResetParts();
+            const value = this.joinAndResetParts();
             this.parts = [value.slice(parameter1, parameter2)];
         }
         else if (typeof parameter1 === "string") {
-            let value = this.joinAndResetParts();
+            const value = this.joinAndResetParts();
             this.parts = [];
-            let match = value.match(new RegExp(parameter1, "g"));
+            const match = value.match(new RegExp(parameter1, "g"));
             if (match) {
                 match.forEach((one, index) => {
                     this.parts.push(one);
@@ -307,8 +307,8 @@ class StringObject {
      */
     paddingRight(length, addition) {
         if (typeof addition !== "undefined" && addition !== null) {
-            let before = this.joinAndResetParts();
-            let after = before.padEnd(length, addition);
+            const before = this.joinAndResetParts();
+            const after = before.padEnd(length, addition);
             this.parts = [after];
         }
         return this;
@@ -423,8 +423,8 @@ class StringObject {
      */
     paddingLeft(length, addition) {
         if (typeof addition !== "undefined" && addition !== null) {
-            let before = this.joinAndResetParts();
-            let after = before.padStart(length, addition);
+            const before = this.joinAndResetParts();
+            const after = before.padStart(length, addition);
             this.parts = [after];
         }
         return this;

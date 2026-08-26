@@ -94,7 +94,7 @@ export class API {
                 }
                 break;
         }
-        let response = await fetch(url.toString(), requestInit);
+        const response = await fetch(url.toString(), requestInit);
         switch (response.status) {
             case 200:
             case 201:

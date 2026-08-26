@@ -37,7 +37,7 @@ export default class StringObject {
         if (this.parts.length === 1) {
             return this.parts[0];
         }
-        let value = this.parts.join("");
+        const value = this.parts.join("");
         this.parts = [value];
         return value;
     }
@@ -95,7 +95,7 @@ export default class StringObject {
      */
     public insert(addition: any, index: number): StringObject {
         if (typeof addition !== "undefined" && addition !== null) {
-            let value: string = this.joinAndResetParts();
+            const value: string = this.joinAndResetParts();
             this.parts = [value.slice(0, index)];
             this.parts.push(new String(addition).toString());
             this.parts.push(value.slice(index));
@@ -134,12 +134,12 @@ export default class StringObject {
      */
     public extract(parameter1: number | string, parameter2?: number): StringObject {
         if (typeof parameter1 === "number") {
-            let value: string = this.joinAndResetParts();
+            const value: string = this.joinAndResetParts();
             this.parts = [value.slice(parameter1, parameter2)];
         } else if (typeof parameter1 === "string") {
-            let value: string = this.joinAndResetParts();
+            const value: string = this.joinAndResetParts();
             this.parts = [];
-            let match = value.match(new RegExp(parameter1, "g"));
+            const match = value.match(new RegExp(parameter1, "g"));
             if (match) {
                 match.forEach((one, index) => {
                     this.parts.push(one);
@@ -347,8 +347,8 @@ export default class StringObject {
      */
     public paddingRight(length: number, addition: any): StringObject {
         if (typeof addition !== "undefined" && addition !== null) {
-            let before: string = this.joinAndResetParts();
-            let after: string = before.padEnd(length, addition);
+            const before: string = this.joinAndResetParts();
+            const after: string = before.padEnd(length, addition);
             this.parts = [after];
         }
         return this;
@@ -473,8 +473,8 @@ export default class StringObject {
      */
     public paddingLeft(length: number, addition: any): StringObject {
         if (typeof addition !== "undefined" && addition !== null) {
-            let before: string = this.joinAndResetParts();
-            let after: string = before.padStart(length, addition);
+            const before: string = this.joinAndResetParts();
+            const after: string = before.padStart(length, addition);
             this.parts = [after];
         }
         return this;
