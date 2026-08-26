@@ -34,6 +34,8 @@ import GraphicalString from "./class/graphic/GraphicalString.js";
 import JAN13Renderer from "./class/graphic/JAN13Renderer.js";
 import NW7Renderer from "./class/graphic/NW7Renderer.js";
 
+import Zipcode from "./class/address/Zipcode.js";
+
 export type {
     Dimension, Bounds,
 }
@@ -46,4 +48,5 @@ export {
     Column, Table, RecordMap, SearchResult, Comparison, Comparisons, WhereSet, Where,
     DeviceInformation, SoundPlayer, IPAddress,
     MillimeterValue, GraphicalString, JAN13Renderer, NW7Renderer,
+    Zipcode,
 }
