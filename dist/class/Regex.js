@@ -74,6 +74,9 @@ export class Regex {
                     result.append("(").append(one.clone().lower()).append("|").append(one.clone().upper());
                     result.append("|").append(one.clone().narrow().lower()).append("|").append(one.clone().narrow().upper()).append(")");
                     break;
+                default:
+                    result.append(one);
+                    break;
             }
         }
         return result.toString();
