@@ -77,6 +77,14 @@ export declare class StringValidator {
      */
     addKatakanaCheck(): void;
     /**
+     * 対象の文字列にE-mailアドレス以外の文字が含まれている場合に例外をスローする確認を予約する。
+     */
+    addEmailAddressCheck(): void;
+    /**
+     * 対象の文字列がRFC準拠のE-mailアドレスではない場合に例外をスローする確認を予約する。
+     */
+    addEmailAddressCheckRFC(): void;
+    /**
      * 対象の文字列が正規表現とマッチしない場合に例外をスローする確認を予約する。
      *
      * @param regex

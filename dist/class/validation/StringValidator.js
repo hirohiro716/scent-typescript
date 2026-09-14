@@ -107,6 +107,19 @@ export class StringValidator {
         this.scheduledMethods.set(Method.katakana, null);
     }
     /**
+     * 対象の文字列にE-mailアドレス以外の文字が含まれている場合に例外をスローする確認を予約する。
+     */
+    addEmailAddressCheck() {
+        this.scheduledMethods.set(Method.emailAddress, null);
+    }
+    /**
+     * 対象の文字列がRFC準拠のE-mailアドレスではない場合に例外をスローする確認を予約する。
+     */
+    addEmailAddressCheckRFC() {
+        this.scheduledMethods.set(Method.emailAddress, null);
+        this.scheduledMethods.set(Method.rfcCompliantEmailAddress, null);
+    }
+    /**
      * 対象の文字列が正規表現とマッチしない場合に例外をスローする確認を予約する。
      *
      * @param regex
@@ -168,6 +181,8 @@ export class StringValidator {
                 break;
             case Method.datetime:
             case Method.telephoneNumber:
+            case Method.emailAddress:
+            case Method.rfcCompliantEmailAddress:
             case Method.regex:
             case Method.reverseRegex:
                 message.append("が正しくありません。");
@@ -275,6 +290,25 @@ export class StringValidator {
                         }
                     }
                     break;
+                case Method.emailAddress:
+                    if (value.length() > 0) {
+                        if (value.clone().replace("[a-zA-Z0-9.@\\-_]", "").length() > 0 || value.length() > 254) {
+                            throw this.createError(method);
+                        }
+                        if (value.length() - value.clone().replace("@", "").length() != 1) {
+                            throw this.createError(method);
+                        }
+                    }
+                    break;
+                case Method.rfcCompliantEmailAddress:
+                    if (value.length() > 0) {
+                        if (value.clone().replace("^[^a-zA-Z0-9]", "").length() != value.length()
+                            || value.clone().replace("\\.\\.", "").length() != value.length()
+                            || value.clone().replace("\\.@", "").length() != value.length()) {
+                            throw this.createError(method);
+                        }
+                    }
+                    break;
                 case Method.regex:
                     if (value.length() > 0) {
                         if (value.clone().replace(parameter, "").length() === value.length()) {
@@ -311,6 +345,8 @@ var Method;
     Method["telephoneNumber"] = "telephoneNumber";
     Method["hiragana"] = "hiragana";
     Method["katakana"] = "katakana";
+    Method["emailAddress"] = "emailAddress";
+    Method["rfcCompliantEmailAddress"] = "rfcCompliantEmailAddress";
     Method["regex"] = "regex";
     Method["reverseRegex"] = "reverseRegex";
 })(Method || (Method = {}));
