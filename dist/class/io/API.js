@@ -42,21 +42,11 @@ export class API {
                 break;
         }
         const response = await fetch(url.toString(), requestInit);
-        switch (response.status) {
-            case 200:
-            case 201:
-                return response;
-            default:
-                let apiRequestError;
-                try {
-                    const errorObject = await response.json();
-                    apiRequestError = new APIRequestError(response.status, errorObject[API.propertyOfErrorMessage.physicalName], errorObject[API.propertyOfCauseObject.physicalName], errorObject[API.propertyOfPropertyAndErrorMessage.physicalName]);
-                }
-                catch (error) {
-                    apiRequestError = new APIRequestError(response.status, error.message);
-                }
-                throw apiRequestError;
+        if (response.ok) {
+            return response;
         }
+        const errorObject = await response.json();
+        throw new APIRequestError(response.status, errorObject[API.propertyOfErrorMessage.physicalName], errorObject[API.propertyOfCauseObject.physicalName], errorObject[API.propertyOfPropertyAndErrorMessage.physicalName]);
     }
     /**
      * @deprecated

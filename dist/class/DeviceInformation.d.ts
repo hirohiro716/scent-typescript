@@ -17,13 +17,13 @@ export default class DeviceInformation {
      */
     readonly screenHeight: number;
     /**
-     * ビューポートの幅。
+     * 利用可能な画面の幅。
      */
-    readonly viewportWidth: number;
+    readonly availWidth: number;
     /**
-     * ビューポートの高さ。
+     * 利用可能な画面の高さ。
      */
-    readonly viewportHeight: number;
+    readonly availHeight: number;
     /**
      * 画面の向き。
      */

@@ -34,11 +34,12 @@ class NW7Renderer {
      * @returns
      */
     static compute7DR(barcode) {
-        const barcodeNumber = StringObject.from(barcode).toNumber();
+        const barcodeObject = StringObject.from(barcode).extract("[0-9]");
+        const barcodeNumber = barcodeObject.toNumber();
         if (barcodeNumber === null) {
             return "";
         }
-        return StringObject.from(barcodeNumber % 7).toString();
+        return StringObject.from(BigInt(barcodeObject.toString()) % 7n).toString();
     }
     /**
      * 7DSRでチェックディジットを算出する。
@@ -60,6 +61,7 @@ class NW7Renderer {
      */
     render(bounds) {
         const barcode = new StringObject(this._barcode);
+        barcode.lower();
         // キャラクタ間のギャップの比率
         const gapWidthRatio = 4;
         // すべてのエレメントの和を計算する

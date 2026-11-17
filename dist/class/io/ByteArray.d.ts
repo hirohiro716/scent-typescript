@@ -19,7 +19,7 @@ export default class ByteArray {
      */
     download(defaultFilename: string): void;
     /**
-     * このバイト配列をUnit8Arrayに変換する。
+     * このバイト配列をBlobに変換する。
      *
      * @returns
      */

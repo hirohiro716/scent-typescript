@@ -76,7 +76,7 @@ export default class CutoffPeriod {
                 }
             }
         }
-        arrayOfMilliseconds.sort();
+        arrayOfMilliseconds.sort((a, b) => a - b);
         // Create periods
         const periods: Period[] = [];
         for (let index = 0; index < arrayOfMilliseconds.length - 1; index++) {

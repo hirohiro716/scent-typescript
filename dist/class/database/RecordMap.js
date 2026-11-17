@@ -49,7 +49,7 @@ export default class RecordMap extends Map {
             else {
                 value.append(record[column.physicalName]);
             }
-            if (value.equals(this.get(column)) === false) {
+            if (value.equals(StringObject.from(this.get(column))) === false) {
                 return false;
             }
         }

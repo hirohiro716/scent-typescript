@@ -44,11 +44,12 @@ export default abstract class NW7Renderer<C> {
      * @returns 
      */
     public static compute7DR(barcode: string): string {
-        const barcodeNumber = StringObject.from(barcode).toNumber();
+        const barcodeObject = StringObject.from(barcode).extract("[0-9]");
+        const barcodeNumber = barcodeObject.toNumber();
         if (barcodeNumber === null) {
             return "";
         }
-        return StringObject.from(barcodeNumber % 7).toString();
+        return StringObject.from(BigInt(barcodeObject.toString()) % 7n).toString();
     }
 
     /**
@@ -83,6 +84,7 @@ export default abstract class NW7Renderer<C> {
      */
     public render(bounds: Bounds): void {
         const barcode = new StringObject(this._barcode);
+        barcode.lower();
         // キャラクタ間のギャップの比率
         const gapWidthRatio: number = 4;
         // すべてのエレメントの和を計算する

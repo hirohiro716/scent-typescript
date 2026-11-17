@@ -11,7 +11,7 @@ export default class SoundPlayer {
      */
     public constructor(mediaURL: string) {
         this._mediaURL = mediaURL;
-        if (window) {
+        if (typeof window !== "undefined") {
             this._audioElement = new Audio(mediaURL);
         }
     }

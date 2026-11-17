@@ -9,7 +9,7 @@ export default class SoundPlayer {
      */
     constructor(mediaURL) {
         this._mediaURL = mediaURL;
-        if (window) {
+        if (typeof window !== "undefined") {
             this._audioElement = new Audio(mediaURL);
         }
     }

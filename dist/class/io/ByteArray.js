@@ -36,12 +36,12 @@ export default class ByteArray {
         URL.revokeObjectURL(url);
     }
     /**
-     * このバイト配列をUnit8Arrayに変換する。
+     * このバイト配列をBlobに変換する。
      *
      * @returns
      */
     toBlob() {
-        return new Blob([this.uint8Array.buffer]);
+        return new Blob([new Uint8Array(this.uint8Array)]);
     }
     /**
      * このバイト配列をBufferに変換する。
@@ -49,7 +49,7 @@ export default class ByteArray {
      * @returns
      */
     toBuffer() {
-        return this.uint8Array.buffer;
+        return new Uint8Array(this.uint8Array).buffer;
     }
     /**
      * このバイト配列を文字列に変換する。

@@ -31,7 +31,6 @@ export class RoundNumber extends Enumeration {
      * @returns
      */
     calculate(value, digit = 0) {
-        const humanized = this.humanize(value);
         let multiplier = 1;
         if (digit > 0) {
             multiplier = StringObject.from("1").paddingRight(digit + 1, "0").toNumber();
@@ -39,15 +38,25 @@ export class RoundNumber extends Enumeration {
         else if (digit < 0) {
             multiplier = 1 / StringObject.from("1").paddingRight(Math.abs(digit) + 1, "0").toNumber();
         }
+        const humanizedValue = this.humanize(value);
+        let result = humanizedValue;
+        const isNegative = result < 0;
+        const increasedValue = Math.abs(this.humanize(humanizedValue * multiplier));
         switch (this.physicalName) {
             case RoundNumbers.round.physicalName:
-                return Math.round(humanized * multiplier) / multiplier;
+                result = Math.round(increasedValue) / multiplier;
+                break;
             case RoundNumbers.floor.physicalName:
-                return Math.floor(humanized * multiplier) / multiplier;
+                result = Math.floor(increasedValue) / multiplier;
+                break;
             case RoundNumbers.ceil.physicalName:
-                return Math.ceil(humanized * multiplier) / multiplier;
+                result = Math.ceil(increasedValue) / multiplier;
+                break;
         }
-        return humanized;
+        if (isNegative) {
+            result *= -1;
+        }
+        return result;
     }
 }
 /**

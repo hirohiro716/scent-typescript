@@ -10,8 +10,8 @@ export default class DeviceInformation {
     constructor(object) {
         this.screenWidth = 0;
         this.screenHeight = 0;
-        this.viewportWidth = 0;
-        this.viewportHeight = 0;
+        this.availWidth = 0;
+        this.availHeight = 0;
         this.screenOrientation = "";
         this.isDarkMode = false;
         this.maximumNumberOfScreenTouchPoints = 0;
@@ -22,12 +22,12 @@ export default class DeviceInformation {
         this.isFirefox = false;
         this.isSafari = false;
         if (typeof object === "undefined") {
-            if (window) {
+            if (typeof window !== "undefined") {
                 if (window.screen) {
                     this.screenWidth = window.screen.width * window.devicePixelRatio;
                     this.screenHeight = window.screen.height * window.devicePixelRatio;
-                    this.viewportWidth = window.screen.availWidth;
-                    this.viewportHeight = window.screen.availHeight;
+                    this.availWidth = window.screen.availWidth;
+                    this.availHeight = window.screen.availHeight;
                     if (window.screen.orientation && window.screen.orientation.type) {
                         this.screenOrientation = window.screen.orientation.type;
                     }
@@ -49,8 +49,8 @@ export default class DeviceInformation {
         else {
             this.screenWidth = object["screenWidth"];
             this.screenHeight = object["screenHeight"];
-            this.viewportWidth = object["viewportWidth"];
-            this.viewportHeight = object["viewportHeight"];
+            this.availWidth = object["availWidth"];
+            this.availHeight = object["availHeight"];
             this.screenOrientation = object["screenOrientation"];
             this.isDarkMode = object["isDarkMode"];
             this.maximumNumberOfScreenTouchPoints = object["maximumNumberOfScreenTouchPoints"];
@@ -71,8 +71,8 @@ export default class DeviceInformation {
         const object = {};
         object["screenWidth"] = this.screenWidth;
         object["screenHeight"] = this.screenHeight;
-        object["viewportWidth"] = this.viewportWidth;
-        object["viewportHeight"] = this.viewportHeight;
+        object["availWidth"] = this.availWidth;
+        object["availHeight"] = this.availHeight;
         object["screenOrientation"] = this.screenOrientation;
         object["isDarkMode"] = this.isDarkMode;
         object["maximumNumberOfScreenTouchPoints"] = this.maximumNumberOfScreenTouchPoints;

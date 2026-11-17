@@ -43,12 +43,12 @@ export default class ByteArray {
     }
     
     /**
-     * このバイト配列をUnit8Arrayに変換する。
+     * このバイト配列をBlobに変換する。
      * 
      * @returns 
      */
     public toBlob(): Blob {
-        return new Blob([this.uint8Array.buffer as ArrayBuffer]);
+        return new Blob([new Uint8Array(this.uint8Array)]);
     }
 
     /**
@@ -57,7 +57,7 @@ export default class ByteArray {
      * @returns 
      */
     public toBuffer(): ArrayBufferLike {
-        return this.uint8Array.buffer;
+        return new Uint8Array(this.uint8Array).buffer;
     }
 
     /**

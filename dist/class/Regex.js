@@ -51,8 +51,12 @@ export class Regex {
         if (valueObject.length() === 0) {
             return valueObject.toString();
         }
+        const specialCharacters = ["\\", ".", "*", "+", "?", "^", "$", "{", "}", "(", ")", "[", "]", "|"];
         const result = new StringObject();
         for (const one of valueObject) {
+            if (specialCharacters.includes(one.toString())) {
+                one.prepend("\\");
+            }
             switch (true) {
                 case RegexTypes.hiragana.test(one.toString()):
                     result.append("(").append(one).append("|").append(one.clone().katakana()).append(")");

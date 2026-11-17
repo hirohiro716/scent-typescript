@@ -21,6 +21,7 @@ export default class IPAddress {
                 address.set(parameter.get("x-forwarded-for"));
             }
         }
+        address.replace(",.{0,}", "");
         address.extract("[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}");
         if (address.length() === 0) {
             address.append("0.0.0.0");
@@ -51,13 +52,13 @@ export default class IPAddress {
         if (this.isLoopback()) {
             return true;
         }
-        if (this.ipAddress.match("10\.") !== null) {
+        if (this.ipAddress.match("^10\\.") !== null) {
             return true;
         }
-        if (this.ipAddress.match("172\.(1[6-9]|2[0-9]|3[01])\.") !== null) {
+        if (this.ipAddress.match("^172\\.(1[6-9]|2[0-9]|3[01])\\.") !== null) {
             return true;
         }
-        if (this.ipAddress.match("192\.168\.") !== null) {
+        if (this.ipAddress.match("^192\\.168\\.") !== null) {
             return true;
         }
         return false;

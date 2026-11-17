@@ -46,7 +46,7 @@ class JAN13Renderer {
     static removeCheckDigit(barcode) {
         const string = new StringObject(barcode);
         if (string.length() >= 12 && string.toNumber() !== null) {
-            return string.extract(1, 12).toString();
+            return string.extract(0, 12).toString();
         }
         return "";
     }

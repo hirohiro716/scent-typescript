@@ -15,14 +15,15 @@ export class Datetime {
         this.yearToDateSeparator = "-";
         this._date = new Date();
         if (typeof parameter1 === "string") {
-            if (parameter1.match("[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}\.[0-9]{3}Z{0,1}")) {
+            if (parameter1.match("^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(\\.[0-9]{3}|)Z{0,1}$")) {
                 this._date = new Date(parameter1);
             }
             else {
-                this.setAllMilliseconds(0);
+                this.setAllMilliseconds(Datetime.INVALID_ALL_MILLISECONDS);
+                this.setHour(0).setMinute(0).setSecond(0).setMillisecond(0);
                 const datetimeString = new StringObject(parameter1);
-                const yyyymmdd = datetimeString.clone().extract("^[0-9\\-]{5,}").split("-|/");
-                if (yyyymmdd.length == 3) {
+                const yyyymmdd = datetimeString.clone().extract("^[0-9\\-/]{5,}").split("-|/");
+                if (yyyymmdd.length === 3) {
                     const yyyy = yyyymmdd[0].toNumber();
                     if (yyyy !== null)
                         this.setYear(yyyy);
@@ -35,6 +36,10 @@ export class Datetime {
                 }
                 const hhmmss = datetimeString.clone().extract("[0-9:\\.]{3,}$").split(":|\\.");
                 if (hhmmss.length >= 2) {
+                    if (yyyymmdd.length !== 3) {
+                        this._date = new Date();
+                        this.setHour(0).setMinute(0).setSecond(0).setMillisecond(0);
+                    }
                     const hh = hhmmss[0].toNumber();
                     if (hh !== null)
                         this.setHour(hh);
@@ -56,6 +61,7 @@ export class Datetime {
             return;
         }
         if (typeof parameter1 === "number") {
+            this.setMonth(1).setDay(1).setHour(0).setMinute(0).setSecond(0).setMillisecond(0);
             this.setYear(parameter1);
             if (typeof month !== "undefined")
                 this.setMonth(month);
@@ -331,7 +337,7 @@ export class Datetime {
      * @returns
      */
     isLastDayOfMonth() {
-        return this.clone().addDay(1).getMonth() > this.getMonth();
+        return this.clone().addDay(1).getMonth() !== this.getMonth();
     }
     /**
      * 月末に変更する。
@@ -593,6 +599,10 @@ export class Datetime {
     }
 }
 /**
+ * 無効な日時を表すミリ秒。
+ */
+Datetime.INVALID_ALL_MILLISECONDS = -60000000000000;
+/**
  * 曜日の定数オブジェクト。
  */
 export const DayOfWeek = {
@@ -701,7 +711,7 @@ export const DatetimeFormat = {
      * @returns
      */
     getEnumerations: () => {
-        return Enumeration.extractEnumerations(DayOfWeek);
+        return Enumeration.extractEnumerations(DatetimeFormat);
     },
     /**
      * すべての定数で、物理名がキー、論理名が値のマップを作成する。

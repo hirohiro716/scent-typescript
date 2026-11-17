@@ -186,7 +186,7 @@ export default class StringObject {
      * @returns このインスタンス。
      */
     public replaceCR(replacement: string): StringObject {
-        return this.replace("\r([^\n])|\r$", replacement + "$1");
+        return this.replace("\r(?!\n)", replacement);
     }
 
     /**
@@ -196,7 +196,7 @@ export default class StringObject {
      * @returns このインスタンス。
      */
     public replaceLF(replacement: string): StringObject {
-        return this.replace("([^\r])\n|^\n", "$1" + replacement);
+        return this.replace("(?<!\r)\n", replacement);
     }
 
     /**
@@ -254,9 +254,16 @@ export default class StringObject {
      * @returns このインスタンス。
      */
     public wide(): StringObject {
-        const value = new StringObject(this.joinAndResetParts());
+        const value = StringObject.from(this.joinAndResetParts()).toString();
         this.parts = [];
-        for (const one of value.toString()) {
+        for (let index = 0; index < value.length; index++) {
+            const two = value.substring(index, index + 2);
+            if (StringObject.NARROW_TO_WIDE_MAP[two]) {
+                this.parts.push(StringObject.NARROW_TO_WIDE_MAP[two]);
+                index++;
+                continue;
+            }
+            const one = value.substring(index, index + 1);
             if (StringObject.NARROW_TO_WIDE_MAP[one]) {
                 this.parts.push(StringObject.NARROW_TO_WIDE_MAP[one]);
             } else {
@@ -413,7 +420,7 @@ export default class StringObject {
      */
     public toDatetime(): Datetime | null {
         const datetime = new Datetime(this.joinAndResetParts());
-        if (datetime.getAllMilliseconds() === 0) {
+        if (datetime.getYear() < 1000) {
             return null;
         }
         return datetime;
@@ -624,8 +631,9 @@ export default class StringObject {
      */
     public static join(values: any[], separator?: string): StringObject {
         const stringObject = new StringObject();
-        for (const value of values) {
-            if (stringObject.length() > 0) {
+        for (let index = 0; index < values.length; index++) {
+            const value = values[index];
+            if (index > 0) {
                 stringObject.append(separator);
             }
             stringObject.append(value);

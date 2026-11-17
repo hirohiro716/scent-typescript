@@ -61,27 +61,34 @@ export class WhereSet {
                     if ("is_negate" in where) {
                         const comparison = Comparisons.find(where.comparison);
                         if (comparison !== null) {
-                            if (where.values.length === 1) {
-                                this._wheres.push(new Where(where.column, comparison, where.values[0].value, where.is_negate));
-                            } else {
-                                const stringValues: string[] = [];
-                                const numberValues: number[] = [];
-                                for (const valueObject of where.values) {
-                                    const value = valueObject.value;
-                                    if (typeof value === "string") {
-                                        stringValues.push(value);
+                            switch (comparison) {
+                                case Comparisons.isNull:
+                                    this._wheres.push(new Where(where.column, comparison, [], where.is_negate));
+                                    break;
+                                default:
+                                    if (where.values.length === 1) {
+                                        this._wheres.push(new Where(where.column, comparison, where.values[0].value, where.is_negate));
+                                    } else {
+                                        const stringValues: string[] = [];
+                                        const numberValues: number[] = [];
+                                        for (const valueObject of where.values) {
+                                            const value = valueObject.value;
+                                            if (typeof value === "string") {
+                                                stringValues.push(value);
+                                            }
+                                            if (typeof value === "number") {
+                                                numberValues.push(value);
+                                            }
+                                        }
+                                        if (stringValues.length > 0) {
+                                            this._wheres.push(new Where(where.column, comparison, stringValues, where.is_negate));
+                                        }
+                                        if (numberValues.length > 0) {
+                                            this._wheres.push(new Where(where.column, comparison, numberValues, where.is_negate));
+                                        }
                                     }
-                                    if (typeof value === "number") {
-                                        numberValues.push(value);
-                                    }
-                                }
-                                if (stringValues.length > 0) {
-                                    this._wheres.push(new Where(where.column, comparison, stringValues, where.is_negate));
-                                }
-                                if (numberValues.length > 0) {
-                                    this._wheres.push(new Where(where.column, comparison, numberValues, where.is_negate));
-                                }
-                            }                            
+                                    break;
+                            }
                         }
                     }
                 }
@@ -160,6 +167,12 @@ export class WhereSet {
             this.add(column, Comparisons.between, [parameterFrom, parameter2Object.toString()], isNegate);
         } else if (typeof parameterFrom === "number" && parameter2Object.toNumber() !== null) {
             this.add(column, Comparisons.between, [parameterFrom, parameter2Object.toNumber()!], isNegate);
+        } else {
+            if (parameterFrom instanceof Date && parameterTo instanceof Date) {
+                this.add(column, Comparisons.between, [parameterFrom, parameterTo], isNegate);
+            } else if (parameterFrom instanceof Datetime && parameterTo instanceof Datetime) {
+                this.add(column, Comparisons.between, [parameterFrom.date, parameterTo.date], isNegate);
+            }
         }
     }
 
@@ -171,7 +184,9 @@ export class WhereSet {
      * @param isNegate 論理否定の場合はtrueを指定。
      */
     public addIn(column: Column | string, values: string[] | number[] | Date[] | Datetime[], isNegate?: boolean) {
-        this.add(column, Comparisons.in, values, isNegate);
+        if (values.length > 0) {
+            this.add(column, Comparisons.in, values, isNegate);
+        }
     }
 
     /**

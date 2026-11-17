@@ -4,6 +4,10 @@ import Enumeration from "../Enumeration.js";
  */
 export declare class Datetime {
     /**
+     * 無効な日時を表すミリ秒。
+     */
+    private static readonly INVALID_ALL_MILLISECONDS;
+    /**
      * コンストラクタ。 "YYYY-MM-DD", "YYYY/MM/DD", "YYYY-MM-DD HH:mm:ss.sss", "YYYY/MM/DD HH:mm:ss.sss" のいずれかの形式の日時文字列を指定する。
      *
      * @param datetimeString
